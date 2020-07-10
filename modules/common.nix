@@ -8,7 +8,7 @@
     unzip p7zip gnupg unrar
     # System monitoring
     htop whois sysstat smartmontools pciutils
-    dmidecode usbutils
+    dmidecode usbutils nmap
     # File transfer
     wget sshfsFuse rsync
     # Media manipulation
@@ -70,7 +70,7 @@
       syntaxHighlighting.enable = true;
       ohMyZsh = {
         enable = true;
-        plugins = [ "git" "python" "bash" ];
+        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "cargo" ];
         theme = "agnoster";
         customPkgs = with pkgs; [
           pkgs.nix-zsh-completions
