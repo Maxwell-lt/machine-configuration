@@ -27,9 +27,9 @@
 
   security = {
     sudo.wheelNeedsPassword = false;
-    apparmor.enable = true;
-    fail2ban.enable = true;
+    #apparmor.enable = true;
   };
+  services.fail2ban.enable = true;
 
   # Allow unfree packages to be installed.
   nixpkgs.config.allowUnfree = true;
@@ -61,7 +61,7 @@
       set smarthome
       set linenumbers
     '';
-    zfs = {
+    zsh = {
       enable = true;
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;

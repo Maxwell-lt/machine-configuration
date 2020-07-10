@@ -1,8 +1,11 @@
-{ config, pgks, ... }:
+{ config, pkgs, ... }:
 
+let
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+in
 {
 
-  imports = [ ../../modules/mullvad.nix ];
+  imports = [ ./mullvad.nix ];
   environment.systemPackages = with pkgs; [
     # UI file utils
     kate ark

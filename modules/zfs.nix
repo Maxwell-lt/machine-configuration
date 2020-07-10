@@ -13,7 +13,7 @@
       enable = true;
       interval = "Sat 05:00";
     };
-    autoTrim = {
+    trim = {
       enable = true;
       interval = "Sat 05:00";
     };
