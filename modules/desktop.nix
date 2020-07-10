@@ -9,7 +9,6 @@ in
   environment.systemPackages = with pkgs; [
     # UI file utils
     kate ark
-
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ]; nativeOnly = true; }).run
     jdk8 multimc
@@ -24,10 +23,20 @@ in
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
+    # Connectivity
+    kdeconnect
   ];
 
-  # Open up ports for torrents
-  networking.firewall.allowedTCPPortRanges = [ { from = 6881; to = 6999; } ];
+  # Open up ports
+  networking.firewall = {
+    allowedTCPPortRanges = [ 
+      { from = 6881; to = 6999; } # Torrents
+      { from = 1714; to = 1764; } # KDEConnect
+    ];
+    allowedUDPPortRanges = [      
+      { from = 1714; to = 1764; } # KDEConnect
+    ];
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
