@@ -7,6 +7,11 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.packages = with pkgs; [
+    lutris
+    playonlinux
+  ];
+
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
   nixpkgs.config.allowUnfree = true;
 

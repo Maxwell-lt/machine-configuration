@@ -25,7 +25,12 @@ in
     jetbrains.pycharm-professional jetbrains.webstorm
     # Connectivity
     kdeconnect
+    # VM dependencies
+    kvm qemu libvirt bridge-utils virt-manager
+    virt-viewer spice-vdagent
   ];
+
+  virtualisation.libvirtd.enable = true;
 
   # Open up ports
   networking.firewall = {
