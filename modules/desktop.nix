@@ -8,7 +8,7 @@ in
   imports = [ ./mullvad.nix ];
   environment.systemPackages = with pkgs; [
     # UI file utils
-    kate ark
+    kate ark okular
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ]; nativeOnly = true; }).run
     jdk8 multimc
