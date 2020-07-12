@@ -20,7 +20,7 @@
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium
+    vscodium atom
     # Connectivity
     kdeconnect
     # VM dependencies
