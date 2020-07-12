@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in
 {
 
   imports = [ ./mullvad.nix ];
@@ -19,7 +16,7 @@ in
     # Media
     mpv syncplay deluge
     # Chat
-    unstable.discord hexchat
+    discord hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
