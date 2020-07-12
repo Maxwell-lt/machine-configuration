@@ -23,6 +23,7 @@ in
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
+    vscodium
     # Connectivity
     kdeconnect
     # VM dependencies
@@ -72,7 +73,7 @@ in
 
   hardware.opengl = {
     driSupport32Bit = true;
-    s3tcSupport = true;
+    #s3tcSupport = true;
     extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
 }
