@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

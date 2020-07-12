@@ -4,9 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -33,4 +30,3 @@ in
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
 }
-
