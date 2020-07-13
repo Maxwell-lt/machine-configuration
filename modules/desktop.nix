@@ -14,7 +14,7 @@
     # Passwords and sync
     keepassxc insync dropbox
     # Media
-    mpv syncplay deluge
+    mpv syncplay deluge pavucontrol
     # Chat
     discord hexchat
     # Development
