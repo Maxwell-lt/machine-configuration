@@ -11,6 +11,8 @@
     jdk8 multimc
     # Browsers
     firefox chromium
+    xdg-desktop-portal-kde
+    plasma-browser-integration
     # Passwords and sync
     keepassxc insync dropbox
     # Media
@@ -27,6 +29,8 @@
     kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
   ];
+
+  nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
 
   virtualisation.libvirtd.enable = true;
 
