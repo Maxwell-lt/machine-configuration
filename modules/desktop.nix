@@ -17,6 +17,7 @@
     keepassxc insync dropbox
     # Media
     mpv syncplay deluge pavucontrol
+    puddletag youtube-dl
     # Chat
     discord hexchat
     # Development
