@@ -5,7 +5,7 @@
     # Terminal basics
     coreutils gitAndTools.gitFull wget vim man tree
     mkpasswd sshfs units progress pv ripgrep zip
-    unzip p7zip gnupg unrar
+    unzip p7zip gnupg unrar git-lfs
     # System monitoring
     htop whois sysstat smartmontools pciutils
     dmidecode usbutils nmap
