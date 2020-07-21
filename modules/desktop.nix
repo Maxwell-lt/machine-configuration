@@ -9,7 +9,7 @@
     libreoffice
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ]; nativeOnly = true; }).run
-    jdk8 multimc
+    jdk8 multimc dolphinEmuMaster
     # Browsers
     firefox chromium
     xdg-desktop-portal-kde
