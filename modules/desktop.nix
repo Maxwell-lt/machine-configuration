@@ -32,7 +32,11 @@
     virt-viewer spice-vdagent
   ];
 
-  nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
+  nixpkgs.config.firefox = {
+    enablePlasmaBrowserIntegration = true;
+    # Broken for now:
+    #enableAdobeFlash = true;
+  };
 
   virtualisation.libvirtd.enable = true;
 
