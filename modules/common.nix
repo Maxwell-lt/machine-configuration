@@ -2,13 +2,15 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # Terminal basics
+    # Terminal tools
     coreutils gitAndTools.gitFull wget vim man tree
     mkpasswd sshfs units progress pv ripgrep zip
     unzip p7zip gnupg unrar git-lfs
+    # FS drivers
+    dosfstools mtools ntfsprogs
     # System monitoring
     htop whois sysstat smartmontools pciutils
-    dmidecode usbutils nmap
+    dmidecode usbutils nmap lm_sensors
     # File transfer
     wget sshfsFuse rsync
     # Media manipulation
