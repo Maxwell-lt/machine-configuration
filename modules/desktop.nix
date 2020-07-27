@@ -8,8 +8,8 @@
     kate ark okular filelight audio-recorder
     libreoffice gparted
     # Games
-    steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ]; nativeOnly = true; }).run
-    jdk8 multimc dolphinEmuMaster
+    steam #(steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ]; nativeOnly = true; }).run Disabled because of gst-plugins-base
+    jdk8 multimc dolphinEmuMaster lutris
     # Browsers
     firefox chromium
     xdg-desktop-portal-kde
@@ -18,7 +18,8 @@
     keepassxc insync dropbox
     # Media
     mpv syncplay deluge pavucontrol
-    puddletag
+    #puddletag Disabled because it depends on broken package gst-plugins-base
+    obs-studio
     # Chat
     discord hexchat
     # Development

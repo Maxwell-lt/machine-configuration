@@ -5,7 +5,7 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    lutris
+    #lutris
     playonlinux
   ];
 
