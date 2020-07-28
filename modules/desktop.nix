@@ -21,7 +21,8 @@
     #puddletag Disabled because it depends on broken package gst-plugins-base
     obs-studio
     # Chat
-    discord hexchat
+    (discord.override { nss = pkgs.nss_3_44; }) # Temporary fix for https://github.com/NixOS/nixpkgs/issues/93955
+    hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
