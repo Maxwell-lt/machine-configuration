@@ -8,7 +8,7 @@
     kate ark okular filelight audio-recorder
     libreoffice gparted
     # Games
-    steam #(steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ]; nativeOnly = true; }).run Disabled because of gst-plugins-base
+    steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris
     # Browsers
     firefox chromium
