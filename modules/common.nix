@@ -5,7 +5,7 @@
     # Terminal tools
     coreutils gitAndTools.gitFull wget vim man tree
     mkpasswd sshfs units progress pv ripgrep zip
-    unzip p7zip gnupg unrar git-lfs
+    unzip p7zip gnupg unrar git-lfs direnv
     # FS drivers
     dosfstools mtools ntfsprogs
     # System monitoring
