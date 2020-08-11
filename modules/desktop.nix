@@ -6,7 +6,7 @@
   environment.systemPackages = with pkgs; [
     # UI utils
     kate ark okular filelight audio-recorder
-    libreoffice gparted
+    libreoffice gparted yed
     kmail kdeApplications.kmail-account-wizard kaddressbook
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
