@@ -19,8 +19,16 @@
   };
 
   networking.useDHCP = false;
-  networking.interfaces.enp39s0.useDHCP = true;
-  networking.interfaces.wlp41s0.useDHCP = true;
+  networking.interfaces.enp1s0.useDHCP = true;
+  networking.interfaces.wlp2s0.useDHCP = true;
+  networking.wireless = {
+    enable = true;
+    networks = {
+      "ltfamily-2.4GHz" = {
+        pskRaw = import ../../secrets/wifikey.nix;
+      };
+    };
+  };
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
