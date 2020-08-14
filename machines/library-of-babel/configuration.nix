@@ -160,12 +160,22 @@
       enableACME = true;
       root = "/var/www/infosite";
     };
+    virtualHosts."media.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "https://68.43.125.230";
+      };
+    };
   };
 
   security.acme = {
     acceptTerms = true;
     certs = {
       "maxwell-lt.dev".email = "maxwell.lt@live.com";
+    };
+    certs = {
+      "media.maxwell-lt.dev".email = "maxwell.lt@live.com";
     };
   };
 
