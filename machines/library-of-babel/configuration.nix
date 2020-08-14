@@ -150,6 +150,11 @@
 
   services.nginx = {
     enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
     virtualHosts."maxwell-lt.dev" = {
       addSSL = true;
       enableACME = true;
