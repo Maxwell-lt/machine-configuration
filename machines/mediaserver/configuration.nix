@@ -37,6 +37,11 @@
         proxyPass = "http://localhost:8096";
       };
     };
+    virtualHosts."68.43.125.230" = {
+      locations."/" = {
+        proxyPass = "https://localhost:8096";
+      };
+    };
   };
 
   security.acme = {
