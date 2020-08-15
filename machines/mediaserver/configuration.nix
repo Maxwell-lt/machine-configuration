@@ -8,6 +8,7 @@
       ../../modules/zfs.nix
       ../../modules/amdgpu.nix
       ../../modules/jellyfin.nix
+      ../../modules/zrepl.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -16,6 +17,20 @@
   networking = {
     hostId = "17ca4f0b";
     hostName = "media-server-alpha";
+  };
+
+  services.zrepl = {
+    enable = true;
+    push."library-of-babel" = {
+      sourceFS = "ssdpool";
+      exclude = [
+        "ssdpool/root/nixos"
+        "ssdpool/reserved"
+      ];
+      targetHost = "158.69.224.168";
+      targetPort = 8551;
+      snapshotting.interval = 10;
+    };
   };
 
   networking.useDHCP = false;
