@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/zrepl.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -32,6 +33,16 @@
     trim = {
       enable = true;
       interval = "Sat 05:00";
+    };
+  };
+
+  services.zrepl = {
+    enable = true;
+    sink."media-server-alpha" = {
+      targetFS = "rpool/backup/media-server-alpha";
+      clients = [ "media-server-alpha" ];
+      port = 8550;
+      openFirewall = true;
     };
   };
 
