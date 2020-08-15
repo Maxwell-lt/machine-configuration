@@ -128,8 +128,8 @@
                 default = 8550;
               };
               serverCN = mkOption {
-                description = "Common Name of server to connect to."
-                example = "example.org"
+                description = "Common Name of server to connect to.";
+                example = "example.org";
                 type = string;
               };
               snapshotting = {
