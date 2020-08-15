@@ -127,6 +127,11 @@
                 type = int;
                 default = 8550;
               };
+              serverCN = mkOption {
+                description = "Common Name of server to connect to."
+                example = "example.org"
+                type = string;
+              };
               snapshotting = {
                 prefix = mkOption {
                   description = "Snapshot name prefix";
@@ -203,7 +208,7 @@
         ca = "/var/spool/zrepl/ca.crt";
         cert = "/var/spool/zrepl/${config.networking.hostName}.crt";
         key = "/var/spool/zrepl/${config.networking.hostName}.key";
-        server_cn = name;
+        server_cn = push.serverCN;
       };
       filesystems = filesystemsConfig push;
       snapshotting = snapshotConfig push;

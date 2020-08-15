@@ -21,7 +21,8 @@
 
   services.zrepl = {
     enable = true;
-    push."library-of-babel" = {
+    push."ssdpool" = {
+      serverCN = "library-of-babel";
       sourceFS = "ssdpool";
       exclude = [
         "ssdpool/root/nixos"
