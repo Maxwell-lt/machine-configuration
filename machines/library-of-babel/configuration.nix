@@ -38,10 +38,16 @@
 
   services.zrepl = {
     enable = true;
-    sink."media-server-alpha" = {
-      targetFS = "rpool/backup/media-server-alpha";
+    #sink."media-server-alpha" = {
+    #  targetFS = "rpool/backup/media-server-alpha";
+    #  clients = [ "media-server-alpha" ];
+    #  port = 8550;
+    #  openFirewall = true;
+    #};
+    sink."media-server-alpha-ssd" = {
+      targetFS = "rpool/backup/media-server-alpha-ssd";
       clients = [ "media-server-alpha" ];
-      port = 8550;
+      port = 8551;
       openFirewall = true;
     };
   };
