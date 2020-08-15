@@ -341,6 +341,7 @@
       uid = 316;
       isSystemUser = true;
       home = "/var/spool/zrepl";
+      extraGroups = [ "wheel" ];
     };
 
     environment.systemPackages = [
