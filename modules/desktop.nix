@@ -35,6 +35,12 @@
     virt-viewer spice-vdagent
   ];
 
+  nixpkgs.config.packageOverrides = pkgs: {
+    mpv = pkgs.mpv-unwrapped.override {
+      vapoursynthSupport = true;
+    };
+  };
+
   nixpkgs.config.firefox = {
     enablePlasmaBrowserIntegration = true;
     # Broken for now:
