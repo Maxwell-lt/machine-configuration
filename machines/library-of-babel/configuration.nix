@@ -46,7 +46,10 @@
     #};
     sink."media-server-alpha-ssd" = {
       targetFS = "rpool/backup/media-server-alpha-ssd";
-      clients = [ "media-server-alpha" ];
+      clients = [
+        "media-server-alpha"
+        "maxwell-nixos"
+      ];
       port = 8551;
       openFirewall = true;
     };
