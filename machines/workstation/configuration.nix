@@ -13,7 +13,11 @@
   environment.systemPackages = with pkgs; [
     # Modify RGB configuration
     openrgb i2c-tools
+
+    flatpak
   ];
+
+  services.flatpak.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
