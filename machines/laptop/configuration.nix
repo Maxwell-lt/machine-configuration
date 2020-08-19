@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-
+let
+  wifiKeys = import ../../secrets/wifikey.nix;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -25,7 +27,13 @@
     enable = true;
     networks = {
       "ltfamily-2.4GHz" = {
-        pskRaw = import ../../secrets/wifikey.nix;
+        pskRaw = wifiKeys.ltfamily;
+        priority = 40;
+      };
+
+      "pixel-hotspot" = {
+        pskRaw = wifiKeys.hotspot;
+        priority = 50;
       };
     };
   };
