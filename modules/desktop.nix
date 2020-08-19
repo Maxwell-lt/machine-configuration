@@ -18,7 +18,8 @@
     # Passwords and sync
     keepassxc insync dropbox
     # Media
-    mpv syncplay deluge pavucontrol
+    (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
+    syncplay deluge pavucontrol
     puddletag obs-studio kdenlive
     # Chat
     discord
@@ -33,6 +34,12 @@
     kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
   ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    mpv = pkgs.mpv-unwrapped.override {
+      vapoursynthSupport = true;
+    };
+  };
 
   nixpkgs.config.firefox = {
     enablePlasmaBrowserIntegration = true;

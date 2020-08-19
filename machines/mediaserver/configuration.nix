@@ -21,13 +21,21 @@
 
   services.zrepl = {
     enable = true;
-    push."ssdpool" = {
+    push.ssdpool = {
       serverCN = "library-of-babel";
       sourceFS = "ssdpool";
       exclude = [
         "ssdpool/root/nixos"
         "ssdpool/reserved"
       ];
+      targetHost = "158.69.224.168";
+      targetPort = 8551;
+      snapshotting.interval = 10;
+    };
+    push.rustpool = {
+      serverCN = "library-of-babel";
+      sourceFS = "rustpool/media";
+      exclude = [ ];
       targetHost = "158.69.224.168";
       targetPort = 8551;
       snapshotting.interval = 10;
