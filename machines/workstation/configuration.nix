@@ -19,7 +19,7 @@
   ];
 
   services.zrepl = {
-    enable = false; # Waiting until later for initial replication
+    enable = true;
     push.rpool = {
       serverCN = "library-of-babel";
       sourceFS = "rpool/safe";
