@@ -21,6 +21,7 @@
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     syncplay deluge pavucontrol
     puddletag obs-studio kdenlive
+    calibre
     # Chat
     discord
     hexchat
