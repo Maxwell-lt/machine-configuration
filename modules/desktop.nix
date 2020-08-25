@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
-
+let
+  personal = import
+    (builtins.fetchTarball https://github.com/maxwell-lt/nixpkgs/tarball/2f57ab652f23cb4c77c14b15c931e13cb9e3fc6c)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+in
 {
 
   imports = [ ./mullvad.nix ];
@@ -18,7 +23,8 @@
     # Passwords and sync
     keepassxc insync dropbox
     # Media
-    (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
+    personal.mpv vapoursynth
+    #(mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     syncplay deluge pavucontrol
     puddletag obs-studio kdenlive
     calibre
