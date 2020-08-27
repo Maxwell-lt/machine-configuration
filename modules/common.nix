@@ -16,10 +16,37 @@
     # Media manipulation
     ffmpeg-full mkvtoolnix-cli imagemagickBig youtube-dl
     r128gain
-    # Fonts
-    powerline-fonts corefonts noto-fonts noto-fonts-cjk
-    noto-fonts-emoji noto-fonts-extra
   ];
+
+  fonts.fonts = with pkgs; [
+    powerline-fonts corefonts
+    noto-fonts noto-fonts-cjk
+    noto-fonts-emoji noto-fonts-extra
+    hack-font ipafont
+    
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "Hack"
+      "Noto Sans Mono CJK JP"
+    ];
+
+    sansSerif = [
+      "Noto Sans"
+      "Noto Sans CJK JP"
+    ];
+
+    serif = [
+      "Noto Serif"
+      "Noto Serif CJK JP"
+    ];
+  };
+
+  i18n.inputMethod = {
+    enabled = "fcitx";
+    fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+  };
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.cpu.amd.updateMicrocode = true;
