@@ -23,8 +23,8 @@ in
     # Passwords and sync
     keepassxc insync dropbox
     # Media
-    personal.mpv vapoursynth
-    #(mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
+    #personal.mpv vapoursynth
+    (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     syncplay deluge pavucontrol
     puddletag obs-studio kdenlive
     calibre

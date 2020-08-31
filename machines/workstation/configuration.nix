@@ -44,6 +44,14 @@
   networking.interfaces.enp39s0.useDHCP = true;
   networking.interfaces.wlp41s0.useDHCP = true;
 
+  # Needed to use erisia/builder
+  nix.useSandbox = "relaxed";
+
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2009", MODE="0666"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", KERNELS=="0005:057E:2009.*", MODE="0666"
+  '';
+
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
 }
