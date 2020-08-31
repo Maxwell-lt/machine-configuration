@@ -13,6 +13,7 @@ in
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
     kmail kdeApplications.kmail-account-wizard kaddressbook
+    krita
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris
