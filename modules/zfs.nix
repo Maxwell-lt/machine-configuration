@@ -6,7 +6,7 @@
 
   services.zfs = {
     autoSnapshot = {
-      enable = true;
+      enable = false;
       flags = "-k -p --utc";
     };
     autoScrub = {
