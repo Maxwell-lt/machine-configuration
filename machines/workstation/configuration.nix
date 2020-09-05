@@ -25,7 +25,7 @@
       sourceFS = "rpool/safe";
       targetHost = "158.69.224.168";
       targetPort = 8551;
-      snapshotting.interval = 10;
+      snapshotting.interval = 60;
     };
   };
 
@@ -47,6 +47,7 @@
   # Needed to use erisia/builder
   nix.useSandbox = "relaxed";
 
+  # Switch Pro Controller udev rules
   services.udev.extraRules = ''
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2009", MODE="0666"
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", KERNELS=="0005:057E:2009.*", MODE="0666"
