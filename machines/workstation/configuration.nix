@@ -25,7 +25,7 @@
       sourceFS = "rpool/safe";
       targetHost = "158.69.224.168";
       targetPort = 8551;
-      snapshotting.interval = 60;
+      snapshotting.interval = 10;
     };
   };
 
@@ -43,6 +43,24 @@
   networking.useDHCP = false;
   networking.interfaces.enp39s0.useDHCP = true;
   networking.interfaces.wlp41s0.useDHCP = true;
+
+  # Needed for tc to work in the firewall script
+  networking.firewall.extraPackages = with pkgs; [ iproute ];
+  
+  # Throttle zrepl traffic
+  networking.firewall.extraCommands = ''
+    # Clear previously-added tc rules
+    # `|| true` is used to ignore errors from these lines, as they will fail if the tc rules are not already added 
+    tc qdisc delete dev enp39s0 root handle 1:0 htb || true
+    tc class delete dev enp39s0 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1 || true
+    # Add traffic control rules
+    # This will limit traffic to 35Mbps, just under the max upload rate of the network
+    tc qdisc add dev enp39s0 root handle 1:0 htb
+    tc class add dev enp39s0 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1
+    # Add routing rule to redirect traffic from the zrepl user to the rate limited qdisc
+    # The UID of the zrepl user is 316, as defined in ../../modules/zrepl.nix
+    ip46tables -t mangle -A POSTROUTING -o enp39s0 -p tcp -m owner --uid-owner 316 -j CLASSIFY --set-class 1:1
+  '';
 
   # Needed to use erisia/builder
   nix.useSandbox = "relaxed";

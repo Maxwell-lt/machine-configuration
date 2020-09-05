@@ -11,7 +11,7 @@
     dosfstools mtools ntfsprogs
     # System monitoring
     htop whois sysstat smartmontools pciutils
-    dmidecode usbutils nmap lm_sensors
+    dmidecode usbutils nmap lm_sensors bmon
     # File transfer
     wget sshfsFuse rsync
     # Media manipulation
