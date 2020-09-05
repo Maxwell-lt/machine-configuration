@@ -30,7 +30,7 @@
       ];
       targetHost = "158.69.224.168";
       targetPort = 8551;
-      snapshotting.interval = 10;
+      snapshotting.interval = 60;
     };
     push.rustpool = {
       serverCN = "library-of-babel";
@@ -38,7 +38,7 @@
       exclude = [ ];
       targetHost = "158.69.224.168";
       targetPort = 8551;
-      snapshotting.interval = 10;
+      snapshotting.interval = 60;
     };
   };
 
