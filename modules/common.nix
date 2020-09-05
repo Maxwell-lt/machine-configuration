@@ -6,20 +6,43 @@
     coreutils gitAndTools.gitFull wget vim man tree
     mkpasswd sshfs units progress pv ripgrep zip
     unzip p7zip gnupg unrar git-lfs direnv easyrsa
+    findutils
     # FS drivers
     dosfstools mtools ntfsprogs
     # System monitoring
     htop whois sysstat smartmontools pciutils
-    dmidecode usbutils nmap lm_sensors
+    dmidecode usbutils nmap lm_sensors bmon
     # File transfer
     wget sshfsFuse rsync
     # Media manipulation
     ffmpeg-full mkvtoolnix-cli imagemagickBig youtube-dl
     r128gain
-    # Fonts
-    powerline-fonts corefonts noto-fonts noto-fonts-cjk
-    noto-fonts-emoji noto-fonts-extra
   ];
+
+  fonts.fonts = with pkgs; [
+    powerline-fonts corefonts
+    noto-fonts noto-fonts-cjk
+    noto-fonts-emoji noto-fonts-extra
+    hack-font ipafont
+    
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "Hack"
+      "Noto Sans Mono CJK JP"
+    ];
+
+    sansSerif = [
+      "Noto Sans"
+      "Noto Sans CJK JP"
+    ];
+
+    serif = [
+      "Noto Serif"
+      "Noto Serif CJK JP"
+    ];
+  };
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.cpu.amd.updateMicrocode = true;

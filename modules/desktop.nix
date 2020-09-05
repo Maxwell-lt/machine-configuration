@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
-
+let
+  personal = import
+    (builtins.fetchTarball https://github.com/maxwell-lt/nixpkgs/tarball/2f57ab652f23cb4c77c14b15c931e13cb9e3fc6c)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+in
 {
 
   imports = [ ./mullvad.nix ];
@@ -8,6 +13,7 @@
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
     kmail kdeApplications.kmail-account-wizard kaddressbook
+    krita
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris
@@ -18,9 +24,11 @@
     # Passwords and sync
     keepassxc insync dropbox
     # Media
+    #personal.mpv vapoursynth
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     syncplay deluge pavucontrol
     puddletag obs-studio kdenlive
+    calibre cmus
     # Chat
     discord
     hexchat
@@ -39,6 +47,12 @@
     mpv = pkgs.mpv-unwrapped.override {
       vapoursynthSupport = true;
     };
+  };
+
+  # Enable IME
+  i18n.inputMethod = {
+    enabled = "fcitx";
+    fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
   };
 
   nixpkgs.config.firefox = {
@@ -85,6 +99,14 @@
     layout = "us";
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
+    # Enable Japanese IME
+    displayManager.sessionCommands = ''
+      export XMODIFIERS="@im=fcitx"
+      export XMODIFIER="@im=fcitx"
+      export GTK_IM_MODULE="fcitx"
+      export QT_IM_MODULE="fcitx"
+      fcitx &
+    '';
   };
 
   hardware.opengl = {

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   boot.supportedFilesystems = [ "zfs" ];
@@ -6,7 +6,7 @@
 
   services.zfs = {
     autoSnapshot = {
-      enable = true;
+      enable = lib.mkDefault false;
       flags = "-k -p --utc";
     };
     autoScrub = {

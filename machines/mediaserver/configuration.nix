@@ -42,6 +42,24 @@
     };
   };
 
+  # Needed for tc to work in the firewall script
+  networking.firewall.extraPackages = with pkgs; [ iproute ];
+
+  # Throttle zrepl traffic
+  networking.firewall.extraCommands = ''
+    # Clear previously-added tc rules
+    # `|| true` is used to ignore errors from these lines, as they will fail if the tc rules are not already added
+    tc qdisc delete dev enp0s31f6 root handle 1:0 htb || true
+    tc class delete dev enp0s31f6 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1 || true
+    # Add traffic control rules
+    # This will limit traffic to 35Mbps, just under the max upload rate of the network
+    tc qdisc add dev enp0s31f6 root handle 1:0 htb
+    tc class add dev enp0s31f6 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1
+    # Add routing rule to redirect traffic from the zrepl user to the rate limited qdisc
+    # The UID of the zrepl user is 316, as defined in ../../modules/zrepl.nix
+    ip46tables -t mangle -A POSTROUTING -o enp0s31f6 -p tcp -m owner --uid-owner 316 -j CLASSIFY --set-class 1:1
+  '';
+
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
 
