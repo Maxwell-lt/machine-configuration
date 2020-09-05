@@ -49,6 +49,7 @@
       clients = [
         "media-server-alpha"
         "maxwell-nixos"
+        "nix-portable-omega"
       ];
       port = 8551;
       openFirewall = true;
@@ -163,7 +164,7 @@
     shell = pkgs.zsh;
   };
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 9090 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
