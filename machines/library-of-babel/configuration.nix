@@ -119,7 +119,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "qt";
+      pinentryFlavor = "curses";
     };
     nano.nanorc = ''
       set tabstospaces
@@ -169,6 +169,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # Setup nginx
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
@@ -188,16 +189,50 @@
         proxyPass = "https://68.43.125.230";
       };
     };
+    virtualHosts."grafana.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:3000";
+      };
+    };
   };
 
   security.acme = {
     acceptTerms = true;
     certs = {
       "maxwell-lt.dev".email = "maxwell.lt@live.com";
-    };
-    certs = {
       "media.maxwell-lt.dev".email = "maxwell.lt@live.com";
+      "grafana.maxwell-lt.dev".email = "maxwell.lt@live.com";
     };
+  };
+
+  services.grafana = {
+    enable = true;
+    auth.anonymous.enable = true;
+  };
+
+  services.prometheus = {
+    enable = true;
+    globalConfig = {
+      evaluation_interval = "20s";
+      scrape_interval = "20s";
+    };
+    scrapeConfigs = [
+      {
+        job_name = "prometheus";
+        static_configs = [{
+          targets = ["localhost:9090"];
+        }];
+      }
+      {
+        job_name = "node";
+        static_configs = [{
+          targets = ["localhost:9100"];
+        }];
+      }
+    ];
+    exporters.node.enable = true;
   };
 
   # This value determines the NixOS release from which the default
