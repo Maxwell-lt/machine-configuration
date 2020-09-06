@@ -1,33 +1,37 @@
-{ config, lib, pkgs }:
+{ config, lib, pkgs, options, ... }:
 
+with lib;
 {
   options = {
-    services.prometheus.exporters.zpool-exporter {
+    services.zpool-exporter = with types; {
       enable = mkEnableOption "zpool-exporter";
 
       package = mkOption {
         description = "zpool-exporter package";
         defaultText = "pkgs.zpool-exporter";
-        type = "package";
+        type = package;
         default = pkgs.callPackage ../zpool_exporter {};
-      }
+      };
 
       port = mkOption {
         description = "Port to listen on";
         type = int;
         default = 9101;
-      }
-    }
-  }
-  config = let 
-    cfg = config.services.prometheus.exporters.zpool-exporter;
-  in
+      };
+    };
+  };
 
-  lib.mkIf cfg.enable {
-    serviceOpts = {
+  config = let 
+    cfg = config.services.zpool-exporter;
+  in
+  mkIf cfg.enable {
+    systemd.services.prometheus-zpool-exporter = {
+      enable = cfg.enable;
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
       serviceConfig = {
         ExecStart = ''
-          ${pkgs.zpool-exporter}/bin/zpool_exporter
+          ${cfg.package}/bin/zpool_exporter
         '';
       };
     };
@@ -35,5 +39,5 @@
     environment.systemPackages = [
       (cfg.package)
     ];
-  }
+  };
 }

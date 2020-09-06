@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/zrepl.nix
+      ../../modules/zpool-exporter.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -231,9 +232,18 @@
           targets = ["localhost:9100"];
         }];
       }
+      {
+        job_name = "zpool-exporter";
+        static_configs = [{
+          targets = ["localhost:9101"];
+        }];
+      }
     ];
-    exporters.node.enable = true;
+    exporters = {
+      node.enable = true;
+    };
   };
+  services.zpool-exporter.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
