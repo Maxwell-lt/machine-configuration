@@ -65,32 +65,23 @@
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  services.nginx = {
-    enable = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
+  # Setup Wireguard client
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.100.0.2/24" ];
 
-    virtualHosts."media.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://localhost:8096";
-      };
-    };
-    virtualHosts."68.43.125.230" = {
-      locations."/" = {
-        proxyPass = "https://localhost:8096";
-      };
-    };
-  };
+    privateKeyFile = "/root/private";
 
-  security.acme = {
-    acceptTerms = true;
-    certs = {
-      "media.maxwell-lt.dev".email = "maxwell.lt@live.com";
-    };
+    peers = [
+      {
+        publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
+
+        allowedIPs = [ "10.100.0.1" ];
+
+        endpoint = "158.69.224.168:51820";
+
+        persistentKeepalive = 25;
+      }
+    ];
   };
 
   # Don't change this value from 20.03!
