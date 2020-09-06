@@ -69,6 +69,39 @@
     hostName = "library-of-babel";
   };
 
+  # Setup Wireguard server
+  networking = {
+    nat = {
+      enable = true;
+      externalInterface = "eno1";
+      internalInterfaces = [ "wg0" ];
+    };
+    firewall.allowedUDPPorts = [ 51820 ];
+
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.100.0.1/24" ];
+      listenPort = 51820;
+
+      # Act as a VPN (unneeded for now)
+      #postSetup = ''
+      #  ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o eno1 -j MASQUERADE
+      #'';
+
+      #postShutdown = ''
+      #  ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o eno1 -j MASQUERADE
+      #'';
+
+      privateKeyFile = "/root/private";
+
+      peers = [
+        {
+          publicKey = "1n83gP4hK7vLUpvh4m5tYMT/Nlij1AF9XeiTdMtgIE8=";
+          allowedIPs = [ "10.0.0.2/32" ];
+        }
+      ];
+    };
+  };
+
   nix = {
     extraOptions = "auto-optimise-store = true";
     gc.automatic = true;
