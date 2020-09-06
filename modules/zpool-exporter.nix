@@ -29,6 +29,7 @@ with lib;
       enable = cfg.enable;
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
+      path = [ pkgs.zfs ];
       serviceConfig = {
         ExecStart = ''
           ${cfg.package}/bin/zpool_exporter
