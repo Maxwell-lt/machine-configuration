@@ -96,7 +96,7 @@
       peers = [
         {
           publicKey = "1n83gP4hK7vLUpvh4m5tYMT/Nlij1AF9XeiTdMtgIE8=";
-          allowedIPs = [ "10.0.0.2/32" ];
+          allowedIPs = [ "10.100.0.2/32" ];
         }
       ];
     };
@@ -221,7 +221,7 @@
       addSSL = true;
       enableACME = true;
       locations."/" = {
-        proxyPass = "https://68.43.125.230";
+        proxyPass = "http://10.100.0.2:8096";
       };
     };
     virtualHosts."grafana.maxwell-lt.dev" = {
