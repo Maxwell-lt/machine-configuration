@@ -9,6 +9,7 @@
       ../../modules/amdgpu.nix
       ../../modules/jellyfin.nix
       ../../modules/zrepl.nix
+      ../../modules/zpool-exporter.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -63,7 +64,10 @@
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    # Prometheus exporters
+    9100 9101
+  ];
 
   # Setup Wireguard client
   networking.wireguard.interfaces.wg0 = {
@@ -82,6 +86,15 @@
         persistentKeepalive = 25;
       }
     ];
+  };
+
+  services.prometheus.exporters = {
+    node.enable = true;
+  };
+
+  services.zpool-exporter = {
+    enable = true;
+    datasets = [ "ssdpool" "rustpool" ];
   };
 
   # Don't change this value from 20.03!

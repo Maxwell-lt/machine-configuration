@@ -18,6 +18,17 @@ with lib;
         type = int;
         default = 9101;
       };
+
+      datasets = mkOption {
+        description = "Datasets to get properties from";
+        type = listOf string;
+      };
+
+      properties = mkOption {
+        description = "Properties to retrieve from zfs get";
+        type = listOf string;
+        default = [ "used" "available" ];
+      };
     };
   };
 
@@ -32,7 +43,10 @@ with lib;
       path = [ pkgs.zfs ];
       serviceConfig = {
         ExecStart = ''
-          ${cfg.package}/bin/zpool_exporter
+          ${cfg.package}/bin/zpool_exporter \
+          --port ${toString cfg.port} \
+          --datasets=${(concatStringsSep "," cfg.datasets)} \
+          --properties=${(concatStringsSep "," cfg.properties)}
         '';
       };
     };
