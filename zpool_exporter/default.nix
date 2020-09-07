@@ -9,16 +9,16 @@ let mkRustPlatform = pkgs.callPackage ./mkRustPlatform.nix {};
 
 in rustPlatform.buildRustPackage rec {
   pname = "zpool-exporter";
-  version = "v0.2.0";
+  version = "v0.2.1";
 
   src = fetchFromGitHub {
     owner = "maxwell-lt";
     repo = pname;
     rev = version;
-    sha256 = "09j6a9sax7knxwi5g45kd6h5fhgldmznkypzinh45dgnzh70r781";
+    sha256 = "0dl1b5wkgfvnxmp8hmrhc43j0k598x90l6rr2kw2y8jgxv5vrgr1";
   };
 
-  cargoSha256 ="1gp82f7kdxsf2kmbwfsyscbh0aqnpbq0lmkr657q7ip4x6c73kpy";
+  cargoSha256 ="1xvmrm994qiai49c01mn2kbarxkssm5cqwjqzm998v3wx30fllrf";
   verifyCargoDeps = true;
 
   preConfigure = ''
