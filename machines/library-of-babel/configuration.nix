@@ -257,19 +257,19 @@
       {
         job_name = "prometheus";
         static_configs = [{
-          targets = ["localhost:9090"];
+          targets = [ "localhost:9090" ];
         }];
       }
       {
         job_name = "node";
         static_configs = [{
-          targets = ["localhost:9100"];
+          targets = [ "localhost:9100" "10.100.0.2:9100" ];
         }];
       }
       {
         job_name = "zpool-exporter";
         static_configs = [{
-          targets = ["localhost:9101"];
+          targets = [ "localhost:9101" "10.100.0.2:9101" ];
         }];
       }
     ];
