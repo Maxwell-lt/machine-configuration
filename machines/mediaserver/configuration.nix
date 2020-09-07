@@ -91,7 +91,11 @@
   services.prometheus.exporters = {
     node.enable = true;
   };
-  services.zpool-exporter.enable = true;
+
+  services.zpool-exporter = {
+    enable = true;
+    datasets = [ "ssdpool" "rustpool" ];
+  };
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
