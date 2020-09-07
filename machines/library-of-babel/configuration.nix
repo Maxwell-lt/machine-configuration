@@ -277,7 +277,11 @@
       node.enable = true;
     };
   };
-  services.zpool-exporter.enable = true;
+  services.zpool-exporter = {
+    enable = true;
+    datasets = [ "rpool" ];
+    properties = [ "used" "available" ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
