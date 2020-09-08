@@ -199,7 +199,7 @@
     shell = pkgs.zsh;
   };
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 9090 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 9090 25565 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -231,6 +231,21 @@
         proxyPass = "http://localhost:3000";
       };
     };
+    virtualHosts."minecraft.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        root = "/var/www/minecraft";
+        tryFiles = "\$uri \$uri/ =404";
+      };
+    };
+    virtualHosts."map.minecraft.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8123";
+      };
+    };
   };
 
   security.acme = {
@@ -239,6 +254,8 @@
       "maxwell-lt.dev".email = "maxwell.lt@live.com";
       "media.maxwell-lt.dev".email = "maxwell.lt@live.com";
       "grafana.maxwell-lt.dev".email = "maxwell.lt@live.com";
+      "minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
+      "map.minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
     };
   };
 
@@ -272,6 +289,12 @@
           targets = [ "localhost:9101" "10.100.0.2:9101" ];
         }];
       }
+      {
+        job_name = "minecraft";
+        static_configs = [{
+          targets = ["localhost:1223"];
+        }];
+      }
     ];
     exporters = {
       node.enable = true;
@@ -282,6 +305,8 @@
     datasets = [ "rpool" ];
     properties = [ "used" "available" ];
   };
+
+  nix.useSandbox = "relaxed";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
