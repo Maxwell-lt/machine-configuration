@@ -26,7 +26,6 @@
       serverCN = "library-of-babel";
       sourceFS = "ssdpool";
       exclude = [
-        "ssdpool/root/nixos"
         "ssdpool/reserved"
       ];
       targetHost = "158.69.224.168";
