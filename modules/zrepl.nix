@@ -337,6 +337,9 @@
         chown -R zrepl:root $HOME
         chmod -R o= $HOME
 
+        # Set environment variable to allow certs without a SAN
+        export GODEBUG=x509ignoreCN=0
+
         # Start the daemon.
         exec setuid zrepl zrepl --config=/etc/zrepl.yml daemon
       '';
