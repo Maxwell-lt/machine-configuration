@@ -26,6 +26,10 @@
     autoSnapshot = {
       enable = true;
       flags = "-k -p --utc";
+      # These snapshots are for Minecraft, so we want a lot of recent snapshots and not a lot of old snapshots
+      frequent = 16;
+      hourly = 36;
+      monthly = 6;
     };
     autoScrub = {
       enable = true;
