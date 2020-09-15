@@ -34,7 +34,7 @@ in
     puddletag obs-studio kdenlive
     calibre cmus
     # Chat
-    master.discord
+    discord
     hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
@@ -52,6 +52,19 @@ in
       vapoursynthSupport = true;
     };
   };
+
+  nixpkgs.overlays = [
+    (self: super: {
+      yed = super.yed.overrideAttrs (old: {
+        pname = "yEd";
+        version = "3.20.1";
+        src = super.fetchzip {
+          url = "https://www.yworks.com/resources/yed/demo/yEd-3.20.1.zip";
+          sha256 = "0sd73s700f3gqq5zq1psrqjg6ff2gv49f8vd37v6bv65vdxqxryq";
+        };
+      });
+    })
+  ];
 
   # Enable IME
   i18n.inputMethod = {
