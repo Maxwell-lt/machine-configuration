@@ -63,6 +63,7 @@ in
         set shortmess+=c
         colorscheme breezy
         set background=light
+        set number
 
         let g:lightline = {
           \ 'colorscheme': 'breezy',
@@ -75,6 +76,7 @@ in
       '';
       plugins = with pkgs.vimPlugins; [
         lightline-vim coc-nvim vim-nix fzf-vim coc-fzf fzfWrapper breezy
+        coc-java coc-json coc-python coc-rls coc-yaml
       ];
     };
     fzf = {
