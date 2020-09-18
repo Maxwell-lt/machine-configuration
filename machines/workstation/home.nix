@@ -25,7 +25,26 @@ in
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
   nixpkgs.config.allowUnfree = true;
 
-    programs = {
+  home.file.".zshrc".text = ''
+    # Lines configured by zsh-newuser-install
+    HISTFILE=~/.histfile
+    HISTSIZE=1000
+    SAVEHIST=1000
+    setopt appendhistory autocd notify
+    unsetopt beep
+    bindkey -e
+    # End of lines configured by zsh-newuser-install
+    # The following lines were added by compinstall
+    zstyle :compinstall filename '/home/maxwell/.zshrc'
+
+    autoload -Uz compinit
+    compinit
+    # End of lines added by compinstall
+    eval "$(direnv hook zsh)"
+    export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+  '';
+
+  programs = {
     neovim = {
       enable = true;
       viAlias = true;
@@ -33,14 +52,14 @@ in
       withNodeJs = true;
       extraConfig = ''
         filetype plugin indent on
-	syntax on
-	set backspace=indent,eol,start
-	set hidden
-	set nobackup
-	set nowritebackup
-	set noswapfile
-	set cmdheight=2
-	set updatetime=300
+        syntax on
+        set backspace=indent,eol,start
+        set hidden
+        set nobackup
+        set nowritebackup
+        set noswapfile
+        set cmdheight=2
+        set updatetime=300
         set shortmess+=c
         colorscheme breezy
         set background=light
@@ -53,14 +72,13 @@ in
           \ 'separator': { 'left': '', 'right': '' },
           \ 'subseparator': { 'left': '', 'right': '' }
           \ }
-       '';
+      '';
       plugins = with pkgs.vimPlugins; [
         lightline-vim coc-nvim vim-nix fzf-vim coc-fzf fzfWrapper breezy
       ];
     };
     fzf = {
       enable = true;
-      defaultCommand = "rg --files --no-ignore-vcs --hidden";
     };
   };
 
