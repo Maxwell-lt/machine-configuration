@@ -20,6 +20,7 @@ in
     #lutris
     playonlinux
     ripgrep
+    nodejs yarn
   ];
 
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
