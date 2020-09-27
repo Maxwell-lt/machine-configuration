@@ -1,4 +1,9 @@
 { config, pkgs, ... }:
+let
+  master = import
+    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/master)
+    { config = config.nixpkgs.config; };
+in
 
 {
   environment.systemPackages = with pkgs; [
@@ -15,7 +20,7 @@
     # File transfer
     wget sshfsFuse rsync
     # Media manipulation
-    ffmpeg-full mkvtoolnix-cli imagemagickBig youtube-dl
+    ffmpeg-full mkvtoolnix-cli imagemagickBig master.youtube-dl
     r128gain
   ];
 
