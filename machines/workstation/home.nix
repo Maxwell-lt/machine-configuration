@@ -42,6 +42,7 @@ in
     compinit
     # End of lines added by compinstall
     eval "$(direnv hook zsh)"
+    export EDITOR="nvim"
     export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
   '';
 
