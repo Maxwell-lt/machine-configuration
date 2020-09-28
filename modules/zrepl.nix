@@ -341,8 +341,7 @@
         export GODEBUG=x509ignoreCN=0
 
         # Start the daemon.
-        #exec setuid zrepl zrepl --config=/etc/zrepl.yml daemon
-        exec zrepl --config=/etc/zrepl.yml daemon
+        exec setuid zrepl zrepl --config=/etc/zrepl.yml daemon
       '';
     };
 
