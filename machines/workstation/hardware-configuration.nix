@@ -33,6 +33,11 @@
       fsType = "vfat";
     };
 
+  fileSystems."/home/maxwell/Temporary Files" =
+    { device = "rpool/local/hometemp";
+      fsType = "zfs";
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/e1272c9f-d29c-4794-b515-cf3639f06587"; }
     ];
