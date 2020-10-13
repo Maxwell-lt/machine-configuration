@@ -185,19 +185,7 @@ with lib;
       ${cfg.lowbatt.scriptText}
     '';
     yesNo = val: if val then "yes" else "no";
-  in
-  mkIf cfg.enable {
-    systemd.services.powerpanel = {
-      enable = cfg.enable;
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        ExecStart = ''
-          ${cfg.package}/bin/pwrstatd \
-        '';
-      };
-    };
-
-    environment.etc."pwrstatd.conf".text = ''
+    confText = ''
       powerfail-delay = ${builtins.toString cfg.powerfail.delay}
       powerfail-active = ${yesNo cfg.powerfail.scriptEnable}
       powerfail-cmd-path = ${powerfailCmd}/bin/pwrstatd-powerfail
@@ -220,6 +208,24 @@ with lib;
       allowed-device-nodes = ${cfg.allowedDeviceNodes}
       hibernate = ${yesNo cfg.hibernate}
     '';
+  in
+  mkIf cfg.enable {
+    systemd.services.powerpanel = {
+      enable = cfg.enable;
+      wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.coreutils ];
+      serviceConfig = {
+      };
+      script = ''
+        ${pkgs.coreutils}/bin/cat > /etc/pwrstatd.conf <<'EOL'
+          ${confText}
+        EOL
+
+        ${pkgs.coreutils}/bin/chmod +rw /etc/pwrstatd.conf
+
+        ${cfg.package}/bin/pwrstatd
+      '';
+    };
 
     environment.systemPackages = [
       (cfg.package)
