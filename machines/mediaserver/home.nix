@@ -73,6 +73,9 @@ in
           \ 'separator': { 'left': '', 'right': '' },
           \ 'subseparator': { 'left': '', 'right': '' }
           \ }
+        let g:coc_user_config = {
+          \ 'rust-client.disableRustup': v:true
+          \ }
       '';
       plugins = with pkgs.vimPlugins; [
         lightline-vim coc-nvim vim-nix fzf-vim coc-fzf fzfWrapper breezy
