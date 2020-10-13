@@ -10,6 +10,7 @@
       ../../modules/jellyfin.nix
       ../../modules/zrepl.nix
       ../../modules/zpool-exporter.nix
+      ../../modules/powerpanel.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -94,6 +95,23 @@
   services.zpool-exporter = {
     enable = true;
     datasets = [ "ssdpool" "rustpool" ];
+  };
+
+  services.powerpanel = {
+    enable = true;
+    powerfail = {
+      scriptEnable = false;
+      autoShutdown = false;
+    };
+    lowbatt = {
+      scriptEnable = false;
+      autoShutdown = false;
+      lowbattThreshold = 20;
+      runtimeThreshold = 300;
+    };
+    enableAlarm = true;
+    turnUPSOff = false;
+    hibernate = false;
   };
 
   # Don't change this value from 20.03!
