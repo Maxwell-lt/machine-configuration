@@ -297,7 +297,13 @@
       {
         job_name = "minecraft";
         static_configs = [{
-          targets = ["localhost:1223"];
+          targets = [ "localhost:1223" ];
+        }];
+      }
+      {
+        job_name = "powerpanel-exporter";
+        static_configs = [{
+          targets = [ "10.100.0.2:9102" ];
         }];
       }
     ];
