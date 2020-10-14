@@ -11,6 +11,7 @@
       ../../modules/zrepl.nix
       ../../modules/zpool-exporter.nix
       ../../modules/powerpanel.nix
+      ../../modules/powerpanel-exporter.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -66,7 +67,7 @@
 
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
-    9100 9101
+    9100 9101 9102
   ];
 
   # Setup Wireguard client
@@ -95,6 +96,10 @@
   services.zpool-exporter = {
     enable = true;
     datasets = [ "ssdpool" "rustpool" ];
+  };
+
+  services.powerpanel-exporter = {
+    enable = true;
   };
 
   services.powerpanel = {
