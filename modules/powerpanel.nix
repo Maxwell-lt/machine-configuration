@@ -227,6 +227,18 @@ with lib;
       '';
     };
 
+    environment.etc."shutdown.sh".text = ''
+      #! ${pkgs.bashInteractive}/bin/bash
+
+      systemctl poweroff
+    '';
+
+    environment.etc."hibernate.sh".text = ''
+      #! ${pkgs.bashInteractive}/bin/bash
+
+      systemctl hibernate
+    '';
+
     environment.systemPackages = [
       (cfg.package)
     ];
