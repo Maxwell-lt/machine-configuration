@@ -213,18 +213,16 @@ with lib;
     systemd.services.powerpanel = {
       enable = cfg.enable;
       wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.coreutils ];
       serviceConfig = {
+        ExecStart = ''
+          ${cfg.package}/bin/pwrstatd
+        '';
       };
-      script = ''
-        ${pkgs.coreutils}/bin/cat > /etc/pwrstatd.conf <<'EOL'
-          ${confText}
-        EOL
+    };
 
-        ${pkgs.coreutils}/bin/chmod +rw /etc/pwrstatd.conf
-
-        ${cfg.package}/bin/pwrstatd
-      '';
+    environment.etc."pwrstatd.conf" = {
+      text = confText;
+      mode = "644";
     };
 
     environment.etc."shutdown.sh".text = ''
