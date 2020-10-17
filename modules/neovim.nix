@@ -23,7 +23,7 @@
         set cmdheight=2
         set updatetime=300
         set shortmess+=c
-        colorscheme breezy
+        colorscheme peachpuff
         set background=light
         set number
 
