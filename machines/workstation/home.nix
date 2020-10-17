@@ -27,6 +27,7 @@
     # End of lines configured by zsh-newuser-install
     # The following lines were added by compinstall
     zstyle :compinstall filename '/home/maxwell/.zshrc'
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
     autoload -Uz compinit
     compinit
