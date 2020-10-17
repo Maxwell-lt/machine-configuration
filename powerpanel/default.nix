@@ -24,6 +24,10 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin
     cp bin/pwrstat $out/bin
     cp bin/pwrstatd $out/bin
+
+    mkdir -p $out/share/man/man8
+    gzip -c doc/pwrstat.8 > $out/share/man/man8/pwrstat.8.gz
+    gzip -c doc/pwrstatd.8 > $out/share/man/man8/pwrstatd.8.gz
   '';
 
   meta = with stdenv.lib; {
