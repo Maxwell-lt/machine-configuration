@@ -22,7 +22,7 @@ in
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris
     # Browsers
-    firefox chromium
+    firefox
     xdg-desktop-portal-kde
     plasma-browser-integration
     # Passwords and sync
