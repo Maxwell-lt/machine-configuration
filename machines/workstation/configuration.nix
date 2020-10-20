@@ -16,6 +16,8 @@
     openrgb i2c-tools
     # Cheating the system
     flatpak
+
+    (pkgs.callPackage ../../svp {})
   ];
 
   services.zrepl = {
