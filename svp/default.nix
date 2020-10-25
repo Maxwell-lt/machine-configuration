@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     avahi
     libusb1
     ocl-icd
-    python-qt
+    makeWrapper
   ];
 
   unpackPhase = with pkgs; ''
@@ -55,8 +55,9 @@ stdenv.mkDerivation rec {
     ln -s $out/opt/svp/extensions/libQtZeroConf.so $out/opt/svp/extensions/libQtZeroConf.so.1
     ln -s $out/opt/svp/extensions/libPythonQt.so $out/opt/svp/extensions/libPythonQt.so.1
 
-    ln -s $out/opt/svp/SVPManager $out/bin/SVPManager
-
     chmod -R +rX $out/opt/svp $out/usr/share
+
+    makeWrapper $out/opt/svp/SVPManager $out/bin/SVPManager \
+      --prefix PATH : ${lib.makeBinPath [ pkgs.gnome3.zenity ]}
   '';
 }
