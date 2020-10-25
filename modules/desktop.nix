@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   personal = import
     (builtins.fetchTarball https://github.com/maxwell-lt/nixpkgs/tarball/2f57ab652f23cb4c77c14b15c931e13cb9e3fc6c)
@@ -31,7 +31,8 @@ in
     #personal.mpv vapoursynth
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     syncplay deluge pavucontrol
-    puddletag obs-studio kdenlive
+    puddletag kdenlive
+    obs-studio
     calibre cmus
     # Chat
     discord
@@ -47,10 +48,17 @@ in
     virt-viewer spice-vdagent
   ];
 
-  nixpkgs.config.packageOverrides = pkgs: {
+  nixpkgs.config.packageOverrides = pkgs: rec {
     mpv = pkgs.mpv-unwrapped.override {
       vapoursynthSupport = true;
     };
+    ffmpeg-full-nvenc = pkgs.ffmpeg-full.override {
+      nonfreeLicensing = true;
+      nvenc = true;
+    };
+    obs-studio = pkgs.obs-studio.overrideAttrs (old: rec {
+      buildInputs = (lib.remove pkgs.ffmpeg-full old.buildInputs) ++ [ ffmpeg-full-nvenc ];
+    });
   };
 
   # Enable IME
