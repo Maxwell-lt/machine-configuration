@@ -81,7 +81,10 @@ in
   programs = {
     dconf.enable = true;
     tmux.enable = true;
-    java.enable = true;
+    java = {
+      enable = true;
+      package = pkgs.jdk8;
+    };
     mtr.enable = true;
     gnupg.agent = {
       enable = true;
