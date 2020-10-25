@@ -49,15 +49,11 @@ in
   ];
 
   nixpkgs.config.packageOverrides = pkgs: rec {
-    mpv = pkgs.mpv-unwrapped.override {
+    mpv = (pkgs.mpv-unwrapped.override {
       vapoursynthSupport = true;
-    };
-    ffmpeg-full-nvenc = pkgs.ffmpeg-full.override {
-      nonfreeLicensing = true;
-      nvenc = true;
-    };
-    obs-studio = pkgs.obs-studio.overrideAttrs (old: rec {
-      buildInputs = (lib.remove pkgs.ffmpeg-full old.buildInputs) ++ [ ffmpeg-full-nvenc ];
+      vapoursynth = pkgs.vapoursynth;
+    }).overrideAttrs (old: rec {
+      wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
     });
   };
 
