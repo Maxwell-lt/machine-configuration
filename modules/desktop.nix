@@ -23,7 +23,7 @@ in
     krita psensor kcalc
     # Games
     steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
-    jdk8 multimc dolphinEmuMaster lutris
+    jdk8 multimc dolphinEmuMaster lutris pcsx2
     # Browsers
     firefox
     xdg-desktop-portal-kde
