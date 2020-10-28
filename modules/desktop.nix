@@ -22,7 +22,7 @@ in
     kmail kdeApplications.kmail-account-wizard kaddressbook
     krita psensor kcalc
     # Games
-    steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
+    (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris pcsx2
     # Browsers
     firefox
@@ -50,6 +50,8 @@ in
     kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
   ];
+
+  programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
     mpv = (pkgs.mpv-unwrapped.override {
@@ -93,7 +95,6 @@ in
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
-    support32Bit = true;
     package = pkgs.pulseaudioFull;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
@@ -118,11 +119,5 @@ in
       export QT_IM_MODULE="fcitx"
       fcitx &
     '';
-  };
-
-  hardware.opengl = {
-    driSupport32Bit = true;
-    #s3tcSupport = true;
-    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
 }
