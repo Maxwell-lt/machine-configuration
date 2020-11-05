@@ -19,8 +19,10 @@ in
     # UI utils
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
-    kmail kdeApplications.kmail-account-wizard kaddressbook
     krita psensor kcalc
+    # KMail and friends
+    kmail kdeApplications.kmail-account-wizard kaddressbook kdeApplications.kleopatra kdeApplications.pim-data-exporter
+    thunderbird birdtray
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris pcsx2
