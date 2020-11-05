@@ -22,10 +22,15 @@
     xz
     zip
     unzip
+    # Frequently used tools
     gitAndTools.gitFull gitAndTools.gh
     coreutils
     which
+    zsh
   ];
+
+  # Use zsh instead of bash
+  user.shell = "${pkgs.zsh}/bin/zsh"
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
