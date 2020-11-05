@@ -32,6 +32,8 @@
   # Use zsh instead of bash
   user.shell = "${pkgs.zsh}/bin/zsh";
 
+  nixpkgs.config.allowUnfree = true;
+
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
 
