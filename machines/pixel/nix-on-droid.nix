@@ -7,21 +7,21 @@
     vim  # or some other editor, e.g. nano or neovim
 
     # Some common stuff that people expect to have
-    #diffutils
-    #findutils
-    #utillinux
-    #tzdata
-    #hostname
-    #man
-    #gnugrep
-    #gnupg
-    #gnused
-    #gnutar
-    #bzip2
-    #gzip
-    #xz
-    #zip
-    #unzip
+    diffutils
+    findutils
+    utillinux
+    tzdata
+    hostname
+    man
+    gnugrep
+    gnupg
+    gnused
+    gnutar
+    bzip2
+    gzip
+    xz
+    zip
+    unzip
     gitAndTools.gitFull gitAndTools.gh
     coreutils
     which
@@ -37,14 +37,5 @@
   #   nix-channel --add https://github.com/rycee/home-manager/archive/release-20.09.tar.gz home-manager
   #   nix-channel --update
   # you can configure home-manager in here like
-  #home-manager.config =
-  #  { pkgs, ... }:
-  #  {
-  #    # Read the changelog before changing this value
-  #    home.stateVersion = "20.09";
-  #
-  #    # insert home-manager config
-  #  };
+  home-manager.config = import ./home.nix;
 }
-
-# vim: ft=nix
