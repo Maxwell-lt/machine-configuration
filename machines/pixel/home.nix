@@ -9,7 +9,11 @@
   ];
 
   home.packages = with pkgs; [
+    getconf
   ];
+
+  programs.direnv.enable = true;
+  services.lorri.enable = true;
 
   home.file.".zshrc".source = ../../dotfiles/.zshrc;
 
