@@ -10,12 +10,38 @@
 
   home.packages = with pkgs; [
     getconf
+    ripgrep
   ];
 
   programs.direnv.enable = true;
   services.lorri.enable = true;
 
-  home.file.".zshrc".source = ../../dotfiles/.zshrc;
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    autocd = true;
+    history.extended = true;
+    localVariables = {
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=10";
+      EDITOR = "nvim";
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "nmap" "safe-paste" ];
+      theme = "agnoster";
+    };
+  };
+
+  programs.fzf = {
+    enable = true;
+    defaultCommand = "rg --files --hidden";
+  };
 
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version

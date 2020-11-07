@@ -45,4 +45,7 @@
   #   nix-channel --update
   # you can configure home-manager in here like
   home-manager.config = import ./home.nix;
+  home-manager.useUserPackages = true;
+
+  environment.etc."profiles".source = /nix/var/nix/profiles;
 }
