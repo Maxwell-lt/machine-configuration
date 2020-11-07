@@ -11,6 +11,7 @@
   home.packages = with pkgs; [
     getconf
     ripgrep
+    openssh
   ];
 
   programs.direnv.enable = true;
