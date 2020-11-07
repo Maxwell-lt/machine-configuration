@@ -13,6 +13,22 @@
     playonlinux
   ];
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "library-of-babel" = {
+        hostname = "maxwell-lt.dev";
+        port = 22;
+        user = "maxwell";
+      };
+      "media-server-alpha" = {
+        hostname = "10.0.0.114";
+        port = 22;
+        user = "maxwell";
+      };
+    };
+  };
+
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
   nixpkgs.config.allowUnfree = true;
 
