@@ -44,6 +44,29 @@
     defaultCommand = "rg --files --hidden";
   };
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "library-of-babel" = {
+        hostname = "maxwell-lt.dev";
+        port = 22;
+        user = "maxwell";
+      };
+      "media-server-alpha" = {
+        hostname = "10.100.0.2";
+        port = 22;
+        user = "maxwell";
+        proxyJump = "library-of-babel";
+      };
+      "maxwell-nixos" = {
+        hostname = "10.0.0.156";
+        port = 22;
+        user = "maxwell";
+        proxyJump = "media-server-alpha";
+      };
+    };
+  };
+
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
