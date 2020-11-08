@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     done;
   '';
 
-  installPhase = ''
+  installPhase = with pkgs; ''
     mkdir -p $out/opt/svp
     mkdir -p $out/bin
     mkdir -p $out/usr/share/licenses/svp
@@ -58,6 +58,6 @@ stdenv.mkDerivation rec {
     chmod -R +rX $out/opt/svp $out/usr/share
 
     makeWrapper $out/opt/svp/SVPManager $out/bin/SVPManager \
-      --prefix PATH : ${lib.makeBinPath [ pkgs.gnome3.zenity ]}
+      --prefix PATH : ${lib.makeBinPath [ gnome3.zenity lsof mediainfo clinfo vapoursynth (mpv.override { vapoursynthSupport = true; })]} \
   '';
 }

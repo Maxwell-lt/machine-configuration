@@ -8,9 +8,6 @@ let
   master = import
     (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/master)
     { config = config.nixpkgs.config; };
-  pinnedKdeConnect = import
-    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/6b6f6808318d4a445870048d1175fcb55b1b69aa)
-    { config = config.nixpkgs.config; };
 in
 {
 
@@ -47,7 +44,7 @@ in
     jetbrains.pycharm-professional jetbrains.webstorm
     vscodium atom
     # Connectivity
-    pinnedKdeConnect.kdeconnect
+    kdeconnect
     # VM dependencies
     kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
