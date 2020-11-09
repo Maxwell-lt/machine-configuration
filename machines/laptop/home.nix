@@ -26,6 +26,11 @@
         port = 22;
         user = "maxwell";
       };
+      "maxwell-nixos" = {
+        hostname = "10.0.0.156";
+        port = 22;
+        user = "maxwell";
+      };
     };
   };
 
