@@ -24,8 +24,9 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
+  networking.networkmanager.enable = true;
   networking.wireless = {
-    enable = true;
+    enable = false;
     networks = {
       "ltfamily-2.4GHz" = {
         pskRaw = wifiKeys.ltfamily;
