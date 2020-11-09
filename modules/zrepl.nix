@@ -16,7 +16,7 @@
         logging.level = mkOption {
           description = "Log level";
           example = "debug";
-          type = string;
+          type = str;
           default = "info";
         };
 
@@ -33,24 +33,24 @@
               sourceFS = mkOption {
                 description = "Root of ZFS dataset(s) to replicate";
                 example = "replicated_pool/home";
-                type = string;
+                type = str;
               };
               targetFS = mkOption {
                 description = "Root of ZFS dataset to write replication snapshots into.";
                 example = "replicated_pool/zrepl";
-                type = string;
+                type = str;
               };
               exclude = mkOption {
                 description = "List of ZFS dataset(s) NOT to replicate or snapshot";
                 example = [ "replicated_pool/home/you/private" ];
-                type = listOf string;
+                type = listOf str;
                 default = [];
               };
               snapshotting = {
                 prefix = mkOption {
                   description = "Snapshot name prefix";
                   default = "zrepl_";
-                  type = string;
+                  type = str;
                 };
                 interval = mkOption {
                   description = "Time in minutes between snapshots";
@@ -75,7 +75,7 @@
               targetFS = mkOption {
                 description = "Root of ZFS dataset to write replication snapshots into.";
                 example = "replicated_pool/zrepl";
-                type = string;
+                type = str;
               };
               port = mkOption {
                 description = "Port on which to listen for zrepl connections.";
@@ -91,7 +91,7 @@
                 description = "Client CNs to permit replication to this targetFS";
                 defaultText = "[ <sink name> ]";
                 default = [ name ];
-                type = listOf string;
+                type = listOf str;
               };
             };
           }));
@@ -109,18 +109,18 @@
               sourceFS = mkOption {
                 description = "Root of ZFS dataset(s) to replicate";
                 example = "fast_and_scary_pool/home";
-                type = string;
+                type = str;
               };
               exclude = mkOption {
                 description = "List of ZFS dataset(s) NOT to replicate or snapshot";
                 example = [ "fast_and_scary_pool/home/you/private" ];
-                type = listOf string;
+                type = listOf str;
                 default = [];
               };
               targetHost = mkOption {
                 description = "DNS name or IP address of machine to replicate to.";
                 example = "example.org";
-                type = string;
+                type = str;
               };
               targetPort = mkOption {
                 description = "Port to connect to. Ignored if targetHost is null.";
@@ -130,13 +130,13 @@
               serverCN = mkOption {
                 description = "Common Name of server to connect to.";
                 example = "example.org";
-                type = string;
+                type = str;
               };
               snapshotting = {
                 prefix = mkOption {
                   description = "Snapshot name prefix";
                   default = "zrepl_";
-                  type = string;
+                  type = str;
                 };
                 interval = mkOption {
                   description = "Time in minutes between snapshots";

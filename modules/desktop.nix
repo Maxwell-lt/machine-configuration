@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   personal = import
     (builtins.fetchTarball https://github.com/maxwell-lt/nixpkgs/tarball/2f57ab652f23cb4c77c14b15c931e13cb9e3fc6c)
@@ -8,6 +8,9 @@ let
   master = import
     (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/master)
     { config = config.nixpkgs.config; };
+  pinnedKdeConnect = import
+    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/6b6f6808318d4a445870048d1175fcb55b1b69aa)
+    { config = config.nixpkgs.config; };
 in
 {
 
@@ -16,13 +19,15 @@ in
     # UI utils
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
-    kmail kdeApplications.kmail-account-wizard kaddressbook
-    krita psensor
+    krita psensor kcalc
+    # KMail and friends
+    kmail kdeApplications.kmail-account-wizard kaddressbook kdeApplications.kleopatra kdeApplications.pim-data-exporter
+    thunderbird birdtray
     # Games
-    steam (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
-    jdk8 multimc dolphinEmuMaster lutris
+    (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
+    jdk8 multimc dolphinEmuMaster lutris pcsx2
     # Browsers
-    firefox chromium
+    firefox
     xdg-desktop-portal-kde
     plasma-browser-integration
     # Passwords and sync
@@ -31,26 +36,32 @@ in
     #personal.mpv vapoursynth
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     syncplay deluge pavucontrol
-    puddletag obs-studio kdenlive
+    puddletag kdenlive
+    obs-studio
     calibre cmus
     # Chat
-    master.discord
+    discord
     hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
     vscodium atom
     # Connectivity
-    kdeconnect
+    pinnedKdeConnect.kdeconnect
     # VM dependencies
     kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
   ];
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    mpv = pkgs.mpv-unwrapped.override {
+  programs.steam.enable = true;
+
+  nixpkgs.config.packageOverrides = pkgs: rec {
+    mpv = (pkgs.mpv-unwrapped.override {
       vapoursynthSupport = true;
-    };
+      vapoursynth = pkgs.vapoursynth;
+    }).overrideAttrs (old: rec {
+      wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
+    });
   };
 
   # Enable IME
@@ -86,7 +97,6 @@ in
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
-    support32Bit = true;
     package = pkgs.pulseaudioFull;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
@@ -111,11 +121,5 @@ in
       export QT_IM_MODULE="fcitx"
       fcitx &
     '';
-  };
-
-  hardware.opengl = {
-    driSupport32Bit = true;
-    #s3tcSupport = true;
-    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
 }
