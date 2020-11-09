@@ -56,7 +56,7 @@ in
   users.users."OrcDovahkiin" = {
     isNormalUser = true;
     extraGroups = [ "video" "audio" "networkmanager" ];
-    hashedPassword = builtins.readFile ../../secrets/odpassword;
+    hashedPassword = (import ../../secrets/odpassword.nix).password;
     shell = pkgs.zsh;
   };
 
