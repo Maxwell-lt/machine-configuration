@@ -9,6 +9,7 @@ in
       ../../modules/zfs.nix
       ../../modules/common.nix
       ../../modules/desktop.nix
+      ../../modules/zrepl.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -33,9 +34,30 @@ in
 
       "pixel-hotspot" = {
         pskRaw = wifiKeys.hotspot;
-        priority = 50;
+        priority = 10;
       };
     };
+  };
+
+  services.zrepl = {
+    enable = true;
+    push.rpool = {
+      serverCN = "library-of-babel";
+      sourceFS = "rpool";
+      exclude = [
+        "rpool/root/nixos"
+      ];
+      targetHost = "158.69.224.168";
+      targetPort = 8551;
+      snapshotting.interval = 10;
+    };
+  };
+
+  users.users."OrcDovahkiin" = {
+    isNormalUser = true;
+    extraGroups = [ "video" "audio" "networkmanager" ];
+    hashedPassword = builtins.readFile ../../secrets/odpassword;
+    shell = pkgs.zsh;
   };
 
   # Don't change this value from 20.03!
