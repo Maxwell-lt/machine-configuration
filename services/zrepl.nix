@@ -10,7 +10,7 @@
           description = "zrepl package";
           defaultText = "pkgs.zrepl";
           type = package;
-          default = pkgs.callPackage ../zrepl {};
+          default = pkgs.callPackage ../pkgs/zrepl {};
         };
         
         logging.level = mkOption {
@@ -353,7 +353,7 @@
     };
 
     environment.systemPackages = [
-      (pkgs.callPackage ../zrepl {})
+      (cfg.package)
     ];
 
     security.wrappers.zrepl-status.source = pkgs.stdenv.mkDerivation {

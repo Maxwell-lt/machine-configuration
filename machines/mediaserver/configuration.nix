@@ -8,10 +8,10 @@
       ../../modules/zfs.nix
       ../../modules/amdgpu.nix
       ../../modules/jellyfin.nix
-      ../../modules/zrepl.nix
-      ../../modules/zpool-exporter.nix
-      ../../modules/powerpanel.nix
-      ../../modules/powerpanel-exporter.nix
+      ../../services/zrepl.nix
+      ../../services/zpool-exporter.nix
+      ../../services/powerpanel.nix
+      ../../services/powerpanel-exporter.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -58,7 +58,7 @@
     tc qdisc add dev enp0s31f6 root handle 1:0 htb
     tc class add dev enp0s31f6 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1
     # Add routing rule to redirect traffic from the zrepl user to the rate limited qdisc
-    # The UID of the zrepl user is 316, as defined in ../../modules/zrepl.nix
+    # The UID of the zrepl user is 316, as defined in the zrepl module
     ip46tables -t mangle -A POSTROUTING -o enp0s31f6 -p tcp -m owner --uid-owner 316 -j CLASSIFY --set-class 1:1
   '';
 

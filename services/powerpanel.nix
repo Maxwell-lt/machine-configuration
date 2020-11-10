@@ -10,7 +10,7 @@ with lib;
         description = "powerpanel package";
         defaultText = "pkgs.powerpanel";
         type = package;
-        default = pkgs.callPackage ../powerpanel {};
+        default = pkgs.callPackage ../pkgs/powerpanel {};
       };
 
       powerfail = {

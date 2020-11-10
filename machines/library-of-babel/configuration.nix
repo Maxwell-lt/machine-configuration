@@ -8,8 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/zrepl.nix
-      ../../modules/zpool-exporter.nix
+      ../../services/zrepl.nix
+      ../../services/zpool-exporter.nix
     ];
 
   # Use the GRUB 2 boot loader.

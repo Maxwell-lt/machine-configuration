@@ -8,7 +8,7 @@
       ../../modules/common.nix
       ../../modules/desktop.nix
       ../../modules/nvidia.nix
-      ../../modules/zrepl.nix
+      ../../services/zrepl.nix
     ];
 
   environment.systemPackages = with pkgs; [
@@ -17,7 +17,7 @@
     # Cheating the system
     flatpak
 
-    (pkgs.callPackage ../../svp {})
+    (pkgs.callPackage ../../pkgs/svp {})
   ];
 
   services.zrepl = {
@@ -60,7 +60,7 @@
     tc qdisc add dev enp39s0 root handle 1:0 htb
     tc class add dev enp39s0 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1
     # Add routing rule to redirect traffic from the zrepl user to the rate limited qdisc
-    # The UID of the zrepl user is 316, as defined in ../../modules/zrepl.nix
+    # The UID of the zrepl user is 316, as defined in the zrepl module
     ip46tables -t mangle -A POSTROUTING -o enp39s0 -p tcp -m owner --uid-owner 316 -j CLASSIFY --set-class 1:1
   '';
 

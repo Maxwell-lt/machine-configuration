@@ -10,7 +10,7 @@ with lib;
         description = "powerpanel-exporter package";
         defaultText = "pkgs.powerpanel-exporter";
         type = package;
-        default = pkgs.callPackage ../powerpanel-exporter {};
+        default = pkgs.callPackage ../pkgs/powerpanel-exporter {};
       };
 
       port = mkOption {
@@ -29,7 +29,7 @@ with lib;
       enable = cfg.enable;
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
-      path = [ (pkgs.callPackage ../powerpanel {}) ];
+      path = [ (pkgs.callPackage ../pkgs/powerpanel {}) ];
       serviceConfig = {
         ExecStart = ''
           ${cfg.package}/bin/powerpanel-exporter \
