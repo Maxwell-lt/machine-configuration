@@ -52,17 +52,27 @@
         port = 22;
         user = "maxwell";
       };
-      "media-server-alpha" = {
+      "ext-media-server-alpha" = {
         hostname = "10.100.0.2";
         port = 22;
         user = "maxwell";
         proxyJump = "library-of-babel";
       };
+      "ext-maxwell-nixos" = {
+        hostname = "10.0.0.156";
+        port = 22;
+        user = "maxwell";
+        proxyJump = "ext-media-server-alpha";
+      };
+      "media-server-alpha" = {
+        hostname = "10.0.0.114";
+        port = 22;
+        user = "maxwell";
+      };
       "maxwell-nixos" = {
         hostname = "10.0.0.156";
         port = 22;
         user = "maxwell";
-        proxyJump = "media-server-alpha";
       };
     };
   };
