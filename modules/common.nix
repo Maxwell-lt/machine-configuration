@@ -80,7 +80,15 @@ in
 
   programs = {
     dconf.enable = true;
-    tmux.enable = true;
+    tmux = {
+      enable = true;
+      keyMode = "vi";
+      terminal = "tmux-256color";
+      clock24 = true;
+      extraConfig = ''
+        set -ga terminal-overrides ",xterm-256color*:Tc"
+      '';
+    };
     java = {
       enable = true;
       package = pkgs.jdk8;
