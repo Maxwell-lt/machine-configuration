@@ -42,7 +42,7 @@ in
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium atom
+    vscodium atom postman
     # Connectivity
     kdeconnect
     # VM dependencies
