@@ -1,14 +1,4 @@
 { config, pkgs, lib, ... }:
-let
-  personal = import
-    (builtins.fetchTarball https://github.com/maxwell-lt/nixpkgs/tarball/2f57ab652f23cb4c77c14b15c931e13cb9e3fc6c)
-    # reuse the current configuration
-    { config = config.nixpkgs.config; };
-  # For discord
-  master = import
-    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/master)
-    { config = config.nixpkgs.config; };
-in
 {
 
   imports = [ ./mullvad.nix ];
@@ -58,6 +48,12 @@ in
       vapoursynth = pkgs.vapoursynth;
     }).overrideAttrs (old: rec {
       wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
+    });
+    discord = pkgs.discord.overrideAttrs (old: {
+      src = pkgs.fetchurl {
+        url = "https://dl.discordapp.net/apps/linux/0.0.13/discord-0.0.13.tar.gz";
+        sha256 = "0d5z6cbj9dg3hjw84pyg75f8dwdvi2mqxb9ic8dfqzk064ssiv7y";
+      };
     });
   };
 
