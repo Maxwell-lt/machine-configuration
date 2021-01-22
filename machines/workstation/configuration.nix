@@ -18,6 +18,13 @@
     flatpak
 
     (pkgs.callPackage ../../pkgs/svp {})
+    (import ../../pkgs/svpflow/default.nix)
+  ];
+
+  # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
+  boot.blacklistedKernelModules = [
+    "snd_hda_intel"
+    "snd_hda_codec_hdmi"
   ];
 
   services.zrepl = {
