@@ -16,6 +16,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoPatchelfHook
+    pkgs.qt5.wrapQtAppsHook
   ];
 
   buildInputs = with pkgs; [
@@ -23,12 +24,19 @@ stdenv.mkDerivation rec {
     xlibs.libX11
     qt5.qtbase
     qt5.qtdeclarative
+    qt5.qtscript
+    qt5.qtsvg
     gcc-unwrapped.lib
     vapoursynth
     avahi
     libusb1
+    libmediainfo
+    python3Full
     ocl-icd
     makeWrapper
+    gnome3.tracker
+
+    (import ../svpflow/default.nix)
   ];
 
   unpackPhase = with pkgs; ''

@@ -9,7 +9,7 @@
     krita psensor kcalc
     # KMail and friends
     kmail kdeApplications.kmail-account-wizard kaddressbook kdeApplications.kleopatra kdeApplications.pim-data-exporter
-    thunderbird birdtray
+    thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     jdk8 multimc dolphinEmuMaster lutris pcsx2
@@ -20,8 +20,8 @@
     # Passwords and sync
     keepassxc insync dropbox
     # Media
-    #personal.mpv vapoursynth
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
+    #mpv vapoursynth
     syncplay deluge pavucontrol
     puddletag kdenlive
     obs-studio
@@ -55,6 +55,12 @@
         sha256 = "0d5z6cbj9dg3hjw84pyg75f8dwdvi2mqxb9ic8dfqzk064ssiv7y";
       };
     });
+    flashplayer = pkgs.flashplayer.overrideAttrs (old: {
+      src = pkgs.fetchurl {
+        url = "https://fpdownload.adobe.com/get/flashplayer/pdc/32.0.0.465/flash_player_npapi_linux.x86_64.tar.gz";
+        sha256 = "0dbccg7ijlr9wdjkh6chbw0q1qchycbi1a313hrrc613k3djw3x9";
+      };
+    });
   };
 
   # Enable IME
@@ -66,7 +72,7 @@
   nixpkgs.config.firefox = {
     enablePlasmaBrowserIntegration = true;
     # Broken for now:
-    #enableAdobeFlash = true;
+    enableAdobeFlash = true;
   };
 
   virtualisation.libvirtd.enable = true;
