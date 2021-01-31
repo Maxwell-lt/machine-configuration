@@ -89,8 +89,13 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      hplip
+      epson-escpr
+    ];
+  };
 
   # Enable sound.
   sound.enable = true;
