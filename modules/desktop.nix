@@ -6,7 +6,7 @@
     # UI utils
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
-    krita psensor kcalc
+    krita psensor kcalc gnome3.simple-scan
     # KMail and friends
     kmail kdeApplications.kmail-account-wizard kaddressbook kdeApplications.kleopatra kdeApplications.pim-data-exporter
     thunderbird birdtray kfind
@@ -95,6 +95,17 @@
       hplip
       epson-escpr
     ];
+  };
+
+  # Network scanning
+  hardware.sane = {
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
+  };
+  users.users.maxwell.extraGroups = [ "scanner" "lp" ];
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
   };
 
   # Enable sound.
