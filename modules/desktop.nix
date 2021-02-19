@@ -8,7 +8,7 @@
     libreoffice gparted yed
     krita psensor kcalc gnome3.simple-scan
     # KMail and friends
-    kmail kdeApplications.kmail-account-wizard kaddressbook kdeApplications.kleopatra kdeApplications.pim-data-exporter
+    kmail plasma5Packages.kmail-account-wizard kaddressbook plasma5Packages.kleopatra plasma5Packages.pim-data-exporter
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
@@ -55,12 +55,6 @@
         sha256 = "0d5z6cbj9dg3hjw84pyg75f8dwdvi2mqxb9ic8dfqzk064ssiv7y";
       };
     });
-    flashplayer = pkgs.flashplayer.overrideAttrs (old: {
-      src = pkgs.fetchurl {
-        url = "https://fpdownload.adobe.com/get/flashplayer/pdc/32.0.0.465/flash_player_npapi_linux.x86_64.tar.gz";
-        sha256 = "0dbccg7ijlr9wdjkh6chbw0q1qchycbi1a313hrrc613k3djw3x9";
-      };
-    });
   };
 
   # Enable IME
@@ -71,8 +65,6 @@
 
   nixpkgs.config.firefox = {
     enablePlasmaBrowserIntegration = true;
-    # Broken for now:
-    enableAdobeFlash = true;
   };
 
   virtualisation.libvirtd.enable = true;
