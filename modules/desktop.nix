@@ -112,7 +112,7 @@
   hardware.bluetooth = {
     enable = true;
     package = pkgs.bluezFull;
-    config.General.Enable = "Source,Sink,Media,Socket";
+    settings.General.Enable = "Source,Sink,Media,Socket";
   };
 
   services.xserver = {
