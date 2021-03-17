@@ -80,7 +80,15 @@ in
 
   programs = {
     dconf.enable = true;
-    tmux.enable = true;
+    tmux = {
+      enable = true;
+      keyMode = "vi";
+      terminal = "tmux-256color";
+      clock24 = true;
+      extraConfig = ''
+        set -ga terminal-overrides ",xterm-256color*:Tc"
+      '';
+    };
     java = {
       enable = true;
       package = pkgs.jdk8;
@@ -110,6 +118,18 @@ in
           pkgs.nix-zsh-completions
         ];
       };
+      shellInit = ''
+        pasteinit() {
+          OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
+          zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+        }
+
+        pastefinish() {
+          zle -N self-insert $OLD_SELF_INSERT
+        }
+        zstyle :bracketed-paste-magic paste-init pasteinit
+        zstyle :bracketed-paste-magic paste-finish pastefinish
+      '';
     };
   };
 

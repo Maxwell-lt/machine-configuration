@@ -10,7 +10,7 @@ with lib;
         description = "zpool-exporter package";
         defaultText = "pkgs.zpool-exporter";
         type = package;
-        default = pkgs.callPackage ../zpool_exporter {};
+        default = pkgs.callPackage ../pkgs/zpool_exporter {};
       };
 
       port = mkOption {
