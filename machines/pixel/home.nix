@@ -12,6 +12,7 @@
     getconf
     ripgrep
     openssh
+    inetutils
   ];
 
   programs.direnv.enable = true;
