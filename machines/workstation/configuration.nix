@@ -55,6 +55,9 @@
 
   # Needed for tc to work in the firewall script
   networking.firewall.extraPackages = with pkgs; [ iproute ];
+
+  # Avoid 30 second wait before login prompt when connecting to Lutron SmartBridge using Telnet: https://forums.lutron.com/showthread.php/3031-30-second-Telnet-Login-Delay
+  networking.firewall.allowedTCPPorts = [ 113 ];
   
   # Throttle zrepl traffic
   networking.firewall.extraCommands = ''
