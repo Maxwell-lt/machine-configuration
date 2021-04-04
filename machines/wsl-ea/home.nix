@@ -13,6 +13,15 @@
     ripgrep
     openssh
     inetutils
+    gitAndTools.gitFull
+    wget
+    units
+    progress
+    zip unzip
+    nix-prefetch-git
+    ffmpeg-full youtube-dl
+    r128gain
+    exa
   ];
 
   programs.direnv.enable = true;
@@ -43,6 +52,14 @@
       enable = true;
       plugins = [ "git" "nmap" "safe-paste" ];
       theme = "agnoster";
+    };
+    shellAliases = {
+      ls = "exa --icons";
+      l = "exa -lah --icons --git";
+      la = "exa -la --icons --git";
+      ll = "exa -l --icons --git";
+      tree = "exa --icons --tree";
+      tre = "exa --icons --tree --level=3";
     };
   };
 
