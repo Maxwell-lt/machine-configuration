@@ -49,6 +49,13 @@
     hostName = "maxwell-nixos";
   };
 
+  # Allow containers to access external network
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-+" ];
+    externalInterface = "enp39s0";
+  };
+
   networking.useDHCP = false;
   networking.interfaces.enp39s0.useDHCP = true;
   networking.interfaces.wlp41s0.useDHCP = true;
