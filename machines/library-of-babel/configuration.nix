@@ -84,7 +84,7 @@
     #};
   };
   # Open port for zrepl
-  networking.firewall.allowedTCPPorts = [ 8550 ]
+  networking.firewall.allowedTCPPorts = [ 8550 ];
 
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
