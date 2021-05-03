@@ -8,7 +8,7 @@
       ../../modules/zfs.nix
       ../../modules/amdgpu.nix
       ../../modules/jellyfin.nix
-      ../../services/zrepl.nix
+      #../../services/zrepl.nix
       ../../services/zpool-exporter.nix
       ../../services/powerpanel.nix
       ../../services/powerpanel-exporter.nix
@@ -24,24 +24,115 @@
 
   services.zrepl = {
     enable = true;
-    push.ssdpool = {
-      serverCN = "library-of-babel";
-      sourceFS = "ssdpool";
-      exclude = [
-        "ssdpool/reserved"
+    settings = {
+      global = {
+        monitoring = [
+          {
+            listen = ":9811";
+            type = "prometheus";
+          }
+        ];
+      };
+      jobs = [
+        {
+          connect = {
+            address = "158.69.224.168:8550";
+            ca = "/var/spool/zrepl/ca.crt";
+            cert = "/var/spool/zrepl/media-server-alpha.crt";
+            key = "/var/spool/zrepl/media-server-alpha.key";
+            server_cn = "library-of-babel";
+            type = "tls";
+          };
+          filesystems = {
+            "rustpool/media<" = true;
+          };
+          name = "rustpool_push";
+          pruning = {
+            keep_receiver = [
+              {
+                grid = "24x1h | 30x1d | 6x14d";
+                regex = "^zrepl_";
+                type = "grid";
+              }
+            ];
+            keep_sender = [
+              {
+                type = "not_replicated";
+              }
+              {
+                grid = "1x3h(keep=all) | 24x1h | 7x1d";
+                regex = "^zrepl_";
+                type = "grid";
+              }
+            ];
+          };
+          snapshotting = {
+            interval = "10m";
+            prefix = "zrepl_";
+            type = "periodic";
+          };
+          type = "push";
+        }
+        {
+          connect = {
+            address = "158.69.224.168:8550";
+            ca = "/var/spool/zrepl/ca.crt";
+            cert = "/var/spool/zrepl/media-server-alpha.crt";
+            key = "/var/spool/zrepl/media-server-alpha.key";
+            server_cn = "library-of-babel";
+            type = "tls";
+          };
+          filesystems = {
+            "ssdpool/reserved" = false;
+            "ssdpool<" = true;
+          };
+          name = "ssdpool_push";
+          pruning = {
+            keep_receiver = [
+              {
+                grid = "24x1h | 30x1d | 6x14d";
+                regex = "^zrepl_";
+                type = "grid";
+              }
+            ];
+            keep_sender = [
+              {
+                type = "not_replicated";
+              }
+              {
+                grid = "1x3h(keep=all) | 24x1h | 7x1d";
+                regex = "^zrepl_";
+                type = "grid";
+              }
+            ];
+          };
+          snapshotting = {
+            interval = "10m";
+            prefix = "zrepl_";
+            type = "periodic";
+          };
+          type = "push";
+        }
       ];
-      targetHost = "158.69.224.168";
-      targetPort = 8551;
-      snapshotting.interval = 10;
     };
-    push.rustpool = {
-      serverCN = "library-of-babel";
-      sourceFS = "rustpool/media";
-      exclude = [ ];
-      targetHost = "158.69.224.168";
-      targetPort = 8551;
-      snapshotting.interval = 10;
-    };
+    #push.ssdpool = {
+    #  serverCN = "library-of-babel";
+    #  sourceFS = "ssdpool";
+    #  exclude = [
+    #    "ssdpool/reserved"
+    #  ];
+    #  targetHost = "158.69.224.168";
+    #  targetPort = 8551;
+    #  snapshotting.interval = 10;
+    #};
+    #push.rustpool = {
+    #  serverCN = "library-of-babel";
+    #  sourceFS = "rustpool/media";
+    #  exclude = [ ];
+    #  targetHost = "158.69.224.168";
+    #  targetPort = 8551;
+    #  snapshotting.interval = 10;
+    #};
   };
 
   # Needed for tc to work in the firewall script
@@ -67,7 +158,7 @@
 
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
-    9100 9101 9102
+    9100 9101 9102 9811
   ];
 
   # Setup Wireguard client

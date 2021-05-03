@@ -8,7 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../services/zrepl.nix
+      #../../services/zrepl.nix
       ../../services/zpool-exporter.nix
     ];
 
@@ -43,23 +43,48 @@
 
   services.zrepl = {
     enable = true;
-    #sink."media-server-alpha" = {
-    #  targetFS = "rpool/backup/media-server-alpha";
-    #  clients = [ "media-server-alpha" ];
-    #  port = 8550;
+    settings = {
+      global = {
+        monitoring = [
+          {
+            listen = ":9811";
+            type = "prometheus";
+          }
+        ];
+      };
+      jobs = [
+        {
+          name = "zrepl_sink";
+          root_fs = "rpool/backup";
+          serve = {
+            ca = "/var/spool/zrepl/ca.crt";
+            cert = "/var/spool/zrepl/library-of-babel.crt";
+            key = "/var/spool/zrepl/library-of-babel.key";
+            client_cns = [
+              "media-server-alpha"
+              "maxwell-nixos"
+              "nix-portable-omega"
+            ];
+            listen = ":8550";
+            type = "tls";
+          };
+          type = "sink";
+        }
+      ];
+    };
+    #sink."media-server-alpha-ssd" = {
+    #  targetFS = "rpool/backup/media-server-alpha-ssd";
+    #  clients = [
+    #    "media-server-alpha"
+    #    "maxwell-nixos"
+    #    "nix-portable-omega"
+    #  ];
+    #  port = 8551;
     #  openFirewall = true;
     #};
-    sink."media-server-alpha-ssd" = {
-      targetFS = "rpool/backup/media-server-alpha-ssd";
-      clients = [
-        "media-server-alpha"
-        "maxwell-nixos"
-        "nix-portable-omega"
-      ];
-      port = 8551;
-      openFirewall = true;
-    };
   };
+  # Open port for zrepl
+  networking.firewall.allowedTCPPorts = [ 8550 ]
 
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -304,6 +329,12 @@
         job_name = "powerpanel-exporter";
         static_configs = [{
           targets = [ "10.100.0.2:9102" ];
+        }];
+      }
+      {
+        job_name = "zrepl";
+        static_configs = [{
+          targets = [ "localhost:9811" "10.100.0.2:9811" ];
         }];
       }
     ];

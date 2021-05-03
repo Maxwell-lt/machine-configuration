@@ -8,7 +8,7 @@
       ../../modules/common.nix
       ../../modules/desktop.nix
       ../../modules/nvidia.nix
-      ../../services/zrepl.nix
+      #../../services/zrepl.nix
     ];
 
   environment.systemPackages = with pkgs; [
@@ -16,9 +16,10 @@
     openrgb i2c-tools
     # Cheating the system
     flatpak
-
-    (pkgs.callPackage ../../pkgs/svp {})
-    (import ../../pkgs/svpflow/default.nix)
+    
+    # These modules need serious work
+    #(pkgs.callPackage ../../pkgs/svp {})
+    #(import ../../pkgs/svpflow/default.nix)
   ];
 
   # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
@@ -29,12 +30,59 @@
 
   services.zrepl = {
     enable = true;
-    push.rpool = {
-      serverCN = "library-of-babel";
-      sourceFS = "rpool/safe";
-      targetHost = "158.69.224.168";
-      targetPort = 8551;
-      snapshotting.interval = 10;
+    settings = {
+      global = {
+        monitoring = [
+          {
+            listen = ":9811";
+            type = "prometheus";
+          }
+        ];
+      };
+      jobs = [
+        {
+          connect = {
+            address = "158.69.224.168:8550";
+            ca = "/var/spool/zrepl/ca.crt";
+            cert = "/var/spool/zrepl/maxwell-nixos.crt";
+            key = "/var/spool/zrepl/maxwell-nixos.key";
+            server_cn = "library-of-babel";
+            type = "tls";
+          };
+          filesystems = {
+            "rpool/safe<" = true;
+          };
+          name = "rpool_push";
+          pruning = {
+            keep_receiver = [
+              {
+                grid = "24x1h | 30x1d | 6x14d";
+                regex = "^zrepl_";
+                type = "grid";
+              }
+            ];
+            keep_sender = [
+              {
+                type = "not_replicated";
+              }
+              {
+                grid = "1x3h(keep=all) | 24x1h | 7x1d";
+                regex = "^zrepl_";
+                type = "grid";
+              }
+            ];
+          };
+          snapshotting = {
+            interval = "10m";
+            prefix = "zrepl_";
+            type = "periodic";
+          };
+          type = "push";
+          send = {
+            encrypted = true;
+          };
+        }
+      ];
     };
   };
 
