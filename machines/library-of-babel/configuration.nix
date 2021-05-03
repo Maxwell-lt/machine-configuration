@@ -83,9 +83,6 @@
     #  openFirewall = true;
     #};
   };
-  # Open port for zrepl
-  networking.firewall.allowedTCPPorts = [ 8550 ];
-
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -105,7 +102,9 @@
       externalInterface = "eno1";
       internalInterfaces = [ "wg0" ];
     };
-    firewall.allowedUDPPorts = [ 51820 ];
+    firewall = {
+      allowedUDPPorts = [ 51820 ];
+    };
 
     wireguard.interfaces.wg0 = {
       ips = [ "10.100.0.1/24" ];
@@ -229,7 +228,12 @@
     shell = pkgs.zsh;
   };
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 25565 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    25565
+    8550 # zrepl
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
