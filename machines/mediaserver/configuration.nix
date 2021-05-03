@@ -50,7 +50,7 @@
           pruning = {
             keep_receiver = [
               {
-                grid = "24x1h | 30x1d | 6x14d";
+                grid = "1x1h(keep=all) | 24x1h | 30x1d | 6x14d";
                 regex = "^zrepl_";
                 type = "grid";
               }
@@ -90,7 +90,7 @@
           pruning = {
             keep_receiver = [
               {
-                grid = "24x1h | 30x1d | 6x14d";
+                grid = "1x1h(keep=all) | 24x1h | 30x1d | 6x14d";
                 regex = "^zrepl_";
                 type = "grid";
               }
