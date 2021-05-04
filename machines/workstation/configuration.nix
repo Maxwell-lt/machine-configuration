@@ -56,9 +56,14 @@
           pruning = {
             keep_receiver = [
               {
-                grid = "24x1h | 30x1d | 6x14d";
+                grid = "24x1h | 30x1d | 12x30d";
                 regex = "^zrepl_";
                 type = "grid";
+              }
+              {
+                type = "last_n";
+                count = 2;
+                regex = "^zrepl_";
               }
             ];
             keep_sender = [
@@ -111,8 +116,12 @@
   # Needed for tc to work in the firewall script
   networking.firewall.extraPackages = with pkgs; [ iproute ];
 
-  # Avoid 30 second wait before login prompt when connecting to Lutron SmartBridge using Telnet: https://forums.lutron.com/showthread.php/3031-30-second-Telnet-Login-Delay
-  networking.firewall.allowedTCPPorts = [ 113 ];
+  networking.firewall.allowedTCPPorts = [
+    # Avoid 30 second wait before login prompt when connecting to Lutron SmartBridge using Telnet: https://forums.lutron.com/showthread.php/3031-30-second-Telnet-Login-Delay
+    113
+    # zrepl prometheus exporter
+    9811
+  ];
   
   # Throttle zrepl traffic
   networking.firewall.extraCommands = ''
