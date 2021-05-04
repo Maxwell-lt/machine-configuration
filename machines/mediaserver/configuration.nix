@@ -115,24 +115,24 @@
         }
       ];
     };
-    #push.ssdpool = {
-    #  serverCN = "library-of-babel";
-    #  sourceFS = "ssdpool";
-    #  exclude = [
-    #    "ssdpool/reserved"
-    #  ];
-    #  targetHost = "158.69.224.168";
-    #  targetPort = 8551;
-    #  snapshotting.interval = 10;
-    #};
-    #push.rustpool = {
-    #  serverCN = "library-of-babel";
-    #  sourceFS = "rustpool/media";
-    #  exclude = [ ];
-    #  targetHost = "158.69.224.168";
-    #  targetPort = 8551;
-    #  snapshotting.interval = 10;
-    #};
+  };
+
+  services.nginx = {
+    enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    virtualHosts."10.100.0.2" = {
+      listen = [{
+        addr = "10.100.0.2";
+        port = 9812;
+        locations."/" = {
+          proxyPass = "http://10.0.0.156:9811";
+        };
+      }];
+    };
   };
 
   # Needed for tc to work in the firewall script

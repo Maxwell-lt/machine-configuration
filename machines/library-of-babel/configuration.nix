@@ -338,7 +338,7 @@
       {
         job_name = "zrepl";
         static_configs = [{
-          targets = [ "localhost:9811" "10.100.0.2:9811" ];
+          targets = [ "localhost:9811" "10.100.0.2:9811" "10.100.0.2:9812" ];
         }];
       }
     ];
