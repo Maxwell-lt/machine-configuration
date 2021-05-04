@@ -124,14 +124,15 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    virtualHosts."10.100.0.2" = {
+    virtualHosts."zrepl_forwarder" = {
+      serverName = "10.100.0.2";
       listen = [{
         addr = "10.100.0.2";
         port = 9812;
-        locations."/" = {
-          proxyPass = "http://10.0.0.156:9811";
-        };
       }];
+      locations."/" = {
+        proxyPass = "http://10.0.0.156:9811";
+      };
     };
   };
 
