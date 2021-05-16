@@ -121,6 +121,24 @@
     113
     # zrepl prometheus exporter
     9811
+
+    # Satisfactory
+    5222 6666
+  ];
+
+  networking.firewall.allowedUDPPorts = [
+    # Satisfactory
+    5222 6666
+  ];
+
+  networking.firewall.allowedUDPPortRanges = [
+    # Satisfactory
+    { from = 7777; to = 9999; }
+  ];
+
+  networking.firewall.allowedTCPPortRanges = [
+    # Satisfactory
+    { from = 7777; to = 9999; }
   ];
   
   # Throttle zrepl traffic
