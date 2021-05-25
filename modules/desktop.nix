@@ -51,8 +51,8 @@
     });
     discord = pkgs.discord.overrideAttrs (old: {
       src = pkgs.fetchurl {
-        url = "https://dl.discordapp.net/apps/linux/0.0.14/discord-0.0.14.tar.gz";
-        sha256 = "1rq490fdl5pinhxk8lkfcfmfq7apj79jzf3m14yql1rc9gpilrf2";
+        url = "https://dl.discordapp.net/apps/linux/0.0.15/discord-0.0.15.tar.gz";
+        sha256 = "0pn2qczim79hqk2limgh88fsn93sa8wvana74mpdk5n6x5afkvdd";
       };
     });
   };
