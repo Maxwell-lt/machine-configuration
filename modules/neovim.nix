@@ -128,7 +128,7 @@
         };
       in with pkgs.vimPlugins; [
         lightline-vim coc-nvim vim-nix fzf-vim coc-fzf fzfWrapper breezy
-        coc-java coc-json coc-python coc-rls coc-yaml neosolarized
+        coc-java coc-json coc-python coc-rls coc-yaml neosolarized vim-toml
       ];
     };
     fzf = {
