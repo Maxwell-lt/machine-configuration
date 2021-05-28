@@ -1,27 +1,59 @@
 { config, pkgs, ... }:
-let
-  master = import
-    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/tarball/master)
-    { config = config.nixpkgs.config; };
-in
 
 {
   environment.systemPackages = with pkgs; [
     # Terminal tools
-    coreutils gitAndTools.gitFull wget vim man tree
-    mkpasswd sshfs units progress pv ripgrep zip
-    unzip p7zip gnupg unrar git-lfs direnv easyrsa
-    findutils nix-prefetch-git wireguard
+    coreutils           # Basic GNU utilities
+    direnv              # Load environment variables when cd'ing into a directory
+    easyrsa             # Scripts for generating x509 certs
+    exa                 # Fancy ls replacement
+    findutils           # GNU find/xargs commands
+    git-lfs             # Git Large File Storage support
+    gitAndTools.gitFull # Git core installation
+    gnupg               # GNU Privacy Guard
+    man                 # Documentation for everything
+    mkpasswd            # Generate hashed passwords
+    nix-prefetch-git    # Obtain hashes from Git for use with Nix
+    p7zip               # 7zip archive tools
+    progress            # View current progress of coreutils tools
+    pv                  # Monitor data moving through Unix pipes
+    rename              # Bulk rename with Perl expressions
+    ripgrep             # Grep, but better
+    tree                # View recursive directory listing
+    units               # Unit conversions
+    unrar               # RAR file extraction
+    unzip               # ZIP file extraction
+    wireguard           # Tools for Wireguard
+    zip                 # ZIP file manipulation
+
     # FS drivers
-    dosfstools mtools ntfsprogs
+    dosfstools  # FAT/VFAT
+    mtools      # More DOS fs compat
+    ntfsprogs   # NTFS
+
     # System monitoring
-    htop whois sysstat smartmontools pciutils
-    dmidecode usbutils nmap lm_sensors bmon
+    bmon          # Monitor network traffic
+    dmidecode     # Read hardware information
+    htop          # Interactive TUI process viewer
+    lm_sensors    # Read hardware sensors
+    nmap          # Network scanning and more
+    pciutils      # Read and manipulate PCI devices
+    smartmontools # View SMART information about drives
+    sysstat       # Collection of performance monitoring tools
+    usbutils      # USB tools, including lsusb
+    whois         # WHOIS lookup
+
     # File transfer
-    wget sshfsFuse rsync
+    rsync     # Incremental file transfer
+    sshfsFuse # Mount remote filesystem over SSH with FUSE
+    wget      # Retrieve files from the web
+
     # Media manipulation
-    ffmpeg-full mkvtoolnix-cli imagemagickBig master.youtube-dl
-    r128gain
+    ffmpeg-full     # Fully featured media file manipulation tool
+    imagemagickBig  # xkcd::2347
+    mkvtoolnix-cli  # Matroska media container tools
+    r128gain        # Add ReplayGain information to music files
+    youtube-dl      # Download video/audio from YouTube
   ];
 
   fonts.fonts = with pkgs; [
@@ -131,6 +163,12 @@ in
         zstyle :bracketed-paste-magic paste-finish pastefinish
       '';
     };
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+    };
   };
 
   # Enable SSH with password authentication disabled.
@@ -156,6 +194,9 @@ in
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDLiENW3t+GR07SPLqU05udjHRQ6KZPFk4VMRBaLPxK9Q4jL8TgJjAEJoWo1tGQUfg8XefUS1VJkoENnLXdoLFkF0W5yHBYqy3UdQpEiuCtW7zs7MxOcAdqfhkr8n8YIz7ud2VyxUXoeVaAQDrXjUYcXIDPJEkXSTQLd6+1vgBuUfPoAQpbgDQGodBcxFPxMz4wXFcV2gvvRtVukUsQ56ux2kQzXyyqMXLO2BAJgiSMojCOSPdCq9ZhUr0gD1/Lf+DW6JAGo2BNNqjyw1ocHTU0cwhxpB9ZyPS78vAVhkzKcsUbnlJLSdLNd/0ybNBuZJKNUzQsNcOsID74mIAn3AfidFBNRKZLuBm2dCMtss22jTUC+MXKvM/2PS9xY97fOjic3yHEZBIx8u6VNen7sCubaC/impgetOJTRsQOlyoMD3uMrGoQeqn+jqi3+/c31+x5qELmo/VsYQxPuF9M5KoiBqhPDrh28H+vcpkw7bTqNOSaZA7ZGSIT1JqfAH6CtJo+hoRsH65WQCS3vIPrvpN6Y7vW6sSS8eYs22YvCGnow8KJ12dJGDa3rMsn3ZJj02xnfUbPuLnJMcx1B5fWDBXPlCPBGDxVaTw9mhIUtvokWBPUVzQg6t+x32i7ZbOEQR4s7DeWSK7aM2peLsaQXs44tlES79W9qG5UDrEM6JviIQ== maxwell@nix-portable-omega"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/qNB6f8IaU2BuI9AsHodHuOoaPabGNogUJQUs2etXE maxwell@pixel"
         ];
+    shell = pkgs.zsh;
+  };
+  users.users.root = {
     shell = pkgs.zsh;
   };
 }

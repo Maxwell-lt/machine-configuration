@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports =
+    [
+      ../../modules/common.nix
+    ];
+
   boot = {
     kernelPackages = pkgs.linuxPackages_rpi4;
     tmpOnTmpfs = true;
@@ -32,36 +37,8 @@
     };
   };
 
-  services.openssh = {
-    enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
-    neovim
-    gitAndTools.gitFull
-   ];
-
-  users = {
-    defaultUserShell = pkgs.zsh;
-    mutableUsers = false;
-    users.root = {
-      password = "apassword";
-    };
-    users.maxwell = {
-      isNormalUser = true;
-      password = "apassword";
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    };
-  };
-
-  environment.variables = {
-    EDITOR = "nvim";
-  };
-
-  programs.zsh = {
-    enable = true;
-    syntaxHighlighting.enable = true;
-  };
+  ];
 
   nix = {
     autoOptimiseStore = true;
