@@ -17,9 +17,7 @@
             "/etc/localtime:/etc/localtime:ro"
           ];
           autoStart = true;
-          ports = [
-            "8123:8123"
-          ];
+          extraOptions = [ "--pod=home-assistant-pod" ];
         };
         "postgres-hass" = {
           image = "postgres:13.3";
@@ -28,16 +26,26 @@
             "/etc/localtime:/etc/localtime:ro"
           ];
           autoStart = true;
-          ports = [
-            "5432:5432"
-          ];
           environment = let secrets = import ../../secrets/postgres.nix; in {
             POSTGRES_USER = "hass";
             POSTGRES_PASSWORD = secrets.postgresPass;
           };
+          extraOptions = [ "--pod=home-assistant-pod" ];
         };
       };
     };
+  };
+
+  systemd.services.create-hass-pod = {
+    serviceConfig.Type = "oneshot";
+    wantedBy = [
+      "podman-postgres-hass.service"
+      "podman-home-assistant.service"
+    ];
+    script = with pkgs; ''
+      ${podman}/bin/podman pod exists home-assistant-pod || \
+        ${podman}/bin/podman pod create --name home-assistant-pod -p '0.0.0.0:8123:8123'
+    '';
   };
 
   networking.firewall = {
