@@ -1,10 +1,51 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [
-      ../../modules/common.nix
+  imports = [
+    ../../modules/common.nix
+  ];
+
+  virtualisation = {
+    oci-containers = {
+      backend = "podman";
+      containers = {
+        "home-assistant" = {
+          image = "homeassistant/home-assistant:stable";
+          dependsOn = [ "postgres-hass" ];
+          volumes = [
+            "/srv/container/hass-config:/config"
+            "/etc/localtime:/etc/localtime:ro"
+          ];
+          autoStart = true;
+          ports = [
+            "8123:8123"
+          ];
+        };
+        "postgres-hass" = {
+          image = "postgres:13.3";
+          volumes = [
+            "/srv/container/postgres-hass:/var/lib/postgresql/data"
+            "/etc/localtime:/etc/localtime:ro"
+          ];
+          autoStart = true;
+          ports = [
+            "5432:5432"
+          ];
+          environment = let secrets = import ../../secrets/postgres.nix; in {
+            POSTGRES_USER = "hass";
+            POSTGRES_PASSWORD = secrets.postgresPass;
+          };
+        };
+      };
+    };
+  };
+
+  networking.firewall = {
+    allowedTCPPorts = [
+      8123  # Home Assistant
+      113   # Open IDENT port so that Lutron bridge won't spend 30 seconds backing off from it
     ];
+  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_rpi4;
