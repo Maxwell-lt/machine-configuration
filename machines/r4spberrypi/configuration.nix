@@ -53,6 +53,24 @@
       8123  # Home Assistant
       113   # Open IDENT port so that Lutron bridge won't spend 30 seconds backing off from it
     ];
+    allowedUDPPorts = [
+      51820 # Wireguard
+    ];
+  };
+
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "10.100.0.3/24" ];
+      privateKeyFile = "/root/wireguard-keys/private";
+      peers = [
+        {
+          publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
+          allowedIPs = [ "10.100.0.1" ];
+          endpoint = "158.69.224.168:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
   };
 
   boot = {
