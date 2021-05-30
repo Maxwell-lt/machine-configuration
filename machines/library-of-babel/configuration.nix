@@ -289,6 +289,11 @@
       enableACME = true;
       locations."/" = {
         proxyPass = "http://10.100.0.3:8123";
+        extraConfig = ''
+          proxy_buffering off;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+        '';
       };
     };
   };
