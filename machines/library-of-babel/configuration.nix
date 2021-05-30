@@ -284,6 +284,13 @@
         proxyPass = "http://localhost:8123";
       };
     };
+    virtualHosts."hass.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://10.100.0.3:8123";
+      };
+    };
   };
 
   security.acme = {
@@ -294,6 +301,7 @@
       "grafana.maxwell-lt.dev".email = "maxwell.lt@live.com";
       "minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
       "map.minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
+      "hass.maxwell-lt.dev".email = "maxwell.lt@live.com";
     };
   };
 
