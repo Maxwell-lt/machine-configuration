@@ -185,7 +185,7 @@
   users.users.maxwell = {
     description = "Maxwell L-T";
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "jellyfin" ];
+    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "jellyfin" "lxd" ];
     hashedPassword = "$6$bJuwDnHiYHpdz$dSsXMl79Rx78pS.W.nQq7eLeoO1lA1OKiG.yq0Mo8vy4Vh66EjZDKvm1AC.aRU47zuvyiUwOx34wTHdM6hdiZ1";
     openssh.authorizedKeys.keys = [
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCj9GfcWPMaytL62VZjvoYRpCT3wxyU6U+riB6gqy5UwozEDOY42NV/Mm2AFC5KQ9QjSC4UZB/Ws5+9q4OHCuRk7z7xCem3rUNDElqMtvmq9dfbaxEknzWucfLQZP8N7cQ/V62K01cSX0o1WwZqj2RZIjvnU5VDH49gOaep795MKOphW1aoXTUGQnhNw3mLDxnnnjjEEThLtac186pXaxDa/JgXBGvoJep2DBUiAXXaXohjMNQijVal/3txfzPOB1SPUnF5qy6qn/WvZfGiVPd3uI/ftLm9m+/O4xr0jeT1webfwyhyirnxFecS/W2pWGtxT6A8jKpiyOccTMDG847D maxwell@maxwell-gaming-mint"

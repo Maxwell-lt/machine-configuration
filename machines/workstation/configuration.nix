@@ -97,6 +97,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  virtualisation = {
+    lxd = {
+      enable = true;
+    };
+    lxc = {
+      enable = true;
+      lxcfs.enable = true;
+    };
+  };
+
   networking = {
     hostId = "79eefeea";
     hostName = "maxwell-nixos";
