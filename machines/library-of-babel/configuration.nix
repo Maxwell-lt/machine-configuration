@@ -126,6 +126,10 @@
           publicKey = "1n83gP4hK7vLUpvh4m5tYMT/Nlij1AF9XeiTdMtgIE8=";
           allowedIPs = [ "10.100.0.2/32" ];
         }
+        {
+          publicKey = "fpAVHIb6zeR1pavzcw5gvrsJhAQf/9rMSpBuI35A7Fw=";
+          allowedIPs = [ "10.100.0.3/32" ];
+        }
       ];
     };
   };
@@ -280,6 +284,18 @@
         proxyPass = "http://localhost:8123";
       };
     };
+    virtualHosts."hass.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://10.100.0.3:8123";
+        extraConfig = ''
+          proxy_buffering off;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+        '';
+      };
+    };
   };
 
   security.acme = {
@@ -290,6 +306,7 @@
       "grafana.maxwell-lt.dev".email = "maxwell.lt@live.com";
       "minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
       "map.minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
+      "hass.maxwell-lt.dev".email = "maxwell.lt@live.com";
     };
   };
 

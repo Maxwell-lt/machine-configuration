@@ -2,6 +2,7 @@
 , pkgs
 , fetchurl
 , autoPatchelfHook
+, lib
 }:
 
 stdenv.mkDerivation rec {
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec {
     gzip -c doc/pwrstatd.8 > $out/share/man/man8/pwrstatd.8.gz
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     license = licenses.unfree;
     homepage = "https://www.cyberpowersystems.com/product/software/powerpanel-for-linux/";
     description = "Monitoring tool for CyberPower UPS units";

@@ -1,6 +1,78 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ../../modules/common.nix
+  ];
+
+  virtualisation = {
+    oci-containers = {
+      backend = "podman";
+      containers = {
+        "home-assistant" = {
+          image = "homeassistant/home-assistant:stable";
+          dependsOn = [ "postgres-hass" ];
+          volumes = [
+            "/srv/container/hass-config:/config"
+            "/etc/localtime:/etc/localtime:ro"
+          ];
+          autoStart = true;
+          extraOptions = [ "--pod=home-assistant-pod" ];
+        };
+        "postgres-hass" = {
+          image = "postgres:13.3";
+          volumes = [
+            "/srv/container/postgres-hass:/var/lib/postgresql/data"
+            "/etc/localtime:/etc/localtime:ro"
+          ];
+          autoStart = true;
+          environment = let secrets = import ../../secrets/postgres.nix; in {
+            POSTGRES_USER = "hass";
+            POSTGRES_PASSWORD = secrets.postgresPass;
+          };
+          extraOptions = [ "--pod=home-assistant-pod" ];
+        };
+      };
+    };
+  };
+
+  systemd.services.create-hass-pod = {
+    serviceConfig.Type = "oneshot";
+    wantedBy = [
+      "podman-postgres-hass.service"
+      "podman-home-assistant.service"
+    ];
+    script = with pkgs; ''
+      ${podman}/bin/podman pod exists home-assistant-pod || \
+        ${podman}/bin/podman pod create --name home-assistant-pod -p '0.0.0.0:8123:8123'
+    '';
+  };
+
+  networking.firewall = {
+    allowedTCPPorts = [
+      8123  # Home Assistant
+      113   # Open IDENT port so that Lutron bridge won't spend 30 seconds backing off from it
+    ];
+    allowedUDPPorts = [
+      51820 # Wireguard
+    ];
+  };
+
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "10.100.0.3/24" ];
+      privateKeyFile = "/root/wireguard-keys/private";
+      peers = [
+        {
+          publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
+          allowedIPs = [ "10.100.0.1" ];
+          endpoint = "158.69.224.168:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_rpi4;
     tmpOnTmpfs = true;
@@ -22,6 +94,8 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  hardware.cpu.intel.updateMicrocode = lib.mkForce false;
+
   # Required for the Wireless firmware
   hardware.enableRedistributableFirmware = true;
 
@@ -32,44 +106,11 @@
     };
   };
 
-  services.openssh = {
-    enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
-    neovim
-    gitAndTools.gitFull
-   ];
-
-  users = {
-    defaultUserShell = pkgs.zsh;
-    mutableUsers = false;
-    users.root = {
-      password = "apassword";
-    };
-    users.maxwell = {
-      isNormalUser = true;
-      password = "apassword";
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    };
-  };
-
-  environment.variables = {
-    EDITOR = "nvim";
-  };
-
-  programs.zsh = {
-    enable = true;
-    syntaxHighlighting.enable = true;
-  };
+  ];
 
   nix = {
     autoOptimiseStore = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
     # Free up to 1GiB whenever there is less than 100MiB left.
     extraOptions = ''
       min-free = ${toString (100 * 1024 * 1024)}
