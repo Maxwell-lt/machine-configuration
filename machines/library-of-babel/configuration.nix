@@ -296,17 +296,29 @@
         '';
       };
     };
+    virtualHosts."grocy.maxwell-lt.dev" = {
+      addSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://10.100.0.2:9280";
+      };
+    };
   };
 
   security.acme = {
     acceptTerms = true;
-    certs = {
-      "maxwell-lt.dev".email = "maxwell.lt@live.com";
-      "media.maxwell-lt.dev".email = "maxwell.lt@live.com";
-      "grafana.maxwell-lt.dev".email = "maxwell.lt@live.com";
-      "minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
-      "map.minecraft.maxwell-lt.dev".email = "maxwell.lt@live.com";
-      "hass.maxwell-lt.dev".email = "maxwell.lt@live.com";
+    certs = 
+    let 
+      email = "maxwell.lt@live.com";
+    in
+    {
+      "maxwell-lt.dev".email = email;
+      "media.maxwell-lt.dev".email = email;
+      "grafana.maxwell-lt.dev".email = email;
+      "minecraft.maxwell-lt.dev".email = email;
+      "map.minecraft.maxwell-lt.dev".email = email;
+      "hass.maxwell-lt.dev".email = email;
+      "grocy.maxwell-lt.dev".email = email;
     };
   };
 
