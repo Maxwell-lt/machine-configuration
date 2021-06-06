@@ -18,4 +18,6 @@
       interval = "Sat 05:00";
     };
   };
+
+  virtualisation.podman.extraPackages = [ pkgs.zfs ];
 }
