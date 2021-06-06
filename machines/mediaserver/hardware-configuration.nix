@@ -43,6 +43,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/srv/containers" =
+    { device = "ssdpool/containers";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
