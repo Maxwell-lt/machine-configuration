@@ -60,13 +60,13 @@
     powerline-fonts corefonts
     noto-fonts noto-fonts-cjk
     noto-fonts-emoji noto-fonts-extra
-    hack-font ipafont
+    nerdfonts ipafont
     
   ];
 
   fonts.fontconfig.defaultFonts = {
     monospace = [
-      "Hack"
+      "Hack Nerd Font"
       "Noto Sans Mono CJK JP"
     ];
 
