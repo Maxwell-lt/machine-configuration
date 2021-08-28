@@ -104,8 +104,8 @@
   sound.enable = true;
   hardware.pulseaudio = {
     enable = false;
-    package = pkgs.pulseaudioFull;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
+    #package = pkgs.pulseaudioFull;
+    #extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
 
   security.rtkit.enable = true;
