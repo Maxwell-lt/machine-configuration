@@ -49,12 +49,12 @@
     }).overrideAttrs (old: rec {
       wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
     });
-    discord = pkgs.discord.overrideAttrs (old: {
-      src = pkgs.fetchurl {
-        url = "https://dl.discordapp.net/apps/linux/0.0.15/discord-0.0.15.tar.gz";
-        sha256 = "0pn2qczim79hqk2limgh88fsn93sa8wvana74mpdk5n6x5afkvdd";
-      };
-    });
+    #discord = pkgs.discord.overrideAttrs (old: {
+    #  src = pkgs.fetchurl {
+    #    url = "https://dl.discordapp.net/apps/linux/0.0.15/discord-0.0.15.tar.gz";
+    #    sha256 = "0pn2qczim79hqk2limgh88fsn93sa8wvana74mpdk5n6x5afkvdd";
+    #  };
+    #});
   };
 
   # Enable IME
