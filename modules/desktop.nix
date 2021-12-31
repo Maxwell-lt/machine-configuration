@@ -8,7 +8,7 @@
     libreoffice gparted yed
     krita psensor kcalc gnome3.simple-scan
     # KMail and friends
-    kmail plasma5Packages.kmail-account-wizard kaddressbook plasma5Packages.kleopatra plasma5Packages.pim-data-exporter
+    plasma5Packages.kmail-account-wizard kaddressbook plasma5Packages.kleopatra plasma5Packages.pim-data-exporter
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run

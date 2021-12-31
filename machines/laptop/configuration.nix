@@ -9,7 +9,7 @@ in
       ../../modules/zfs.nix
       ../../modules/common.nix
       ../../modules/desktop.nix
-      ../../modules/zrepl.nix
+      ../../services/zrepl.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -39,6 +39,9 @@ in
       };
     };
   };
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   services.zrepl = {
     enable = true;
