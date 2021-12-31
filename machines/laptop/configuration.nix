@@ -9,7 +9,7 @@ in
       ../../modules/zfs.nix
       ../../modules/common.nix
       ../../modules/desktop.nix
-      ../../services/zrepl.nix
+      #../../services/zrepl.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -43,19 +43,19 @@ in
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  services.zrepl = {
-    enable = true;
-    push.rpool = {
-      serverCN = "library-of-babel";
-      sourceFS = "rpool";
-      exclude = [
-        "rpool/root/nixos"
-      ];
-      targetHost = "158.69.224.168";
-      targetPort = 8551;
-      snapshotting.interval = 10;
-    };
-  };
+  #services.zrepl = {
+  #  enable = true;
+  #  push.rpool = {
+  #    serverCN = "library-of-babel";
+  #    sourceFS = "rpool";
+  #    exclude = [
+  #      "rpool/root/nixos"
+  #    ];
+  #    targetHost = "158.69.224.168";
+  #    targetPort = 8551;
+  #    snapshotting.interval = 10;
+  #  };
+  #};
 
   users.users."OrcDovahkiin" = {
     isNormalUser = true;
