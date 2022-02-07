@@ -28,6 +28,8 @@
     "snd_hda_codec_hdmi"
   ];
 
+  hardware.opentabletdriver.enable = true;
+
   services.zrepl = {
     enable = true;
     settings = {
@@ -167,7 +169,7 @@
   '';
 
   # Needed to use erisia/builder
-  nix.useSandbox = "relaxed";
+  nix.settings.sandbox = "relaxed";
 
   # Switch Pro Controller udev rules
   services.udev.extraRules = ''
