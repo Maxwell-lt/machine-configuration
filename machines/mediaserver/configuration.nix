@@ -12,7 +12,7 @@
       ../../services/zpool-exporter.nix
       ../../services/powerpanel.nix
       ../../services/powerpanel-exporter.nix
-      ../../modules/grocy.nix
+      #../../modules/grocy.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
