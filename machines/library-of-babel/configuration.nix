@@ -201,7 +201,7 @@
       syntaxHighlighting.enable = true;
       ohMyZsh = {
         enable = true;
-        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "cargo" ];
+        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "rust" ];
         theme = "agnoster";
         customPkgs = with pkgs; [
           pkgs.nix-zsh-completions
