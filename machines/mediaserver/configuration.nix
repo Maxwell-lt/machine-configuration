@@ -86,6 +86,8 @@
           filesystems = {
             "ssdpool/reserved" = false;
             "ssdpool<" = true;
+            "ssdpool/root/nixos<" = false;
+            "ssdpool/root/nixos" = true;
           };
           name = "ssdpool_push";
           pruning = {
