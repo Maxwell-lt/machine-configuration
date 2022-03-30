@@ -73,7 +73,7 @@
                 type = "not_replicated";
               }
               {
-                grid = "1x3h(keep=all) | 24x1h | 7x1d";
+                grid = "1x3h(keep=all) | 24x1h | 3x1d";
                 regex = "^zrepl_";
                 type = "grid";
               }
