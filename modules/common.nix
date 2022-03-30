@@ -23,7 +23,7 @@
     units               # Unit conversions
     unrar               # RAR file extraction
     unzip               # ZIP file extraction
-    wireguard           # Tools for Wireguard
+    wireguard-tools     # Tools for Wireguard
     zip                 # ZIP file manipulation
 
     # FS drivers
@@ -45,7 +45,7 @@
 
     # File transfer
     rsync     # Incremental file transfer
-    sshfsFuse # Mount remote filesystem over SSH with FUSE
+    sshfs-fuse # Mount remote filesystem over SSH with FUSE
     wget      # Retrieve files from the web
 
     # Media manipulation

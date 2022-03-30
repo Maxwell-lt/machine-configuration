@@ -36,7 +36,7 @@
     # Connectivity
     kdeconnect
     # VM dependencies
-    kvm qemu libvirt bridge-utils virt-manager
+    qemu_kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
   ];
 
