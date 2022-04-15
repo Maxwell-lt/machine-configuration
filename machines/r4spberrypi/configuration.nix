@@ -10,19 +10,19 @@
       backend = "podman";
       containers = {
         "home-assistant" = {
-          image = "homeassistant/home-assistant:stable";
+          image = "homeassistant/home-assistant:2022.4.3";
           dependsOn = [ "postgres-hass" ];
           volumes = [
-            "/srv/container/hass-config:/config"
+            "/srv/container/home-assistant:/config"
             "/etc/localtime:/etc/localtime:ro"
           ];
           autoStart = true;
           extraOptions = [ "--pod=home-assistant-pod" ];
         };
         "postgres-hass" = {
-          image = "postgres:13.3";
+          image = "postgres:14.2";
           volumes = [
-            "/srv/container/postgres-hass:/var/lib/postgresql/data"
+            "/srv/container/postgres-home-assistant:/var/lib/postgresql/data"
             "/etc/localtime:/etc/localtime:ro"
           ];
           autoStart = true;
@@ -44,7 +44,7 @@
     ];
     script = with pkgs; ''
       ${podman}/bin/podman pod exists home-assistant-pod || \
-        ${podman}/bin/podman pod create --name home-assistant-pod -p '0.0.0.0:8123:8123'
+        ${podman}/bin/podman pod create --name home-assistant-pod -p '0.0.0.0:8123:8123 --network bridge'
     '';
   };
 
@@ -87,10 +87,10 @@
     ];
   };
 
-  boot.loader.raspberryPi = {
-    enable = true;
-    version = 4;
-  };
+  #boot.loader.raspberryPi = {
+  #  enable = true;
+  #  version = 4;
+  #};
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 

@@ -40,6 +40,31 @@
     virt-viewer spice-vdagent
   ];
 
+  fonts.fonts = with pkgs; [
+    powerline-fonts corefonts
+    noto-fonts noto-fonts-cjk
+    noto-fonts-emoji noto-fonts-extra
+    nerdfonts ipafont
+    
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "Hack Nerd Font"
+      "Noto Sans Mono CJK JP"
+    ];
+
+    sansSerif = [
+      "Noto Sans"
+      "Noto Sans CJK JP"
+    ];
+
+    serif = [
+      "Noto Serif"
+      "Noto Serif CJK JP"
+    ];
+  };
+
   programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
