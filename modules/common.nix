@@ -44,15 +44,17 @@
     whois         # WHOIS lookup
 
     # File transfer
-    rsync     # Incremental file transfer
-    sshfs-fuse # Mount remote filesystem over SSH with FUSE
-    wget      # Retrieve files from the web
+    rsync       # Incremental file transfer
+    sshfs-fuse  # Mount remote filesystem over SSH with FUSE
+    wget        # Retrieve files from the web
 
     # Media manipulation
+    abcde           # One-step CD ripping tool
     ffmpeg-full     # Fully featured media file manipulation tool
     imagemagickBig  # xkcd::2347
     mkvtoolnix-cli  # Matroska media container tools
     r128gain        # Add ReplayGain information to music files
+    vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
     youtube-dl      # Download video/audio from YouTube
   ];
 
