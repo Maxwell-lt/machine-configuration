@@ -23,7 +23,7 @@
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     #mpv vapoursynth
     syncplay deluge pavucontrol
-    puddletag kdenlive
+    puddletag #kdenlive
     obs-studio
     calibre cmus
     # Chat
@@ -68,12 +68,12 @@
   programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
-    mpv = (pkgs.mpv-unwrapped.override {
-      vapoursynthSupport = true;
-      vapoursynth = pkgs.vapoursynth;
-    }).overrideAttrs (old: rec {
-      wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
-    });
+    #mpv = (pkgs.mpv-unwrapped.override {
+    #  vapoursynthSupport = true;
+    #  vapoursynth = pkgs.vapoursynth;
+    #}).overrideAttrs (old: rec {
+    #  wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
+    #});
     #discord = pkgs.discord.overrideAttrs (old: {
     #  src = pkgs.fetchurl {
     #    url = "https://dl.discordapp.net/apps/linux/0.0.17/discord-0.0.17.tar.gz";
