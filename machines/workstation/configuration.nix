@@ -143,9 +143,6 @@
 
     # Satisfactory
     5222 6666
-
-    # Clementine
-    5500
   ];
 
   networking.firewall.allowedUDPPorts = [
