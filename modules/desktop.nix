@@ -26,6 +26,7 @@
     puddletag #kdenlive
     obs-studio
     calibre cmus
+    clementine
     # Chat
     discord
     hexchat
