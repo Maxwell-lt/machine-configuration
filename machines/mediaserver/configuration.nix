@@ -163,7 +163,43 @@
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
     9100 9101 9102 9811 9812
+    # K3s
+    6443
   ];
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = toString [
+      "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+      "--snapshotter=zfs"
+    ];
+  };
+
+  systemd.services.k3s = {
+    wants = ["containerd.service"];
+    after = ["containerd.service"];
+  };
+
+  virtualisation.containerd = {
+    enable = true;
+    settings = {
+      version = 2;
+      plugins."io.containerd.grpc.v1.cri".cni = {
+        bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
+          mkdir -p $out
+          ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
+        ''}";
+        conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
+      };
+    };
+  };
+
+  systemd.services.containerd.serviceConfig = {
+    ExecStartPre = [
+      "-${pkgs.zfs}/bin/zfs create -o mountpoint=/var/lib/containerd/io.containerd.snapshotter.v1.zfs ssdpool/containerd"
+    ];
+  };
 
   # Setup Wireguard client
   networking.wireguard.interfaces.wg0 = {
