@@ -26,6 +26,12 @@
     wireguard-tools     # Tools for Wireguard
     zip                 # ZIP file manipulation
 
+    # Containers
+    buildah         # Daemonless OCI container builder
+    kubectl         # CLI for Kubernetes
+    kubectx         # Switch between contexts
+    kubernetes-helm # Deploy charts to K8s clusters
+
     # FS drivers
     dosfstools  # FAT/VFAT
     mtools      # More DOS fs compat
