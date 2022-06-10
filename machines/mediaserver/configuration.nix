@@ -201,6 +201,32 @@
     ];
   };
 
+  # Expose paths on NFS for K3s to access
+  fileSystems = {
+    "/export/qbconf" = {
+      device = "/mnt/media/config/qbittorrent";
+      options = [ "bind" ];
+    };
+    "/export/torrents" = {
+      device = "/mnt/media/staging/torrents";
+      options = [ "bind" ];
+    };
+    "/export/tv" = {
+      device = "/mnt/media/tv";
+      options = [ "bind" ];
+    };
+  };
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /export           10.0.0.114(rw,fsid=0,no_subtree_check)
+      /export/qbconf    10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+      /export/torrents  10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+      /export/tv        10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+    '';
+  };
+
   # Setup Wireguard client
   networking.wireguard.interfaces.wg0 = {
     ips = [ "10.100.0.2/24" ];
