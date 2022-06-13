@@ -215,6 +215,10 @@
       device = "/mnt/media/tv";
       options = [ "bind" ];
     };
+    "/export/movies" = {
+      device = "/mnt/media/movies";
+      options = [ "bind" ];
+    };
   };
 
   services.nfs.server = {
@@ -224,6 +228,7 @@
       /export/qbconf    10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
       /export/torrents  10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
       /export/tv        10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+      /export/movies    10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
     '';
   };
 
