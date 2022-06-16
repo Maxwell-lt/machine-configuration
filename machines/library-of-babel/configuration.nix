@@ -296,11 +296,11 @@
         '';
       };
     };
-    virtualHosts."grocy.maxwell-lt.dev" = {
+    virtualHosts."kube.maxwell-lt.dev" = {
       addSSL = true;
       enableACME = true;
       locations."/" = {
-        proxyPass = "http://10.100.0.2:9280";
+        proxyPass = "http://10.100.0.2:80";
       };
     };
   };
@@ -318,7 +318,7 @@
       "minecraft.maxwell-lt.dev".email = email;
       "map.minecraft.maxwell-lt.dev".email = email;
       "hass.maxwell-lt.dev".email = email;
-      "grocy.maxwell-lt.dev".email = email;
+      "kube.maxwell-lt.dev".email = email;
     };
   };
 
