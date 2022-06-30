@@ -88,6 +88,7 @@
             "ssdpool<" = true;
             "ssdpool/root/nixos<" = false;
             "ssdpool/root/nixos" = true;
+            "ssdpool/containerd<" = false;
           };
           name = "ssdpool_push";
           pruning = {
