@@ -15,6 +15,7 @@
     mkpasswd            # Generate hashed passwords
     nix-prefetch-git    # Obtain hashes from Git for use with Nix
     p7zip               # 7zip archive tools
+    parallel            # Much smarter xargs
     progress            # View current progress of coreutils tools
     pv                  # Monitor data moving through Unix pipes
     rename              # Bulk rename with Perl expressions

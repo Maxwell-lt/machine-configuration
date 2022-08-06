@@ -27,13 +27,14 @@
     obs-studio
     calibre cmus
     clementine
+    picard
     # Chat
     discord
     hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium atom postman
+    vscodium atom postman insomnia
     # Connectivity
     kdeconnect
     # VM dependencies
