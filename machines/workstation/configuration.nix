@@ -16,6 +16,12 @@
     openrgb i2c-tools
     # Cheating the system
     flatpak
+
+    # DAW and plugins
+    ardour
+    lsp-plugins
+    surge-XT
+    zam-plugins
     
     # These modules need serious work
     #(pkgs.callPackage ../../pkgs/svp {})
