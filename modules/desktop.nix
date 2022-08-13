@@ -23,7 +23,7 @@
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     #mpv vapoursynth
     syncplay deluge pavucontrol
-    puddletag #kdenlive
+    puddletag kdenlive
     obs-studio
     calibre cmus
     clementine
@@ -70,6 +70,7 @@
   programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
+    mistune = pkgs.mistune_2_0;
     #mpv = (pkgs.mpv-unwrapped.override {
     #  vapoursynthSupport = true;
     #  vapoursynth = pkgs.vapoursynth;
@@ -83,6 +84,11 @@
     #  };
     #});
   };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "python3.10-mistune-0.8.4"
+  ];
+
 
   # Enable IME
   i18n.inputMethod = {
