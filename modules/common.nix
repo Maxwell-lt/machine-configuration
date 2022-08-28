@@ -15,6 +15,7 @@
     mkpasswd            # Generate hashed passwords
     nix-prefetch-git    # Obtain hashes from Git for use with Nix
     p7zip               # 7zip archive tools
+    parallel            # Much smarter xargs
     progress            # View current progress of coreutils tools
     pv                  # Monitor data moving through Unix pipes
     rename              # Bulk rename with Perl expressions
@@ -23,8 +24,14 @@
     units               # Unit conversions
     unrar               # RAR file extraction
     unzip               # ZIP file extraction
-    wireguard           # Tools for Wireguard
+    wireguard-tools     # Tools for Wireguard
     zip                 # ZIP file manipulation
+
+    # Containers
+    buildah         # Daemonless OCI container builder
+    kubectl         # CLI for Kubernetes
+    kubectx         # Switch between contexts
+    kubernetes-helm # Deploy charts to K8s clusters
 
     # FS drivers
     dosfstools  # FAT/VFAT
@@ -44,42 +51,19 @@
     whois         # WHOIS lookup
 
     # File transfer
-    rsync     # Incremental file transfer
-    sshfsFuse # Mount remote filesystem over SSH with FUSE
-    wget      # Retrieve files from the web
+    rsync       # Incremental file transfer
+    sshfs-fuse  # Mount remote filesystem over SSH with FUSE
+    wget        # Retrieve files from the web
 
     # Media manipulation
+    abcde           # One-step CD ripping tool
     ffmpeg-full     # Fully featured media file manipulation tool
     imagemagickBig  # xkcd::2347
     mkvtoolnix-cli  # Matroska media container tools
     r128gain        # Add ReplayGain information to music files
+    vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
     youtube-dl      # Download video/audio from YouTube
   ];
-
-  fonts.fonts = with pkgs; [
-    powerline-fonts corefonts
-    noto-fonts noto-fonts-cjk
-    noto-fonts-emoji noto-fonts-extra
-    nerdfonts ipafont
-    
-  ];
-
-  fonts.fontconfig.defaultFonts = {
-    monospace = [
-      "Hack Nerd Font"
-      "Noto Sans Mono CJK JP"
-    ];
-
-    sansSerif = [
-      "Noto Sans"
-      "Noto Sans CJK JP"
-    ];
-
-    serif = [
-      "Noto Serif"
-      "Noto Serif CJK JP"
-    ];
-  };
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.cpu.amd.updateMicrocode = true;
@@ -144,7 +128,7 @@
       syntaxHighlighting.enable = true;
       ohMyZsh = {
         enable = true;
-        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "cargo" ];
+        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "rust" ];
         theme = "agnoster";
         customPkgs = with pkgs; [
           pkgs.nix-zsh-completions

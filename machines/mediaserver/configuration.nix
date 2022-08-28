@@ -12,7 +12,7 @@
       ../../services/zpool-exporter.nix
       ../../services/powerpanel.nix
       ../../services/powerpanel-exporter.nix
-      ../../modules/grocy.nix
+      #../../modules/grocy.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -86,6 +86,9 @@
           filesystems = {
             "ssdpool/reserved" = false;
             "ssdpool<" = true;
+            "ssdpool/root/nixos<" = false;
+            "ssdpool/root/nixos" = true;
+            "ssdpool/containerd<" = false;
           };
           name = "ssdpool_push";
           pruning = {
@@ -161,7 +164,74 @@
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
     9100 9101 9102 9811 9812
+    # K3s
+    6443
   ];
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = toString [
+      "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+      "--snapshotter=zfs"
+    ];
+  };
+
+  systemd.services.k3s = {
+    wants = ["containerd.service"];
+    after = ["containerd.service"];
+  };
+
+  virtualisation.containerd = {
+    enable = true;
+    settings = {
+      version = 2;
+      plugins."io.containerd.grpc.v1.cri".cni = {
+        bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
+          mkdir -p $out
+          ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
+        ''}";
+        conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
+      };
+    };
+  };
+
+  systemd.services.containerd.serviceConfig = {
+    ExecStartPre = [
+      "-${pkgs.zfs}/bin/zfs create -o mountpoint=/var/lib/containerd/io.containerd.snapshotter.v1.zfs ssdpool/containerd"
+    ];
+  };
+
+  # Expose paths on NFS for K3s to access
+  fileSystems = {
+    "/export/qbconf" = {
+      device = "/mnt/media/config/qbittorrent";
+      options = [ "bind" ];
+    };
+    "/export/torrents" = {
+      device = "/mnt/media/staging/torrents";
+      options = [ "bind" ];
+    };
+    "/export/tv" = {
+      device = "/mnt/media/tv";
+      options = [ "bind" ];
+    };
+    "/export/movies" = {
+      device = "/mnt/media/movies";
+      options = [ "bind" ];
+    };
+  };
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /export           10.0.0.114(rw,fsid=0,no_subtree_check)
+      /export/qbconf    10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+      /export/torrents  10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+      /export/tv        10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+      /export/movies    10.0.0.114(rw,nohide,insecure,no_subtree_check,no_root_squash)
+    '';
+  };
 
   # Setup Wireguard client
   networking.wireguard.interfaces.wg0 = {

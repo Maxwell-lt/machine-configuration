@@ -12,7 +12,7 @@
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
-    jdk8 multimc dolphinEmuMaster lutris pcsx2
+    jdk8 polymc dolphinEmuMaster lutris pcsx2
     # Browsers
     firefox
     xdg-desktop-portal-kde
@@ -26,36 +26,69 @@
     puddletag kdenlive
     obs-studio
     calibre cmus
+    clementine
+    picard
     # Chat
     discord
     hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium atom postman
+    vscodium atom postman insomnia
     # Connectivity
     kdeconnect
     # VM dependencies
-    kvm qemu libvirt bridge-utils virt-manager
+    qemu_kvm qemu libvirt bridge-utils virt-manager
     virt-viewer spice-vdagent
   ];
+
+  fonts.fonts = with pkgs; [
+    powerline-fonts corefonts
+    noto-fonts noto-fonts-cjk
+    noto-fonts-emoji noto-fonts-extra
+    nerdfonts ipafont
+    
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "Hack Nerd Font"
+      "Noto Sans Mono CJK JP"
+    ];
+
+    sansSerif = [
+      "Noto Sans"
+      "Noto Sans CJK JP"
+    ];
+
+    serif = [
+      "Noto Serif"
+      "Noto Serif CJK JP"
+    ];
+  };
 
   programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
-    mpv = (pkgs.mpv-unwrapped.override {
-      vapoursynthSupport = true;
-      vapoursynth = pkgs.vapoursynth;
-    }).overrideAttrs (old: rec {
-      wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
-    });
+    mistune = pkgs.mistune_2_0;
+    #mpv = (pkgs.mpv-unwrapped.override {
+    #  vapoursynthSupport = true;
+    #  vapoursynth = pkgs.vapoursynth;
+    #}).overrideAttrs (old: rec {
+    #  wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
+    #});
     #discord = pkgs.discord.overrideAttrs (old: {
     #  src = pkgs.fetchurl {
-    #    url = "https://dl.discordapp.net/apps/linux/0.0.15/discord-0.0.15.tar.gz";
-    #    sha256 = "0pn2qczim79hqk2limgh88fsn93sa8wvana74mpdk5n6x5afkvdd";
+    #    url = "https://dl.discordapp.net/apps/linux/0.0.17/discord-0.0.17.tar.gz";
+    #    sha256 = "058k0cmbm4y572jqw83bayb2zzl2fw2aaz0zj1gvg6sxblp76qil";
     #  };
     #});
   };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "python3.10-mistune-0.8.4"
+  ];
+
 
   # Enable IME
   i18n.inputMethod = {

@@ -5,8 +5,8 @@
 let mozillaOverlay = fetchFromGitHub {
       owner = "mozilla";
       repo = "nixpkgs-mozilla";
-      rev = "efda5b357451dbb0431f983cca679ae3cd9b9829";
-      sha256 = "11wqrg86g3qva67vnk81ynvqyfj0zxk83cbrf0p9hsvxiwxs8469";
+      rev = "7c1e8b1dd6ed0043fb4ee0b12b815256b0b9de6f";
+      sha256 = "1a71nfw7d36vplf89fp65vgj3s66np1dc0hqnqgj5gbdnpm1bihl";
     };
     mozilla = callPackage "${mozillaOverlay.out}/package-set.nix" {};
     rustSpecific = (mozilla.rustChannelOf { inherit date channel; }).rust;

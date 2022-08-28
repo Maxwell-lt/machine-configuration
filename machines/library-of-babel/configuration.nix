@@ -201,7 +201,7 @@
       syntaxHighlighting.enable = true;
       ohMyZsh = {
         enable = true;
-        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "cargo" ];
+        plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "rust" ];
         theme = "agnoster";
         customPkgs = with pkgs; [
           pkgs.nix-zsh-completions
@@ -296,11 +296,11 @@
         '';
       };
     };
-    virtualHosts."grocy.maxwell-lt.dev" = {
+    virtualHosts."kube.maxwell-lt.dev" = {
       addSSL = true;
       enableACME = true;
       locations."/" = {
-        proxyPass = "http://10.100.0.2:9280";
+        proxyPass = "http://10.100.0.2:80";
       };
     };
   };
@@ -318,7 +318,7 @@
       "minecraft.maxwell-lt.dev".email = email;
       "map.minecraft.maxwell-lt.dev".email = email;
       "hass.maxwell-lt.dev".email = email;
-      "grocy.maxwell-lt.dev".email = email;
+      "kube.maxwell-lt.dev".email = email;
     };
   };
 
@@ -381,7 +381,7 @@
     properties = [ "used" "available" ];
   };
 
-  nix.useSandbox = "relaxed";
+  nix.settings.sandbox = "relaxed";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

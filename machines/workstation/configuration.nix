@@ -16,17 +16,32 @@
     openrgb i2c-tools
     # Cheating the system
     flatpak
+
+    # DAW and plugins
+    ardour
+    lsp-plugins
+    surge-XT
+    zam-plugins
     
     # These modules need serious work
     #(pkgs.callPackage ../../pkgs/svp {})
     #(import ../../pkgs/svpflow/default.nix)
   ];
 
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
   boot.blacklistedKernelModules = [
     "snd_hda_intel"
     "snd_hda_codec_hdmi"
   ];
+
+  hardware.opentabletdriver.enable = true;
 
   services.zrepl = {
     enable = true;
@@ -71,7 +86,7 @@
                 type = "not_replicated";
               }
               {
-                grid = "1x3h(keep=all) | 24x1h | 7x1d";
+                grid = "1x3h(keep=all) | 24x1h | 3x1d";
                 regex = "^zrepl_";
                 type = "grid";
               }
@@ -167,7 +182,7 @@
   '';
 
   # Needed to use erisia/builder
-  nix.useSandbox = "relaxed";
+  nix.settings.sandbox = "relaxed";
 
   # Switch Pro Controller udev rules
   services.udev.extraRules = ''
