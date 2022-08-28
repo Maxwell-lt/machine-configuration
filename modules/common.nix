@@ -15,6 +15,7 @@
     mkpasswd            # Generate hashed passwords
     nix-prefetch-git    # Obtain hashes from Git for use with Nix
     p7zip               # 7zip archive tools
+    parallel            # Much smarter xargs
     progress            # View current progress of coreutils tools
     pv                  # Monitor data moving through Unix pipes
     rename              # Bulk rename with Perl expressions
@@ -68,10 +69,14 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   nix = {
-    extraOptions = "auto-optimise-store = true";
+    extraOptions = ''
+      auto-optimise-store = true
+      experimental-features = nix-command flakes
+    '';
     gc.automatic = true;
     gc.dates = "Sat 05:00";
     gc.options = "--delete-older-than 14d";
+    package = pkgs.nixFlakes;
   };
 
   security = {

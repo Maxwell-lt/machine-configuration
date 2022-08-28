@@ -102,8 +102,10 @@
           \ 'rust-client.disableRustup': v:true,
           \ 'diagnostic.errorSign': '☢️',
           \ 'diagnostic.warningSign': '!',
-          \ 'diagnostic.hintSign': '?'
+          \ 'diagnostic.hintSign': '?',
+          \ 'rust-analyzer.serverPath': 'rust-analyzer'
           \ }
+        autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
       '';
       plugins = let
         breezy = pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -128,7 +130,7 @@
         };
       in with pkgs.vimPlugins; [
         lightline-vim coc-nvim vim-nix fzf-vim coc-fzf fzfWrapper breezy
-        coc-java coc-json coc-python coc-rls coc-yaml neosolarized vim-toml
+        coc-java coc-json coc-python coc-rust-analyzer coc-yaml neosolarized vim-toml
       ];
     };
     fzf = {

@@ -16,18 +16,18 @@
     openrgb i2c-tools
     # Cheating the system
     flatpak
+
+    # DAW and plugins
+    ardour
+    lsp-plugins
+    surge-XT
+    zam-plugins
     
     # These modules need serious work
     #(pkgs.callPackage ../../pkgs/svp {})
     #(import ../../pkgs/svpflow/default.nix)
   ];
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 
   # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
   boot.blacklistedKernelModules = [

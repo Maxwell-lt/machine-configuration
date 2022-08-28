@@ -18,22 +18,24 @@
     xdg-desktop-portal-kde
     plasma-browser-integration
     # Passwords and sync
-    keepassxc insync dropbox
+    keepassxc insync-v3 dropbox
     # Media
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     #mpv vapoursynth
     syncplay deluge pavucontrol
-    puddletag #kdenlive
+    # puddletag 
+    kdenlive
     obs-studio
     calibre cmus
     clementine
+    picard
     # Chat
     discord
     hexchat
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium atom postman
+    vscodium atom postman insomnia
     # Connectivity
     kdeconnect
     # VM dependencies
@@ -69,6 +71,7 @@
   programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
+    mistune = pkgs.mistune_2_0;
     #mpv = (pkgs.mpv-unwrapped.override {
     #  vapoursynthSupport = true;
     #  vapoursynth = pkgs.vapoursynth;
@@ -81,7 +84,18 @@
     #    sha256 = "058k0cmbm4y572jqw83bayb2zzl2fw2aaz0zj1gvg6sxblp76qil";
     #  };
     #});
+    insync-v3 = pkgs.insync-v3.overrideAttrs (old: {
+      src = pkgs.fetchurl {
+        url = "https://cdn.insynchq.com/builds/linux/insync_3.7.11.50381-focal_amd64.deb";
+        sha256 = "sha256-W4YUjQ8VdU+m5DwPlokO0i/mKWOi/1vN79ZmMJk9dZM=";
+      };
+    });
   };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "python3.10-mistune-0.8.4"
+  ];
+
 
   # Enable IME
   i18n.inputMethod = {
