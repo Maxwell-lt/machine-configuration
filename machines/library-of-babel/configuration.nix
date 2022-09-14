@@ -102,9 +102,6 @@
       externalInterface = "eno1";
       internalInterfaces = [ "wg0" ];
     };
-    firewall = {
-      allowedUDPPorts = [ 51820 ];
-    };
 
     wireguard.interfaces.wg0 = {
       ips = [ "10.100.0.1/24" ];
@@ -237,12 +234,16 @@
   };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
+    53 # Forwarded DNS for kube.maxwell-lt.dev. domain
     80
     443
     25565
     8550 # zrepl
   ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedUDPPorts = [ 
+    53      # Forwarded DNS for kube.maxwell-lt.dev. domain
+    51820   # Wireguard
+  ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -254,77 +255,90 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    virtualHosts."maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      root = "/var/www/infosite";
-    };
-    virtualHosts."media.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://10.100.0.2:8096";
+    virtualHosts = {
+      "maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        root = "/var/www/infosite";
+      };
+      "media.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://10.100.0.2:8096";
+        };
+      };
+      "grafana.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:3000";
+        };
+      };
+      "minecraft.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          root = "/var/www/minecraft";
+          tryFiles = "\$uri \$uri/ =404";
+        };
+      };
+      "map.minecraft.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:8123";
+        };
+      };
+      "hass.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://10.100.0.3:8123";
+          extraConfig = ''
+            proxy_buffering off;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+          '';
+        };
+      };
+      "~^[a-zA-Z0-9\\-_]+\\.kube.maxwell-lt.dev$" = {
+        addSSL = true;
+        useACMEHost = "kube.maxwell-lt.dev";
+        locations."/" = {
+          proxyPass = "http://10.100.0.2:80";
+        };
       };
     };
-    virtualHosts."grafana.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://localhost:3000";
-      };
-    };
-    virtualHosts."minecraft.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        root = "/var/www/minecraft";
-        tryFiles = "\$uri \$uri/ =404";
-      };
-    };
-    virtualHosts."map.minecraft.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://localhost:8123";
-      };
-    };
-    virtualHosts."hass.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://10.100.0.3:8123";
-        extraConfig = ''
-          proxy_buffering off;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-        '';
-      };
-    };
-    virtualHosts."kube.maxwell-lt.dev" = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://10.100.0.2:80";
-      };
-    };
+
+    streamConfig = ''
+      server {
+        listen 53 udp;
+        proxy_pass 10.100.0.2:9053;
+        proxy_timeout 20s;
+      }
+
+      server {
+        listen 53;
+        proxy_pass 10.100.0.2:9054;
+        proxy_timeout 20s;
+      }
+    '';
   };
 
   security.acme = {
     acceptTerms = true;
-    certs = 
-    let 
+    defaults = {
       email = "maxwell.lt@live.com";
-    in
-    {
-      "maxwell-lt.dev".email = email;
-      "media.maxwell-lt.dev".email = email;
-      "grafana.maxwell-lt.dev".email = email;
-      "minecraft.maxwell-lt.dev".email = email;
-      "map.minecraft.maxwell-lt.dev".email = email;
-      "hass.maxwell-lt.dev".email = email;
-      "kube.maxwell-lt.dev".email = email;
+    };
+    certs."kube.maxwell-lt.dev" = {
+      domain = "*.kube.maxwell-lt.dev";
+      dnsProvider = "rfc2136";
+      credentialsFile = "/var/lib/secrets/certs.secret";
     };
   };
+
+  users.users.nginx.extraGroups = [ "acme" ];
 
   services.grafana = {
     enable = true;
