@@ -23,7 +23,7 @@
     (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
     #mpv vapoursynth
     syncplay deluge pavucontrol
-    # puddletag 
+    puddletag 
     kdenlive
     obs-studio
     calibre cmus
@@ -71,7 +71,6 @@
   programs.steam.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: rec {
-    mistune = pkgs.mistune_2_0;
     #mpv = (pkgs.mpv-unwrapped.override {
     #  vapoursynthSupport = true;
     #  vapoursynth = pkgs.vapoursynth;
@@ -89,6 +88,20 @@
         url = "https://cdn.insynchq.com/builds/linux/insync_3.7.11.50381-focal_amd64.deb";
         sha256 = "sha256-W4YUjQ8VdU+m5DwPlokO0i/mKWOi/1vN79ZmMJk9dZM=";
       };
+    });
+    puddletag = pkgs.puddletag.overrideAttrs (old: {
+      propagatedBuildInputs = with pkgs; with python3Packages; [
+        pyacoustid
+        # chromaprint
+        configobj
+        levenshtein
+        lxml
+        mutagen
+        pyparsing
+        pyqt5
+        rapidfuzz
+      ];
+      postPatch = old.postPatch + "sed -i requirements.txt -e 's/^chromaprint$//'\n";
     });
   };
 
