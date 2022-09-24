@@ -89,26 +89,7 @@
         sha256 = "sha256-W4YUjQ8VdU+m5DwPlokO0i/mKWOi/1vN79ZmMJk9dZM=";
       };
     });
-    puddletag = pkgs.puddletag.overrideAttrs (old: {
-      propagatedBuildInputs = with pkgs; with python3Packages; [
-        pyacoustid
-        # chromaprint
-        configobj
-        levenshtein
-        lxml
-        mutagen
-        pyparsing
-        pyqt5
-        rapidfuzz
-      ];
-      postPatch = old.postPatch + "sed -i requirements.txt -e 's/^chromaprint$//'\n";
-    });
   };
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "python3.10-mistune-0.8.4"
-  ];
-
 
   # Enable IME
   i18n.inputMethod = {
