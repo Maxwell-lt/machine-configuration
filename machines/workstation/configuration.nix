@@ -28,6 +28,20 @@
     #(import ../../pkgs/svpflow/default.nix)
   ];
 
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "8192";
+    }
+    {
+      domain = "*";
+      type = "soft";
+      item = "memlock";
+      value = "16384";
+    }
+  ];
 
   # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
   boot.blacklistedKernelModules = [
