@@ -9,7 +9,7 @@
     # Some common stuff that people expect to have
     diffutils
     findutils
-    utillinux
+    util-linux
     tzdata
     hostname
     man
@@ -47,5 +47,5 @@
   home-manager.config = import ./home.nix;
   home-manager.useUserPackages = true;
 
-  environment.etc."profiles".source = /nix/var/nix/profiles;
+  #environment.etc."profiles".source = /nix/var/nix/profiles;
 }
