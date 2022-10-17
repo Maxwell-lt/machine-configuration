@@ -18,9 +18,10 @@
     xdg-desktop-portal-kde
     plasma-browser-integration
     # Passwords and sync
-    keepassxc insync-v3 dropbox
+    keepassxc dropbox
+    #insync-v3
     # Media
-    (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; })
+    mpv
     #mpv vapoursynth
     syncplay deluge pavucontrol
     puddletag 
@@ -70,26 +71,40 @@
 
   programs.steam.enable = true;
 
-  nixpkgs.config.packageOverrides = pkgs: rec {
-    #mpv = (pkgs.mpv-unwrapped.override {
-    #  vapoursynthSupport = true;
-    #  vapoursynth = pkgs.vapoursynth;
-    #}).overrideAttrs (old: rec {
-    #  wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
-    #});
-    #discord = pkgs.discord.overrideAttrs (old: {
-    #  src = pkgs.fetchurl {
-    #    url = "https://dl.discordapp.net/apps/linux/0.0.17/discord-0.0.17.tar.gz";
-    #    sha256 = "058k0cmbm4y572jqw83bayb2zzl2fw2aaz0zj1gvg6sxblp76qil";
-    #  };
-    #});
-    insync-v3 = pkgs.insync-v3.overrideAttrs (old: {
-      src = pkgs.fetchurl {
-        url = "https://cdn.insynchq.com/builds/linux/insync_3.7.11.50381-focal_amd64.deb";
-        sha256 = "sha256-W4YUjQ8VdU+m5DwPlokO0i/mKWOi/1vN79ZmMJk9dZM=";
+  nixpkgs.overlays = [
+    (final: prev: {
+      polymc = prev.polymc.overrideAttrs (old: {
+        src = final.fetchFromGitHub {
+          owner = "PlaceholderMC";
+          repo = "PlaceholderMC";
+          rev = "1.4.2";
+          sha256 = "sha256-mqLk7ZcSrtvlUziNUCtnH7xQplXBruuiuN2b1+VX1ng=";
+          fetchSubmodules = true;
+        };
+      });
+      mpv = prev.mpv-with-scripts.override {
+        scripts = [ final.mpvScripts.mpris ];
       };
-    });
-  };
+      #mpv = (prev.mpv-unwrapped.override {
+      #  vapoursynthSupport = true;
+      #  vapoursynth = final.vapoursynth;
+      #}).overrideAttrs (old: rec {
+      #  wafConfigureFlags = old.wafConfigureFlags ++ ["--enable-vapoursynth"];
+      #});
+      #discord = prev.discord.overrideAttrs (old: {
+      #  src = final.fetchurl {
+      #    url = "https://dl.discordapp.net/apps/linux/0.0.17/discord-0.0.17.tar.gz";
+      #    sha256 = "058k0cmbm4y572jqw83bayb2zzl2fw2aaz0zj1gvg6sxblp76qil";
+      #  };
+      #});
+      #insync-v3 = prev.insync-v3.overrideAttrs (old: {
+      #  src = final.fetchurl {
+      #    url = "https://cdn.insynchq.com/builds/linux/insync_3.7.11.50381-focal_amd64.deb";
+      #    sha256 = "sha256-W4YUjQ8VdU+m5DwPlokO0i/mKWOi/1vN79ZmMJk9dZM=";
+      #  };
+      #});
+    })
+  ];
 
   # Enable IME
   i18n.inputMethod = {
