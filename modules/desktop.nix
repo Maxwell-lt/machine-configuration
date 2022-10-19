@@ -71,6 +71,10 @@
 
   programs.steam.enable = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "polymc-1.4.2"
+  ];
+
   nixpkgs.overlays = [
     (final: prev: {
       polymc = prev.polymc.overrideAttrs (old: {
