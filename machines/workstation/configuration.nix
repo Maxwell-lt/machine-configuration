@@ -128,6 +128,15 @@
       enable = true;
       lxcfs.enable = true;
     };
+    podman = {
+      enable = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.dnsname.enable = true;
+    };
   };
 
   networking = {
@@ -197,6 +206,27 @@
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2009", MODE="0666"
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", KERNELS=="0005:057E:2009.*", MODE="0666"
   '';
+
+  #environment.etc = {
+  #  "containers/policy.json" = {
+  #    text = ''
+  #      {
+  #        "default": [
+  #          {
+  #            "type": "insecureAcceptAnything"
+  #          }
+  #        ],
+  #        "transports":
+  #          {
+  #            "docker-daemon":
+  #              {
+  #                "": [{"type":"insecureAcceptAnything"}]
+  #              }
+  #          }
+  #      }
+  #    '';
+  #  };
+  #};
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
