@@ -12,7 +12,7 @@
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
-    jdk8 polymc dolphinEmuMaster lutris pcsx2
+    jdk8 prismlauncher dolphinEmuMaster lutris pcsx2
     # Browsers
     firefox
     xdg-desktop-portal-kde
@@ -71,22 +71,9 @@
 
   programs.steam.enable = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "polymc-1.4.2"
-  ];
-
   nixpkgs.overlays = [
     (final: prev: {
-      polymc = prev.polymc.overrideAttrs (old: {
-        src = final.fetchFromGitHub {
-          owner = "PlaceholderMC";
-          repo = "PlaceholderMC";
-          rev = "1.4.2";
-          sha256 = "sha256-mqLk7ZcSrtvlUziNUCtnH7xQplXBruuiuN2b1+VX1ng=";
-          fetchSubmodules = true;
-        };
-      });
-      mpv = prev.mpv-with-scripts.override {
+      mpv = prev.mpv.override {
         scripts = [ final.mpvScripts.mpris ];
       };
       #mpv = (prev.mpv-unwrapped.override {
