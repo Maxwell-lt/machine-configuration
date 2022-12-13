@@ -43,6 +43,8 @@
     }
   ];
 
+  networking.networkmanager.enable = true;
+
   # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
   boot.blacklistedKernelModules = [
     "snd_hda_intel"
