@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       #../../services/zrepl.nix
-      ../../services/zpool-exporter.nix
+      #../../services/zpool-exporter.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -163,14 +163,14 @@
     coreutils gitAndTools.gitFull wget vim man tree
     mkpasswd sshfs units progress pv ripgrep zip
     unzip p7zip gnupg unrar git-lfs direnv easyrsa
-    wireguard
+    wireguard-tools
     # FS drivers
     dosfstools mtools ntfsprogs
     # System monitoring
     htop whois sysstat smartmontools pciutils
     dmidecode usbutils nmap lm_sensors bmon
     # File transfer
-    wget sshfsFuse rsync
+    wget sshfs-fuse rsync
     # Media manipulation
     ffmpeg-full mkvtoolnix-cli imagemagickBig youtube-dl
     r128gain
@@ -216,7 +216,7 @@
   services.openssh = {
     enable = true;
     allowSFTP = true;
-    passwordAuthentication = false;
+    settings.PasswordAuthentication = false;
   };
 
   users.mutableUsers = false;
@@ -342,7 +342,7 @@
 
   services.grafana = {
     enable = true;
-    auth.anonymous.enable = true;
+    settings."auth.anonymous".enabled = true;
   };
 
   services.prometheus = {
@@ -393,11 +393,11 @@
       node.enable = true;
     };
   };
-  services.zpool-exporter = {
-    enable = true;
-    datasets = [ "rpool" ];
-    properties = [ "used" "available" ];
-  };
+  #services.zpool-exporter = {
+  #  enable = true;
+  #  datasets = [ "rpool" ];
+  #  properties = [ "used" "available" ];
+  #};
 
   nix.settings.sandbox = "relaxed";
 
