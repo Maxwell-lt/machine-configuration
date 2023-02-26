@@ -29,7 +29,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/95D9-2622";
+    { device = "/dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b4eca7db0-part1";
       fsType = "vfat";
     };
 
