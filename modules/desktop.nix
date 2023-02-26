@@ -156,6 +156,47 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    # Pasted in default value from module
+    media-session.config.bluez-monitor = {
+      properties = {
+        # Disable AVRCP absolute volume.
+        # This desyncs PC and audio device volume, allowing those to be set independently.
+        bluez5.enable-hw-volume = false;
+      };
+      rules = [
+        {
+          actions = {
+            update-props = {
+              bluez5.auto-connect = [
+                "hfp_hf"
+                "hsp_hs"
+                "a2dp_sink"
+              ];
+            };
+          };
+          matches = [
+            {
+              device.name = "~bluez_card.*";
+            }
+          ];
+        }
+        {
+          actions = {
+            update-props = {
+              node.pause-on-idle = false;
+            };
+          };
+          matches = [
+            {
+              node.name = "~bluez_input.*";
+            }
+            {
+              node.name = "~bluez_output.*";
+            }
+          ];
+        }
+      ];
+    };
   };
 
   # Enable bluetooth.

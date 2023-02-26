@@ -163,7 +163,7 @@
   services.openssh = {
     enable = true;
     allowSFTP = true;
-    passwordAuthentication = false;
+    settings.PasswordAuthentication = false;
   };
 
   services.lorri.enable = true;

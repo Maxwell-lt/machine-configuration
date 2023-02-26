@@ -11,6 +11,11 @@
       #../../services/zrepl.nix
     ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];
+
+
   environment.systemPackages = with pkgs; [
     # Modify RGB configuration
     openrgb i2c-tools
@@ -124,11 +129,11 @@
 
   virtualisation = {
     lxd = {
-      enable = true;
+      enable = false;
     };
     lxc = {
-      enable = true;
-      lxcfs.enable = true;
+      enable = false;
+      lxcfs.enable = false;
     };
     docker = {
       enable = true;
