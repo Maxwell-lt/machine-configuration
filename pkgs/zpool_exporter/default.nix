@@ -1,24 +1,17 @@
-{ stdenv, pkgs, fetchFromGitHub, ... }:
+{ stdenv, pkgs, fetchFromGitHub, rustPlatform, ... }:
 
-let mkRustPlatform = pkgs.callPackage ./mkRustPlatform.nix {};
-
-    rustPlatform = mkRustPlatform {
-      date = "2020-08-29";
-      channel = "nightly";
-    };
-
-in rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage rec {
   pname = "zpool-exporter";
-  version = "v0.2.1";
+  version = "v0.3.0";
 
   src = fetchFromGitHub {
     owner = "maxwell-lt";
     repo = pname;
     rev = version;
-    sha256 = "0dl1b5wkgfvnxmp8hmrhc43j0k598x90l6rr2kw2y8jgxv5vrgr1";
+    sha256 = "sha256-iW8fu/Lj2UivNBnEIZ1/EikQBte3RIoXZEw1HHxoyMg=";
   };
 
-  cargoSha256 ="1xvmrm994qiai49c01mn2kbarxkssm5cqwjqzm998v3wx30fllrf";
+  cargoSha256 ="sha256-WndbJkTFIdpkaB1AbJdLmpQE++lT+qs7/VmtH6Cq6pk=";
   verifyCargoDeps = true;
 
   preConfigure = ''
