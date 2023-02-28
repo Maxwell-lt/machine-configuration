@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       #../../services/zrepl.nix
-      #../../services/zpool-exporter.nix
+      ../../services/zpool-exporter.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -393,11 +393,11 @@
       node.enable = true;
     };
   };
-  #services.zpool-exporter = {
-  #  enable = true;
-  #  datasets = [ "rpool" ];
-  #  properties = [ "used" "available" ];
-  #};
+  services.zpool-exporter = {
+    enable = true;
+    datasets = [ "rpool" ];
+    properties = [ "used" "available" ];
+  };
 
   nix.settings.sandbox = "relaxed";
 
