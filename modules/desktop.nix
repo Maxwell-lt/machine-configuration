@@ -13,7 +13,8 @@
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
-    jdk8 prismlauncher dolphinEmuMaster lutris pcsx2
+    dolphinEmuMaster lutris pcsx2
+    (prismlauncher.override { jdks = [ jdk jdk8 jdk19 ]; })
     # Browsers
     firefox
     xdg-desktop-portal-kde
