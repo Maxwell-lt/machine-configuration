@@ -7,7 +7,7 @@
       ../../modules/zfs.nix
       ../../modules/common.nix
       ../../modules/desktop.nix
-      ../../modules/nvidia.nix
+      ../../modules/amdgpu.nix
       #../../services/zrepl.nix
     ];
 
