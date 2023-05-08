@@ -6,7 +6,8 @@
       ./hardware-configuration.nix
       ../../modules/common.nix
       ../../modules/zfs.nix
-      ../../modules/amdgpu.nix
+      #../../modules/amdgpu.nix
+      ../../modules/nvidia.nix
       ../../modules/jellyfin.nix
       #../../services/zrepl.nix
       ../../services/zpool-exporter.nix
@@ -144,7 +145,7 @@
   networking.firewall.extraPackages = with pkgs; [ iproute ];
 
   networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
+  networking.interfaces.enp39s0.useDHCP = true;
 
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
