@@ -7,7 +7,7 @@
       ../../modules/zfs.nix
       ../../modules/common.nix
       ../../modules/desktop.nix
-      ../../modules/nvidia.nix
+      ../../modules/amdgpu.nix
       #../../services/zrepl.nix
     ];
 
@@ -162,12 +162,12 @@
   networking.nat = {
     enable = true;
     internalInterfaces = [ "ve-+" ];
-    externalInterface = "enp39s0";
+    externalInterface = "enp16s0";
   };
 
   networking.useDHCP = false;
-  networking.interfaces.enp39s0.useDHCP = true;
-  networking.interfaces.wlp41s0.useDHCP = true;
+  networking.interfaces.enp16s0.useDHCP = true;
+  networking.interfaces.wlp17s0.useDHCP = true;
 
   # Needed for tc to work in the firewall script
   networking.firewall.extraPackages = with pkgs; [ iproute ];

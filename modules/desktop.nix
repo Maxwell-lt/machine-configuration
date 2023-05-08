@@ -13,7 +13,8 @@
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
-    jdk8 prismlauncher dolphinEmuMaster lutris pcsx2
+    dolphinEmuMaster lutris pcsx2
+    (prismlauncher.override { jdks = [ jdk jdk8 jdk19 ]; })
     # Browsers
     firefox
     xdg-desktop-portal-kde
@@ -100,8 +101,8 @@
 
   # Enable IME
   i18n.inputMethod = {
-    enabled = "fcitx";
-    fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+    enabled = "fcitx5";
+    fcitx5.addons = [ pkgs.fcitx5-mozc ];
   };
 
   nixpkgs.config.firefox = {
@@ -156,47 +157,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
-    # Pasted in default value from module
-    media-session.config.bluez-monitor = {
-      properties = {
-        # Disable AVRCP absolute volume.
-        # This desyncs PC and audio device volume, allowing those to be set independently.
-        bluez5.enable-hw-volume = false;
-      };
-      rules = [
-        {
-          actions = {
-            update-props = {
-              bluez5.auto-connect = [
-                "hfp_hf"
-                "hsp_hs"
-                "a2dp_sink"
-              ];
-            };
-          };
-          matches = [
-            {
-              device.name = "~bluez_card.*";
-            }
-          ];
-        }
-        {
-          actions = {
-            update-props = {
-              node.pause-on-idle = false;
-            };
-          };
-          matches = [
-            {
-              node.name = "~bluez_input.*";
-            }
-            {
-              node.name = "~bluez_output.*";
-            }
-          ];
-        }
-      ];
-    };
   };
 
   # Enable bluetooth.
