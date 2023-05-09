@@ -24,7 +24,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/20B0-FAC4";
+    { device = "/dev/disk/by-id/nvme-eui.e8238fa6bf530001001b444a4435f0f0-part1";
       fsType = "vfat";
     };
 
