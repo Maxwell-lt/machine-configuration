@@ -24,6 +24,7 @@
     units               # Unit conversions
     unrar               # RAR file extraction
     unzip               # ZIP file extraction
+    unar                # Extract from multiple archive types with one tool
     wireguard-tools     # Tools for Wireguard
     zip                 # ZIP file manipulation
 
@@ -49,6 +50,7 @@
     sysstat       # Collection of performance monitoring tools
     usbutils      # USB tools, including lsusb
     whois         # WHOIS lookup
+    dig           # DNS lookup
 
     # File transfer
     rsync       # Incremental file transfer
@@ -62,7 +64,7 @@
     mkvtoolnix-cli  # Matroska media container tools
     r128gain        # Add ReplayGain information to music files
     vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
-    youtube-dl      # Download video/audio from YouTube
+    yt-dlp          # Download video/audio from YouTube
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -138,6 +140,7 @@
           pkgs.nix-zsh-completions
         ];
       };
+      # Fix paste into zsh writing character-by-character
       shellInit = ''
         pasteinit() {
           OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
