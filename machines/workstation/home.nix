@@ -17,7 +17,7 @@
     enable = true;
     matchBlocks = {
       "library-of-babel" = {
-        hostname = "maxwell-lt.dev";
+        hostname = "ssh.maxwell-lt.dev";
         port = 22;
         user = "maxwell";
       };
