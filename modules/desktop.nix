@@ -21,7 +21,7 @@
     plasma-browser-integration
     # Passwords and sync
     keepassxc dropbox
-    #insync-v3
+    insync
     # Media
     mpv
     #mpv vapoursynth
