@@ -46,7 +46,7 @@
     virt-viewer spice-vdagent
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     powerline-fonts corefonts
     noto-fonts noto-fonts-cjk
     noto-fonts-emoji noto-fonts-extra
