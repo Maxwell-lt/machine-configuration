@@ -59,6 +59,8 @@
 
     # Media manipulation
     abcde           # One-step CD ripping tool
+    whipper         # Secure ripper, Linux equivalent of EAC
+    flac            # FLAC CLI encoder, can also validate a .flac's internal checksum
     ffmpeg-full     # Fully featured media file manipulation tool
     imagemagickBig  # xkcd::2347
     mkvtoolnix-cli  # Matroska media container tools
