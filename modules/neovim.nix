@@ -138,6 +138,26 @@
             { name = 'luasnip' },
           },
         }
+
+        require('telescope').setup {
+          extensions = {
+            fzf = {
+              fuzzy = true,                    -- false will only do exact matching
+              override_generic_sorter = true,  -- override the generic sorter
+              override_file_sorter = true,     -- override the file sorter
+              case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                               -- the default case_mode is "smart_case"
+            },
+            file_browser = {
+              hijack_netrw = true
+            }
+          }
+        }
+        require('telescope').load_extension('fzf')
+        require('telescope').load_extension('file_browser')
+
+        local file_browser = require('telescope').extensions.file_browser
+        vim.keymap.set('n', '<leader>fd', file_browser.file_browser, {})
       '';
       plugins = with pkgs.vimPlugins; [
         {
@@ -163,26 +183,8 @@
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
           '';
         }
-        {
-          plugin = telescope-fzf-native-nvim;
-          type = "lua";
-          config = ''
-            require('telescope').setup {
-              extensions = {
-                fzf = {
-                  fuzzy = true,                    -- false will only do exact matching
-                  override_generic_sorter = true,  -- override the generic sorter
-                  override_file_sorter = true,     -- override the file sorter
-                  case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                                   -- the default case_mode is "smart_case"
-                }
-              }
-            }
-            -- To get fzf loaded and working with telescope, you need to call
-            -- load_extension, somewhere after setup function:
-            require('telescope').load_extension('fzf')
-          '';
-        }
+        telescope-fzf-native-nvim
+        telescope-file-browser-nvim
         {
           plugin = gitsigns-nvim;
           type = "lua";
@@ -223,6 +225,7 @@
         nodePackages.typescript
         nodePackages.typescript-language-server
         nodePackages.yaml-language-server
+        xclip
       ];
     };
     fzf = {
