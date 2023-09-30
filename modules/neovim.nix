@@ -33,11 +33,17 @@
 
         local lspconfig = require('lspconfig')
 
+        local inlay_on_attach = function(client, bufnr)
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint(bufnr, true)
+          end
+        end
+
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
         local servers = { 'rust_analyzer', 'pyright' }
         for _, lsp in ipairs(servers) do
           lspconfig[lsp].setup {
-            -- on_attach = my_custom_on_attach,
+            on_attach = inlay_on_attach,
             capabilities = capabilities,
           }
         end
@@ -155,6 +161,26 @@
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
             vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+          '';
+        }
+        {
+          plugin = telescope-fzf-native-nvim;
+          type = "lua";
+          config = ''
+            require('telescope').setup {
+              extensions = {
+                fzf = {
+                  fuzzy = true,                    -- false will only do exact matching
+                  override_generic_sorter = true,  -- override the generic sorter
+                  override_file_sorter = true,     -- override the file sorter
+                  case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                                   -- the default case_mode is "smart_case"
+                }
+              }
+            }
+            -- To get fzf loaded and working with telescope, you need to call
+            -- load_extension, somewhere after setup function:
+            require('telescope').load_extension('fzf')
           '';
         }
         {

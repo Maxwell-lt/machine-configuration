@@ -6,7 +6,7 @@
     coreutils           # Basic GNU utilities
     direnv              # Load environment variables when cd'ing into a directory
     easyrsa             # Scripts for generating x509 certs
-    exa                 # Fancy ls replacement
+    eza                 # Fancy ls replacement
     findutils           # GNU find/xargs commands
     git-lfs             # Git Large File Storage support
     gitAndTools.gitFull # Git core installation
@@ -155,6 +155,12 @@
         zstyle :bracketed-paste-magic paste-init pasteinit
         zstyle :bracketed-paste-magic paste-finish pastefinish
       '';
+      shellAliases = {
+        ls = "eza --icons";
+        ll = "eza --icons -l --time-style long-iso";
+        la = "eza --icons -l --time-style long-iso -a";
+        lt = "eza --icons --tree -l";
+      };
     };
     neovim = {
       enable = true;

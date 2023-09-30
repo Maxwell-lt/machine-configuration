@@ -30,7 +30,7 @@
     kdenlive
     obs-studio
     calibre cmus
-    clementine
+    strawberry
     picard
     # Chat
     discord
