@@ -11,6 +11,9 @@
     git-lfs             # Git Large File Storage support
     gitAndTools.gitFull # Git core installation
     gnupg               # GNU Privacy Guard
+    jq                  # JSON printing and manipulation
+    jless               # JSON navigator
+    yq                  # jq, but for YAML
     man                 # Documentation for everything
     mkpasswd            # Generate hashed passwords
     nix-prefetch-git    # Obtain hashes from Git for use with Nix
