@@ -14,7 +14,7 @@
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     dolphinEmuMaster lutris pcsx2
-    (prismlauncher.override { jdks = [ jdk jdk8 jdk19 ]; })
+    (prismlauncher.override { jdks = [ jdk8 jdk17 jdk19 ]; })
     # Browsers
     firefox
     xdg-desktop-portal-kde
