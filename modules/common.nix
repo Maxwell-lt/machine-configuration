@@ -118,7 +118,7 @@
     };
     java = {
       enable = true;
-      package = pkgs.jdk8;
+      package = pkgs.jdk17;
     };
     mtr.enable = true;
     gnupg.agent = {
