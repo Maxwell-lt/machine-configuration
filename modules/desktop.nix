@@ -38,7 +38,7 @@
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium atom postman insomnia
+    vscodium insomnia
     # Connectivity
     kdeconnect
     # VM dependencies
@@ -171,7 +171,7 @@
   # Enable bluetooth.
   hardware.bluetooth = {
     enable = true;
-    package = pkgs.bluezFull;
+    package = pkgs.bluez;
     settings.General.Enable = "Source,Sink,Media,Socket";
   };
 
