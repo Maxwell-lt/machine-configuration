@@ -7,7 +7,7 @@
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
     krita psensor kcalc gnome3.simple-scan
-    logseq prusa-slicer
+    logseq prusa-slicer kmymoney
     # KMail and friends
     plasma5Packages.kmail-account-wizard kaddressbook plasma5Packages.kleopatra plasma5Packages.pim-data-exporter
     thunderbird birdtray kfind
