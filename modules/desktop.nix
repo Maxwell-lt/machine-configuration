@@ -78,15 +78,15 @@
       mpv = prev.mpv.override {
         scripts = [ final.mpvScripts.mpris ];
       };
-      prismlauncher-unwrapped = prev.prismlauncher-unwrapped.overrideAttrs (o: {
-        patches = (o.patches or [ ]) ++ [
-          (final.fetchpatch {
-            name = "revert-removal-of-ftb-packs.patch";
-            url = "https://github.com/Maxwell-lt/PrismLauncher/commit/e625f2b827888f1b615450e005e63ca6c8870d2e.patch";
-            hash = "sha256-bQLB0To1WD5nt+4HBx+lKS9meVr0tpUixtGQPM2ptb8=";
-          })
-        ];
-      });
+      #prismlauncher-unwrapped = prev.prismlauncher-unwrapped.overrideAttrs (o: {
+      #  patches = (o.patches or [ ]) ++ [
+      #    (final.fetchpatch {
+      #      name = "revert-removal-of-ftb-packs.patch";
+      #      url = "https://github.com/Maxwell-lt/PrismLauncher/commit/e625f2b827888f1b615450e005e63ca6c8870d2e.patch";
+      #      hash = "sha256-bQLB0To1WD5nt+4HBx+lKS9meVr0tpUixtGQPM2ptb8=";
+      #    })
+      #  ];
+      #});
       #mpv = (prev.mpv-unwrapped.override {
       #  vapoursynthSupport = true;
       #  vapoursynth = final.vapoursynth;
