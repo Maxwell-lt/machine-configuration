@@ -115,7 +115,8 @@
   };
 
   nixpkgs.config.firefox = {
-    enablePlasmaBrowserIntegration = true;
+    #enablePlasmaBrowserIntegration = true;
+    nativeMessagingHosts = [ pkgs.plasma-browser-integration ];
   };
 
   virtualisation.libvirtd.enable = true;
