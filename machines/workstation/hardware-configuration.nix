@@ -15,6 +15,9 @@
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
   };
+  boot.extraModprobeConfig = ''
+    options zfs zfs_dmu_offset_next_sync=0
+  '';
 
   fileSystems."/" =
     { device = "rpool/safe/root";
