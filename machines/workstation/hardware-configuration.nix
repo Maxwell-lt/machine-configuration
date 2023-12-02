@@ -15,8 +15,10 @@
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
   };
+  # Set ZFS ARC size to 16GiB
+  # Temporary: disable dmu_offset_next_sync tunable to mitigate dataloss bug
   boot.extraModprobeConfig = ''
-    options zfs zfs_dmu_offset_next_sync=0
+    options zfs zfs_dmu_offset_next_sync=0 zfs_arc_max=17179869184
   '';
 
   fileSystems."/" =
