@@ -179,7 +179,10 @@
   services.xserver = {
     enable = true;
     layout = "us";
-    displayManager.sddm.enable = true;
+    displayManager = {
+      sddm.enable = true;
+      defaultSession = "plasmawayland";
+    };
     desktopManager.plasma5.enable = true;
     # Enable Japanese IME
     displayManager.sessionCommands = ''
@@ -187,7 +190,6 @@
       export XMODIFIER="@im=fcitx"
       export GTK_IM_MODULE="fcitx"
       export QT_IM_MODULE="fcitx"
-      fcitx &
     '';
   };
 }
