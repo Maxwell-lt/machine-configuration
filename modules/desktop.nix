@@ -184,12 +184,5 @@
       defaultSession = "plasmawayland";
     };
     desktopManager.plasma5.enable = true;
-    # Enable Japanese IME
-    displayManager.sessionCommands = ''
-      export XMODIFIERS="@im=fcitx"
-      export XMODIFIER="@im=fcitx"
-      export GTK_IM_MODULE="fcitx"
-      export QT_IM_MODULE="fcitx"
-    '';
   };
 }
