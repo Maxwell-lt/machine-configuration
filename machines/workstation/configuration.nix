@@ -8,6 +8,7 @@
       ../../modules/common.nix
       ../../modules/desktop.nix
       ../../modules/amdgpu.nix
+      ../../modules/osu.nix
       #../../services/zrepl.nix
     ];
 
@@ -28,7 +29,7 @@
     surge-XT
     zam-plugins
     noisetorch
-    
+
     # These modules need serious work
     #(pkgs.callPackage ../../pkgs/svp {})
     #(import ../../pkgs/svpflow/default.nix)
