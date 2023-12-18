@@ -6,7 +6,6 @@
       ../../modules/zfs.nix
       ../../modules/common.nix
       ../../modules/desktop.nix
-      #../../services/zrepl.nix
     ];
 
   sops = {

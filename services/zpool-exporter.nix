@@ -21,12 +21,12 @@ with lib;
 
       datasets = mkOption {
         description = "Datasets to get properties from";
-        type = listOf string;
+        type = listOf str;
       };
 
       properties = mkOption {
         description = "Properties to retrieve from zfs get";
-        type = listOf string;
+        type = listOf str;
         default = [ "used" "available" ];
       };
     };

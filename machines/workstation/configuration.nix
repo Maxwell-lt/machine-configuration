@@ -9,7 +9,6 @@
       ../../modules/desktop.nix
       ../../modules/amdgpu.nix
       ../../modules/osu.nix
-      #../../services/zrepl.nix
     ];
 
   nixpkgs.config.permittedInsecurePackages = [
