@@ -1,7 +1,4 @@
 { config, pkgs, ... }:
-let
-  wifiKeys = import ../../secrets/wifikey.nix;
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -11,6 +8,12 @@ in
       ../../modules/desktop.nix
       #../../services/zrepl.nix
     ];
+
+  sops = {
+    defaultSopsFile = ../../secrets/wifi.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets."wireless.env" = { };
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -26,16 +29,12 @@ in
   networking.interfaces.wlp2s0.useDHCP = true;
   networking.networkmanager.enable = true;
   networking.wireless = {
+    environmentFile = config.sops.secrets."wireless.env".path;
     enable = false;
     networks = {
-      "ltfamily-2.4GHz" = {
-        pskRaw = wifiKeys.ltfamily;
+      "@home_uuid@" = {
+        psk = "@home_psk@";
         priority = 40;
-      };
-
-      "pixel-hotspot" = {
-        pskRaw = wifiKeys.hotspot;
-        priority = 10;
       };
     };
   };
@@ -75,13 +74,6 @@ in
   #    snapshotting.interval = 10;
   #  };
   #};
-
-  users.users."OrcDovahkiin" = {
-    isNormalUser = true;
-    extraGroups = [ "video" "audio" "networkmanager" ];
-    hashedPassword = (import ../../secrets/odpassword.nix).password;
-    shell = pkgs.zsh;
-  };
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?

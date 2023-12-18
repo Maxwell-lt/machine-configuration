@@ -1,0 +1,11 @@
+keys:
+  - &admin_workstation age1y832x8gp8lt7tzl7m03cfvmuaqlf58fdgvyc3gprpkdv9cve5yxqk4mkw9
+  - &admin_babel age12mql9lrqmp6yvrr9gh0kuuwnxn2hkvcku7x620vgtj6r568zfq7skkpajf
+  - &admin_media age13d0wge5xgtd8yvfak9lrhy5ee0yus7uecwhh0cpyqs59yv2ypveqt6evuh
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *admin_workstation
+          - *admin_babel
+          - *admin_media

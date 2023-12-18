@@ -261,6 +261,11 @@
         enableACME = true;
         root = "/var/www/infosite";
       };
+      "www.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        root = "/var/www/infosite";
+      };
       "media.maxwell-lt.dev" = {
         addSSL = true;
         enableACME = true;
@@ -302,28 +307,28 @@
           '';
         };
       };
-      "~^[a-zA-Z0-9\\-_]+\\.kube.maxwell-lt.dev$" = {
-        addSSL = true;
-        useACMEHost = "kube.maxwell-lt.dev";
-        locations."/" = {
-          proxyPass = "http://10.100.0.2:80";
-        };
-      };
+      #"~^[a-zA-Z0-9\\-_]+\\.kube.maxwell-lt.dev$" = {
+      #  addSSL = true;
+      #  useACMEHost = "kube.maxwell-lt.dev";
+      #  locations."/" = {
+      #    proxyPass = "http://10.100.0.2:80";
+      #  };
+      #};
     };
 
-    streamConfig = ''
-      server {
-        listen 53 udp;
-        proxy_pass 10.100.0.2:9053;
-        proxy_timeout 20s;
-      }
+    #streamConfig = ''
+    #  server {
+    #    listen 53 udp;
+    #    proxy_pass 10.100.0.2:9053;
+    #    proxy_timeout 20s;
+    #  }
 
-      server {
-        listen 53;
-        proxy_pass 10.100.0.2:9054;
-        proxy_timeout 20s;
-      }
-    '';
+    #  server {
+    #    listen 53;
+    #    proxy_pass 10.100.0.2:9054;
+    #    proxy_timeout 20s;
+    #  }
+    #'';
   };
 
   security.acme = {
@@ -331,11 +336,11 @@
     defaults = {
       email = "maxwell.lt@live.com";
     };
-    certs."kube.maxwell-lt.dev" = {
-      domain = "*.kube.maxwell-lt.dev";
-      dnsProvider = "rfc2136";
-      credentialsFile = "/var/lib/secrets/certs.secret";
-    };
+    #certs."kube.maxwell-lt.dev" = {
+    #  domain = "*.kube.maxwell-lt.dev";
+    #  dnsProvider = "rfc2136";
+    #  credentialsFile = "/var/lib/secrets/certs.secret";
+    #};
   };
 
   users.users.nginx.extraGroups = [ "acme" ];

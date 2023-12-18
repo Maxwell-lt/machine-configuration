@@ -7,21 +7,21 @@
     kate ark okular filelight audio-recorder
     libreoffice gparted yed
     krita psensor kcalc gnome3.simple-scan
-    logseq
+    logseq prusa-slicer kmymoney
     # KMail and friends
     plasma5Packages.kmail-account-wizard kaddressbook plasma5Packages.kleopatra plasma5Packages.pim-data-exporter
     thunderbird birdtray kfind
     # Games
     (steam.override { extraPkgs = pkgs: [ mono gtk3 gtk3-x11 libgdiplus zlib ];}).run
     dolphinEmuMaster lutris pcsx2
-    (prismlauncher.override { jdks = [ jdk jdk8 jdk19 ]; })
+    (prismlauncher.override { jdks = [ jdk8 jdk17 jdk19 ]; })
     # Browsers
     firefox
     xdg-desktop-portal-kde
     plasma-browser-integration
     # Passwords and sync
     keepassxc dropbox
-    #insync-v3
+    insync
     # Media
     mpv
     #mpv vapoursynth
@@ -30,7 +30,7 @@
     kdenlive
     obs-studio
     calibre cmus
-    clementine
+    strawberry
     picard
     # Chat
     discord
@@ -38,7 +38,7 @@
     # Development
     jetbrains.idea-ultimate jetbrains.clion
     jetbrains.pycharm-professional jetbrains.webstorm
-    vscodium atom postman insomnia
+    vscodium insomnia
     # Connectivity
     kdeconnect
     # VM dependencies
@@ -46,7 +46,7 @@
     virt-viewer spice-vdagent
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     powerline-fonts corefonts
     noto-fonts noto-fonts-cjk
     noto-fonts-emoji noto-fonts-extra
@@ -78,6 +78,15 @@
       mpv = prev.mpv.override {
         scripts = [ final.mpvScripts.mpris ];
       };
+      #prismlauncher-unwrapped = prev.prismlauncher-unwrapped.overrideAttrs (o: {
+      #  patches = (o.patches or [ ]) ++ [
+      #    (final.fetchpatch {
+      #      name = "revert-removal-of-ftb-packs.patch";
+      #      url = "https://github.com/Maxwell-lt/PrismLauncher/commit/e625f2b827888f1b615450e005e63ca6c8870d2e.patch";
+      #      hash = "sha256-bQLB0To1WD5nt+4HBx+lKS9meVr0tpUixtGQPM2ptb8=";
+      #    })
+      #  ];
+      #});
       #mpv = (prev.mpv-unwrapped.override {
       #  vapoursynthSupport = true;
       #  vapoursynth = final.vapoursynth;
@@ -106,7 +115,8 @@
   };
 
   nixpkgs.config.firefox = {
-    enablePlasmaBrowserIntegration = true;
+    #enablePlasmaBrowserIntegration = true;
+    nativeMessagingHosts = [ pkgs.plasma-browser-integration ];
   };
 
   virtualisation.libvirtd.enable = true;
@@ -162,22 +172,17 @@
   # Enable bluetooth.
   hardware.bluetooth = {
     enable = true;
-    package = pkgs.bluezFull;
+    package = pkgs.bluez;
     settings.General.Enable = "Source,Sink,Media,Socket";
   };
 
   services.xserver = {
     enable = true;
     layout = "us";
-    displayManager.sddm.enable = true;
+    displayManager = {
+      sddm.enable = true;
+      defaultSession = "plasmawayland";
+    };
     desktopManager.plasma5.enable = true;
-    # Enable Japanese IME
-    displayManager.sessionCommands = ''
-      export XMODIFIERS="@im=fcitx"
-      export XMODIFIER="@im=fcitx"
-      export GTK_IM_MODULE="fcitx"
-      export QT_IM_MODULE="fcitx"
-      fcitx &
-    '';
   };
 }

@@ -33,11 +33,17 @@
 
         local lspconfig = require('lspconfig')
 
+        local inlay_on_attach = function(client, bufnr)
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint(bufnr, true)
+          end
+        end
+
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
         local servers = { 'rust_analyzer', 'pyright' }
         for _, lsp in ipairs(servers) do
           lspconfig[lsp].setup {
-            -- on_attach = my_custom_on_attach,
+            on_attach = inlay_on_attach,
             capabilities = capabilities,
           }
         end
@@ -54,6 +60,38 @@
             "--tsserver-path", 
             "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/" 
           }
+        })
+        
+        -- Set nvim-lspconfig keybinds
+        -- Use LspAttach autocommand to only map the following keys
+        -- after the language server attaches to the current buffer
+        vim.api.nvim_create_autocmd('LspAttach', {
+          group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+          callback = function(ev)
+            -- Enable completion triggered by <c-x><c-o>
+            vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+            -- Buffer local mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local opts = { buffer = ev.buf }
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+            vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+            vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+            vim.keymap.set('n', '<space>wl', function()
+              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, opts)
+            vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+            vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+            vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+            vim.keymap.set('n', '<space>f', function()
+              vim.lsp.buf.format { async = true }
+            end, opts)
+          end,
         })
 
         -- luasnip setup
@@ -100,6 +138,26 @@
             { name = 'luasnip' },
           },
         }
+
+        require('telescope').setup {
+          extensions = {
+            fzf = {
+              fuzzy = true,                    -- false will only do exact matching
+              override_generic_sorter = true,  -- override the generic sorter
+              override_file_sorter = true,     -- override the file sorter
+              case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                               -- the default case_mode is "smart_case"
+            },
+            file_browser = {
+              hijack_netrw = true
+            }
+          }
+        }
+        require('telescope').load_extension('fzf')
+        require('telescope').load_extension('file_browser')
+
+        local file_browser = require('telescope').extensions.file_browser
+        vim.keymap.set('n', '<leader>fd', file_browser.file_browser, {})
       '';
       plugins = with pkgs.vimPlugins; [
         {
@@ -125,6 +183,8 @@
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
           '';
         }
+        telescope-fzf-native-nvim
+        telescope-file-browser-nvim
         {
           plugin = gitsigns-nvim;
           type = "lua";
@@ -165,6 +225,7 @@
         nodePackages.typescript
         nodePackages.typescript-language-server
         nodePackages.yaml-language-server
+        xclip
       ];
     };
     fzf = {

@@ -6,11 +6,14 @@
     coreutils           # Basic GNU utilities
     direnv              # Load environment variables when cd'ing into a directory
     easyrsa             # Scripts for generating x509 certs
-    exa                 # Fancy ls replacement
+    eza                 # Fancy ls replacement
     findutils           # GNU find/xargs commands
     git-lfs             # Git Large File Storage support
     gitAndTools.gitFull # Git core installation
     gnupg               # GNU Privacy Guard
+    jq                  # JSON printing and manipulation
+    jless               # JSON navigator
+    yq                  # jq, but for YAML
     man                 # Documentation for everything
     mkpasswd            # Generate hashed passwords
     nix-prefetch-git    # Obtain hashes from Git for use with Nix
@@ -24,6 +27,7 @@
     units               # Unit conversions
     unrar               # RAR file extraction
     unzip               # ZIP file extraction
+    unar                # Extract from multiple archive types with one tool
     wireguard-tools     # Tools for Wireguard
     zip                 # ZIP file manipulation
 
@@ -49,6 +53,7 @@
     sysstat       # Collection of performance monitoring tools
     usbutils      # USB tools, including lsusb
     whois         # WHOIS lookup
+    dig           # DNS lookup
 
     # File transfer
     rsync       # Incremental file transfer
@@ -57,12 +62,14 @@
 
     # Media manipulation
     abcde           # One-step CD ripping tool
+    whipper         # Secure ripper, Linux equivalent of EAC
+    flac            # FLAC CLI encoder, can also validate a .flac's internal checksum
     ffmpeg-full     # Fully featured media file manipulation tool
     imagemagickBig  # xkcd::2347
     mkvtoolnix-cli  # Matroska media container tools
     r128gain        # Add ReplayGain information to music files
     vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
-    youtube-dl      # Download video/audio from YouTube
+    yt-dlp          # Download video/audio from YouTube
   ];
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -111,7 +118,7 @@
     };
     java = {
       enable = true;
-      package = pkgs.jdk8;
+      package = pkgs.jdk17;
     };
     mtr.enable = true;
     gnupg.agent = {
@@ -138,6 +145,7 @@
           pkgs.nix-zsh-completions
         ];
       };
+      # Fix paste into zsh writing character-by-character
       shellInit = ''
         pasteinit() {
           OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
@@ -150,6 +158,12 @@
         zstyle :bracketed-paste-magic paste-init pasteinit
         zstyle :bracketed-paste-magic paste-finish pastefinish
       '';
+      shellAliases = {
+        ls = "eza --icons";
+        ll = "eza --icons -l --time-style long-iso";
+        la = "eza --icons -l --time-style long-iso -a";
+        lt = "eza --icons --tree -l";
+      };
     };
     neovim = {
       enable = true;

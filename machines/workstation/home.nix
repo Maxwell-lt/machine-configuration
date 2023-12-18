@@ -1,8 +1,21 @@
 { config, pkgs, ... }:
 
+let
+  playlist-scan = pkgs.writers.writePython3Bin "playlist-scan" {} ''
+    import os
+    import sys
+    with open(sys.argv[1]) as f:
+        lines = f.read().splitlines()
+    miss = [line for line in lines if line[0] != '#' and not os.path.exists(line)]
+    print(f'Playlist {sys.argv[1]} has {len(miss)} missing files.')
+    print(*miss, sep='\n')
+  '';
+in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  manual.manpages.enable = false;
 
   imports = [
     ../../modules/neovim.nix
@@ -11,13 +24,14 @@
   home.packages = with pkgs; [
     #lutris
     playonlinux
+    playlist-scan
   ];
 
   programs.ssh = {
     enable = true;
     matchBlocks = {
       "library-of-babel" = {
-        hostname = "maxwell-lt.dev";
+        hostname = "ssh.maxwell-lt.dev";
         port = 22;
         user = "maxwell";
       };
