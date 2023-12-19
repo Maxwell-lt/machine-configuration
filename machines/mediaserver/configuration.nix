@@ -16,6 +16,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  services.invokeai = {
+    enable = true;
+    package = pkgs.invokeai-nvidia;
+  };
+
   networking = {
     hostId = "17ca4f0b";
     hostName = "media-server-alpha";
