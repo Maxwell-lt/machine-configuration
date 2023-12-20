@@ -20,6 +20,8 @@
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5000cca22df6b3dd"; # or "nodev" for efi only
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   services.zfs = {
     autoSnapshot = {
       enable = true;
