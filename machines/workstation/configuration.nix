@@ -8,7 +8,6 @@
       ../../modules/common.nix
       ../../modules/desktop.nix
       ../../modules/amdgpu.nix
-      ../../modules/osu.nix
     ];
 
   nixpkgs.config.permittedInsecurePackages = [
