@@ -1,12 +1,22 @@
 { config, pkgs, ... }:
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/zfs.nix
-      ../../modules/common.nix
-      ../../modules/desktop.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  mlt = {
+    common = {
+      enable = true;
+      media = true;
+      user.enable = true;
+    };
+    desktop = {
+      enable = true;
+      printing = true;
+      productivity = true;
+    };
+    zfs.enable = true;
+  };
 
   sops = {
     defaultSopsFile = ../../secrets/wifi.yaml;

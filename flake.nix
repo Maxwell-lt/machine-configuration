@@ -23,15 +23,17 @@
         linux64System = "x86_64-linux";
         buildSystem = config: nixpkgs.lib.nixosSystem {
           system = linux64System;
-          modules = config ++ [ sops-nix.nixosModules.sops ];
-          specialArgs = { inherit nixified-ai; };
+          modules = config ++ [ 
+            sops-nix.nixosModules.sops
+            ./config
+          ];
         };
       in
       {
         maxwell-nixos = buildSystem [
           ./machines/workstation/configuration.nix
         ];
-        media-server-alpha = buildSystem [
+        media-server-alpha = (buildSystem [
           ./machines/mediaserver/configuration.nix
           nixified-ai.nixosModules.invokeai
           {
@@ -46,13 +48,17 @@
               trusted-public-keys = [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
             };
           }
-        ];
+        ]) // { specialArgs = { inherit nixified-ai; }; };
         nix-portable-omega = buildSystem [
           ./machines/laptop/configuration.nix
         ];
         library-of-babel = buildSystem [
           ./machines/library-of-babel/configuration.nix
         ];
+        rpi4-nixos = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [ ./machines/r4spberrypi/configuration.nix ];
+        };
       };
     homeConfigurations =
       let

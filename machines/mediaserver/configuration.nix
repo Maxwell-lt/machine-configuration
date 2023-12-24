@@ -1,17 +1,20 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/common.nix
-      ../../modules/zfs.nix
-      ../../modules/nvidia.nix
-      ../../modules/jellyfin.nix
-      ../../services/zpool-exporter.nix
-      ../../services/powerpanel.nix
-      ../../services/powerpanel-exporter.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  mlt = {
+    common = {
+      enable = true;
+      containers = true;
+      media = true;
+      user.enable = true;
+    };
+    jellyfin.enable = true;
+    zfs.enable = true;
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
