@@ -29,7 +29,8 @@ in
       environment.systemPackages = with pkgs; [
         kmymoney      # Double-entry accounting platform
         libreoffice   # Office suite
-        logseq        # Knowledge management platform
+        # Disabled due to EOL electron_25 dependency.
+        #logseq       # Knowledge management platform
       ];
     })
 
@@ -221,7 +222,7 @@ in
       # Enable avahi to help resolve .local addresses
       services.avahi = {
         enable = true;
-        nssmdns = true;
+        nssmdns4 = true;
       };
     })
 
