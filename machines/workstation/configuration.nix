@@ -9,7 +9,10 @@
     common = {
       enable = true;
       media = true;
-      user.enable = true;
+      user = {
+        enable = true;
+        password = true;
+      };
     };
     docker.enable = true;
     desktop = {

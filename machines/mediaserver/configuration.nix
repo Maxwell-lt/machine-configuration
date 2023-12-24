@@ -10,7 +10,10 @@
       enable = true;
       containers = true;
       media = true;
-      user.enable = true;
+      user = {
+        enable = true;
+        password = true;
+      };
     };
     jellyfin.enable = true;
     zfs.enable = true;

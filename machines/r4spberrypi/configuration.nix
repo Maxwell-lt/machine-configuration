@@ -3,7 +3,10 @@
 {
   mlt.common = {
     enable = true;
-    user.enable = true;
+    user = {
+      enable = true;
+      password = true;
+    };
     containers = true;
   };
 
