@@ -68,7 +68,7 @@
       {
         publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
 
-        allowedIPs = [ "10.100.0.1" ];
+        allowedIPs = [ "10.100.0.0/24" ];
 
         endpoint = "158.69.224.168:51820";
 
@@ -76,6 +76,8 @@
       }
     ];
   };
+
+  networking.firewall.allowedUDPPorts = [ 51820 ];
 
   services.zrepl = {
     enable = true;
