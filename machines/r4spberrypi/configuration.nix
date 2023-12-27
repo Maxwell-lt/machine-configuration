@@ -1,9 +1,14 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ../../modules/common.nix
-  ];
+  mlt.common = {
+    enable = true;
+    user = {
+      enable = true;
+      password = true;
+    };
+    containers = true;
+  };
 
   virtualisation = {
     oci-containers = {

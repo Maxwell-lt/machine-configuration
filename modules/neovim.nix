@@ -225,7 +225,7 @@
         nodePackages.typescript
         nodePackages.typescript-language-server
         nodePackages.yaml-language-server
-        xclip
+        wl-clipboard
       ];
     };
     fzf = {

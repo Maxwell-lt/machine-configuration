@@ -8,18 +8,18 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../services/zpool-exporter.nix
     ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
   boot.supportedFilesystems = [ "zfs" ];
   # boot.loader.grub.efiSupport = true;
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+  boot.loader.grub.device = "/dev/disk/by-id/wwn-0x5000cca22df6b3dd"; # or "nodev" for efi only
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   services.zfs = {
     autoSnapshot = {
@@ -129,6 +129,10 @@
         {
           publicKey = "u02RNnEoI2W/kZiFAY1OG6i7KnpEMgq+VpSHnVt9Ck0=";
           allowedIPs = [ "10.100.0.4/32" ];
+        }
+        {
+          publicKey = "S+U8WhWiLl9NOzvFb1QGZg6brrGpnAVp0dfrQ5PsrCk=";
+          allowedIPs = [ "10.100.0.5/32" ];
         }
       ];
     };

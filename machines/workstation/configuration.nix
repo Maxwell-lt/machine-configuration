@@ -1,43 +1,39 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/zfs.nix
-      ../../modules/common.nix
-      ../../modules/desktop.nix
-      ../../modules/amdgpu.nix
-      ../../modules/osu.nix
-    ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "python-2.7.18.6"
+  imports = [
+    ./hardware-configuration.nix
   ];
 
-
-  environment.systemPackages = with pkgs; [
-    # Modify RGB configuration
-    openrgb-with-all-plugins i2c-tools
-    # Cheating the system
-    flatpak
-
-    # DAW and plugins
-    ardour
-    lsp-plugins
-    surge-XT
-    zam-plugins
-    noisetorch
-
-    # These modules need serious work
-    #(pkgs.callPackage ../../pkgs/svp {})
-    #(import ../../pkgs/svpflow/default.nix)
-  ];
-
-  programs.noisetorch.enable = true;
-
-  # For OpenRGB
-  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
+  mlt = {
+    common = {
+      enable = true;
+      media = true;
+      user = {
+        enable = true;
+        password = true;
+      };
+    };
+    docker.enable = true;
+    desktop = {
+      enable = true;
+      gpu = "amdgpu";
+      gaming = true;
+      productivity = true;
+      email = true;
+      creative = true;
+      torrent = true;
+      printing = true;
+      kdeconnect = true;
+      development = true;
+    };
+    openrgb = {
+      enable = true;
+      motherboard = "amd";
+    };
+    vm.enable = true;
+    zfs.enable = true;
+  };
 
   security.pam.loginLimits = [
     {
@@ -62,7 +58,26 @@
     "snd_hda_codec_hdmi"
   ];
 
-  hardware.opentabletdriver.enable = true;
+  # Setup Wireguard client
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.100.0.5/24" ];
+
+    privateKeyFile = "/root/private";
+
+    peers = [
+      {
+        publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
+
+        allowedIPs = [ "10.100.0.0/24" ];
+
+        endpoint = "158.69.224.168:51820";
+
+        persistentKeepalive = 25;
+      }
+    ];
+  };
+
+  networking.firewall.allowedUDPPorts = [ 51820 ];
 
   services.zrepl = {
     enable = true;
@@ -133,32 +148,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  virtualisation = {
-    lxd = {
-      enable = false;
-    };
-    lxc = {
-      enable = false;
-      lxcfs.enable = false;
-    };
-    docker = {
-      enable = true;
-    };
-    #podman = {
-    #  enable = true;
-
-    #  # Create a `docker` alias for podman, to use it as a drop-in replacement
-    #  dockerCompat = true;
-    #  dockerSocket.enable = true;
-
-    #  # Required for containers under podman-compose to be able to talk to each other.
-    #  defaultNetwork.dnsname.enable = true;
-    #  extraPackages = [ pkgs.zfs ];
-    #};
-  };
-
-  users.users.maxwell.extraGroups = [ "docker" ];
-
   networking = {
     hostId = "79eefeea";
     hostName = "maxwell-nixos";
@@ -174,9 +163,6 @@
   networking.useDHCP = false;
   networking.interfaces.enp16s0.useDHCP = true;
   networking.interfaces.wlp17s0.useDHCP = true;
-
-  # Needed for tc to work in the firewall script
-  networking.firewall.extraPackages = with pkgs; [ iproute ];
 
   networking.firewall.allowedTCPPorts = [
     # Avoid 30 second wait before login prompt when connecting to Lutron SmartBridge using Telnet: https://forums.lutron.com/showthread.php/3031-30-second-Telnet-Login-Delay
@@ -203,21 +189,6 @@
     { from = 7777; to = 9999; }
   ];
   
-  # Throttle zrepl traffic
-#  networking.firewall.extraCommands = ''
-#    # Clear previously-added tc rules
-#    # `|| true` is used to ignore errors from these lines, as they will fail if the tc rules are not already added 
-#    tc qdisc delete dev enp39s0 root handle 1:0 htb || true
-#    tc class delete dev enp39s0 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1 || true
-#    # Add traffic control rules
-#    # This will limit traffic to 35Mbps, just under the max upload rate of the network
-#    tc qdisc add dev enp39s0 root handle 1:0 htb
-#    tc class add dev enp39s0 parent 1:0 classid 1:1 htb rate 35Mbit ceil 35Mbit prio 1
-#    # Add routing rule to redirect traffic from the zrepl user to the rate limited qdisc
-#    # The UID of the zrepl user is 316, as defined in the zrepl module
-#    ip46tables -t mangle -A POSTROUTING -o enp39s0 -p tcp -m owner --uid-owner 316 -j CLASSIFY --set-class 1:1
-#  '';
-
   # Needed to use erisia/builder
   nix.settings.sandbox = "relaxed";
 
