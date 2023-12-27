@@ -10,8 +10,8 @@ in
       enable = mkEnableOption "desktop";
       gpu = mkOption {
         description = "GPU type installed";
-        type = enum [ "amdgpu" "nvidia" ];
-        default = "amdgpu";
+        type = nullOr (enum [ "amdgpu" "nvidia" ]);
+        default = null;
       };
       gaming = mkEnableOption "gaming";
       printing = mkEnableOption "printing";
@@ -107,7 +107,7 @@ in
       # Enable Plasma/Wayland
       services.xserver = {
         enable = true;
-        videoDrivers = [ cfg.gpu ];
+        videoDrivers = mkIf (cfg.gpu != null) [ cfg.gpu ];
         layout = "us";
         displayManager = {
           sddm.enable = true;

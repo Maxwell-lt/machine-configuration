@@ -39,10 +39,10 @@
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = false;
   networking.wireless = {
     environmentFile = config.sops.secrets."wireless.env".path;
-    enable = false;
+    enable = true;
     networks = {
       "@home_uuid@" = {
         psk = "@home_psk@";
