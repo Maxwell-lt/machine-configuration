@@ -30,7 +30,7 @@
         ./machines/mediaserver/configuration.nix
         nixified-ai.nixosModules.invokeai
         { 
-          environment.systemPackages = [ nixified-ai.packages.x86_64-linux.textgen-nvidia ];
+          environment.systemPackages = [ nixified-ai.packages.x86_64-linux.textgen-nvidia nixified-ai.packages.x86_64-linux.invokeai-nvidia ];
           nixpkgs.overlays = [
             (final: prev: {
               invokeai-nvidia = nixified-ai.packages.x86_64-linux.invokeai-nvidia;

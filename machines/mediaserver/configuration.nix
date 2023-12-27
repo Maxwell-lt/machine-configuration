@@ -19,6 +19,7 @@
   services.invokeai = {
     enable = true;
     package = pkgs.invokeai-nvidia;
+    settings.host = "0.0.0.0";
   };
 
   networking = {
@@ -152,6 +153,8 @@
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
     9100 9101 9102 9811 9812
+    # InvokeAI
+    9090
   ];
 
   # Setup Wireguard client
