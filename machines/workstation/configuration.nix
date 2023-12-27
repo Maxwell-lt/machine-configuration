@@ -77,8 +77,6 @@
     ];
   };
 
-  networking.firewall.allowedUDPPorts = [ 51820 ];
-
   services.zrepl = {
     enable = true;
     settings = {
@@ -177,6 +175,8 @@
   networking.firewall.allowedUDPPorts = [
     # Satisfactory
     5222 6666
+    # WG
+    51820
   ];
 
   networking.firewall.allowedUDPPortRanges = [
