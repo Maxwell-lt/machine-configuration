@@ -62,11 +62,15 @@ in
     })
 
     (mkIf cfg.user.enable {
+      sops.secrets.password = mkIf cfg.user.password {
+        sopsFile = ../secrets/password.yaml;
+        neededForUsers = true;
+      };
       users.users.${cfg.user.username} = {
         description = "${cfg.user.userDescription}";
         isNormalUser = true;
         extraGroups = [ "wheel" ];
-        hashedPassword = mkIf cfg.user.password "$6$bJuwDnHiYHpdz$dSsXMl79Rx78pS.W.nQq7eLeoO1lA1OKiG.yq0Mo8vy4Vh66EjZDKvm1AC.aRU47zuvyiUwOx34wTHdM6hdiZ1";
+        hashedPasswordFile = mkIf cfg.user.password config.sops.secrets.password.path;
         openssh.authorizedKeys.keys = cfg.user.additionalSSHKeys ++ [
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD5LS315i42OMhMxkRjLrvdP65zDYdlD0hAOjXslf6JAhgvQu7CUbnLmMhivKlXp7z825NWrB66jlR5R6muO6bwoSDC9RID01ixcRv1iF4fmveDDXkSUy1MjeOdUOcml+zhh+IIi/SkGsjI7weqe0fKJCj1uIoru+UoIOjPeL0uC32Sl/GC9VRVGqiH57lIjkUaf9j3Ja9MvY63nx5W1+BIQuOlabEB2XD8hIUiEQEi0jNCCkAuvhnJjHIGSIRvUQBijInUGOR7M8eRmEwTrbl36DFIphnKKP+mhAefy5zIIMctdDucqyfweizLBg2D4qY1WiXHflng5k63h5WRYwvAyLJQ7Jy9/Dvm2eNYWhQ0bdGV0a3l3oRvthIReXgLuygWs9M/quCyb1VnNRYbxs1vRwI1MzN1EZ7W8OfX/5S3XNy3DBENoga4eA8xXanhSM3StRFpaYfx05E4x2tdQYQ2CMbps14oMEZ8bYc1cxD5r1aDfzzo2/0YkLGhVJVpoBrmCaQsHc07klqb+XwWTkqxdE/jTiNV3ZXXHlzD3Vt1jD8Goo2kMqjC1MGwFTUJAz20St3O/3ntka1sYZZJ8dDzU/ly6xI3xW1IN+o0A7Q9qpIIw4Lgc1eWEURH3/D2fnDTcFPIIh9h1oEEXldl0j6dWrw8f3XySBVBk7yNJzB0/Q== maxwell.lt@live.com"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6RnS6RiN5u9vyXVKMZgnCsLJOuXaqADbDQWfShufCv maxwell@nix-portable-omega"
@@ -78,6 +82,11 @@ in
     })
 
     (mkIf cfg.enable {
+      sops = {
+        defaultSopsFile = ../secrets/general.yaml;
+        age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      };
+
       environment.systemPackages = with pkgs; [
         # Core utilities
         coreutils           # Basic GNU utilities
@@ -94,6 +103,9 @@ in
         easyrsa             # Scripts for generating x509 certs
         gnupg               # GNU Privacy Guard
         wireguard-tools     # Tools for Wireguard
+        sops                # Tool for managing secrets
+        ssh-to-age          # Convert SSH key to age key
+        age                 # Modern encryption tool like PGP without the legacy junk
 
         # Archive handling
         p7zip               # 7zip archive tools

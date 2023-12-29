@@ -1,13 +1,28 @@
 keys:
-  - &admin_workstation age1y832x8gp8lt7tzl7m03cfvmuaqlf58fdgvyc3gprpkdv9cve5yxqk4mkw9
-  - &admin_babel age12mql9lrqmp6yvrr9gh0kuuwnxn2hkvcku7x620vgtj6r568zfq7skkpajf
-  - &admin_media age13d0wge5xgtd8yvfak9lrhy5ee0yus7uecwhh0cpyqs59yv2ypveqt6evuh
-  - &admin_laptop age1zd6sgnfz9cv0urtpl6u7p5a4adurgr5tezgp4mnfvjuk2r4vpsdqmfk8mq
+- &admin_workstation age1y832x8gp8lt7tzl7m03cfvmuaqlf58fdgvyc3gprpkdv9cve5yxqk4mkw9
+- &host_workstation age19gccnk5vrlnpxh6jcf8ryr4kutq6cm73m5rudmnve0pdu0zj4uzsvylzxj
+- &host_babel age12mql9lrqmp6yvrr9gh0kuuwnxn2hkvcku7x620vgtj6r568zfq7skkpajf
+- &host_media age13d0wge5xgtd8yvfak9lrhy5ee0yus7uecwhh0cpyqs59yv2ypveqt6evuh
+- &host_laptop age1zd6sgnfz9cv0urtpl6u7p5a4adurgr5tezgp4mnfvjuk2r4vpsdqmfk8mq
 creation_rules:
-  - path_regex: secrets/[^/]+\.yaml$
-    key_groups:
-      - age:
-          - *admin_workstation
-          - *admin_babel
-          - *admin_media
-          - *admin_laptop
+  # Overridden key permissions for specific files
+- path_regex: secrets/wifi.yaml$
+  key_groups:
+  - age:
+    - *admin_workstation
+    - *host_laptop
+- path_regex: secrets/services.yaml$
+  key_groups:
+  - age:
+    - *admin_workstation
+    - *host_babel
+    - *host_media
+  # Generic all-host secrets
+- path_regex: secrets/[^/]+\.yaml$
+  key_groups:
+  - age:
+    - *admin_workstation
+    - *host_workstation
+    - *host_babel
+    - *host_media
+    - *host_laptop

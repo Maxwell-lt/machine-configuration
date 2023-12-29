@@ -22,9 +22,9 @@
   };
 
   sops = {
-    defaultSopsFile = ../../secrets/wifi.yaml;
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    secrets."wireless.env" = { };
+    secrets."wireless.env" = {
+      sopsFile = ../../secrets/wifi.yaml;
+    };
   };
 
   # Use the systemd-boot EFI boot loader.

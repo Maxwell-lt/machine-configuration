@@ -14,5 +14,6 @@
     ./powerpanel-exporter.nix   # Custom Prometheus exporter which reads data from PowerPanel
     ./zpool-exporter.nix        # Custom Prometheus exporter which queries disk usage information from ZFS
     ./jellyfin.nix              # Jellyfin media server
+    ./photoprism.nix            # PhotoPrism photo management server
   ];
 }
