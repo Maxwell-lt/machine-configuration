@@ -17,6 +17,11 @@
     };
     jellyfin.enable = true;
     zfs.enable = true;
+    photoprism = {
+      enable = true;
+      storagePath = /mnt/media/photoprism/originals;
+      importPath = /mnt/media/photoprism/import;
+    };
   };
 
   boot.loader.systemd-boot.enable = true;
@@ -161,6 +166,8 @@
     9100 9101 9102 9811 9812
     # InvokeAI
     9090
+    # PhotoPrism
+    2342
   ];
 
   # Setup Wireguard client

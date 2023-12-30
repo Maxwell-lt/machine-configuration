@@ -76,6 +76,9 @@
         "maxwell@media-server-alpha" = buildHome [
           machines/mediaserver/home.nix
         ];
+	"maxwell@nix-portable-omega" = buildHome [
+	  machines/laptop/home.nix
+	];
       };
   };
 }
