@@ -37,5 +37,14 @@ in
       };
     };
     networking.firewall.allowedTCPPorts = [ 2342 ];
+
+    # Workaround issue with PhotoPrism unable to write in its directories
+    # https://github.com/NixOS/nixpkgs/issues/218061#issuecomment-1868001086
+    systemd.services.photoprism.serviceConfig.DynamicUser = lib.mkForce false;
+    users.users.photoprism = {
+      group = "photoprism";
+      isSystemUser = true;
+    };
+    users.groups.photoprism = { };
   };
 }
