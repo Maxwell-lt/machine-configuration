@@ -166,8 +166,6 @@
     9100 9101 9102 9811 9812
     # InvokeAI
     9090
-    # PhotoPrism
-    2342
   ];
 
   # Setup Wireguard client

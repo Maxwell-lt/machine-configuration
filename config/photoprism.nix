@@ -36,5 +36,6 @@ in
         PHOTOPRISM_APP_NAME = "PhotoPrism (maxwell-lt.dev)";
       };
     };
+    networking.firewall.allowedTCPPorts = [ 2342 ];
   };
 }
