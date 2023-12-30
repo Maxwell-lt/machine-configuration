@@ -12,7 +12,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.nextcloud_admin.sopsFile = ../secrets/services.yaml;
+    sops.secrets.nextcloud_admin = {
+      sopsFile = ../secrets/services.yaml;
+      owner = config.users.users.nextcloud.name;
+      group = config.users.users.nextcloud.group;
+    };
     services.nextcloud = {
       enable = true;
       config.adminpassFile = config.sops.secrets.nextcloud_admin.path;
@@ -21,7 +25,8 @@ in
         inherit memories;
       };
       extraAppsEnable = true;
-      hostname = "localhost";
+      hostName = "localhost";
+      configureRedis = true;
     };
   };
 }
