@@ -13,6 +13,10 @@
         enable = true;
         password = true;
       };
+      java = {
+        enable = true;
+        version = "21";
+      };
     };
     docker.enable = true;
     desktop = {

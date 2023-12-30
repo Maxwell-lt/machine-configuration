@@ -34,6 +34,14 @@ in
         };
         password = mkEnableOption "set password for account";
       };
+      java = {
+        enable = mkEnableOption "java";
+        version = mkOption {
+          description = "Java version to install";
+          type = str;
+          default = "21";
+        };
+      };
     };
   };
 
@@ -262,6 +270,12 @@ in
       # Set root user's shell to zsh
       users.users.root = {
         shell = pkgs.zsh;
+      };
+    })
+    (mkIf cfg.java.enable {
+      programs.java = {
+        enable = true;
+        package = pkgs."jdk${cfg.java.version}";
       };
     })
   ];
