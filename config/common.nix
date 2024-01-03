@@ -65,6 +65,7 @@ in
         mkvtoolnix-cli  # Matroska media container tools
         r128gain        # Add ReplayGain information to music files
         vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
+        vorbis-tools    # Vorbis encoder tools
         yt-dlp          # Download video/audio from YouTube
       ];
     })
