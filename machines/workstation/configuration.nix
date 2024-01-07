@@ -18,7 +18,7 @@
         version = "21";
       };
     };
-    docker.enable = true;
+    docker.enable = false;
     desktop = {
       enable = true;
       gpu = "amdgpu";
