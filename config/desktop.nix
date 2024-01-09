@@ -54,8 +54,12 @@ in
         lsp-plugins   # Pack of VST plugins
         surge-XT      # Synthesizer VST
         zam-plugins   # Pack of VST plugins by ZamAudio
+        # 3D Printing
+        prusa-slicer  # Slicer
+        freecad       # CAD (traditional)
+        openscad      # CAD (text-based modeling)
         # Other
-        prusa-slicer  # Slicer for 3D printing
+        plantuml-c4   # UML renderer, with support for C4 diagrams
         yed           # Graph drawing tool
       ];
     })

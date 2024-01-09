@@ -137,6 +137,7 @@ in
 
         # Nix tools
         nixpkgs-fmt           # Formatter for Nix files
+        nix-output-monitor    # Show detailed information about ongoing Nix builds
         nix-prefetch-scripts  # Obtain hashes from multiple sources for use with Nix
         steam-run             # Quick and dirty method to run dynamic binaries in a FHS chroot with many included libraries
 
