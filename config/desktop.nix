@@ -29,8 +29,7 @@ in
       environment.systemPackages = with pkgs; [
         kmymoney      # Double-entry accounting platform
         libreoffice   # Office suite
-        # Disabled due to EOL electron_25 dependency.
-        #logseq       # Knowledge management platform
+        logseq        # Knowledge management platform
       ];
     })
 
@@ -125,7 +124,10 @@ in
       # Enable IME
       i18n.inputMethod = {
         enabled = "fcitx5";
-        fcitx5.addons = [ pkgs.fcitx5-mozc ];
+        fcitx5 = {
+          addons = [ pkgs.fcitx5-mozc ];
+          waylandFrontend = true;
+        };
       };
 
       # Override MPV to include mpris (for media controls integration with DE)
