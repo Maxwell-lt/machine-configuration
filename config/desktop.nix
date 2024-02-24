@@ -198,6 +198,7 @@ in
         pcsx2
         (prismlauncher.override { jdks = [ jdk8 jdk17 jdk19 ]; })
         (callPackage ../pkgs/itgmania-bin {})
+        (callPackage ../pkgs/outfox {})
       ];
       programs.steam.enable = true;
       hardware.opentabletdriver.enable = true;
