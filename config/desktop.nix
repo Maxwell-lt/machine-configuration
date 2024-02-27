@@ -184,7 +184,18 @@ in
       # Enable bluetooth
       hardware.bluetooth = {
         enable = true;
-        settings.General.Enable = "Source,Sink,Media,Socket";
+        settings.General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+
+      environment.etc = {
+        "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+          bluez_monitor.properties = {
+            ["bluez5.enable-hw-volume"] = false,
+            ["bluez5.hfphsp-backend"] = "none",
+          }
+        '';
       };
 
       # Enable NoiseTorch for microphone noise removal
