@@ -51,7 +51,7 @@ in
         # Audio
         ardour        # DAW
         lsp-plugins   # Pack of VST plugins
-        surge-XT      # Synthesizer VST
+        #surge-XT      # Synthesizer VST
         zam-plugins   # Pack of VST plugins by ZamAudio
         # 3D Printing
         prusa-slicer  # Slicer
@@ -114,9 +114,9 @@ in
         layout = "us";
         displayManager = {
           sddm.enable = true;
-          defaultSession = "plasmawayland";
+          defaultSession = "plasma";
         };
-        desktopManager.plasma5.enable = true;
+        desktopManager.plasma6.enable = true;
       };
 
       mlt.common.user.additionalExtraGroups = [ "video" "audio" "networkmanager" ];
@@ -127,6 +127,7 @@ in
         fcitx5 = {
           addons = [ pkgs.fcitx5-mozc ];
           waylandFrontend = true;
+          plasma6Support = true;
         };
       };
 
@@ -179,6 +180,14 @@ in
         alsa.support32Bit = true;
         pulse.enable = true;
         jack.enable = true;
+        wireplumber.configPackages = [
+          (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+            bluez_monitor.properties = {
+              ["bluez5.enable-hw-volume"] = false,
+              ["bluez5.hfphsp-backend"] = "none",
+            }
+          '')
+        ];
       };
 
       # Enable bluetooth
@@ -187,15 +196,6 @@ in
         settings.General = {
           Enable = "Source,Sink,Media,Socket";
         };
-      };
-
-      environment.etc = {
-        "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
-          bluez_monitor.properties = {
-            ["bluez5.enable-hw-volume"] = false,
-            ["bluez5.hfphsp-backend"] = "none",
-          }
-        '';
       };
 
       # Enable NoiseTorch for microphone noise removal
