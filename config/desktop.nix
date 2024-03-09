@@ -10,7 +10,7 @@ in
       enable = mkEnableOption "desktop";
       gpu = mkOption {
         description = "GPU type installed";
-        type = nullOr (enum [ "amdgpu" "nvidia" ]);
+        type = nullOr (enum [ "amdgpu" "nvidia" "modesetting" ]);
         default = null;
       };
       gaming = mkEnableOption "gaming";

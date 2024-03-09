@@ -21,7 +21,7 @@
     docker.enable = false;
     desktop = {
       enable = true;
-      gpu = "amdgpu";
+      gpu = "modesetting"; # recommended for AMD drivers over amdgpu
       gaming = true;
       productivity = true;
       email = true;
