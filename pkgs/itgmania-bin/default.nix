@@ -17,12 +17,12 @@
 
 stdenv.mkDerivation rec {
   pname = "itgmania-bin";
-  version = "0.7.0";
+  version = "0.8.0";
 
   src = {
     x86_64-linux = fetchurl {
-      url = "https://github.com/itgmania/itgmania/releases/download/v0.7.0/ITGmania-0.7.0-Linux.tar.gz";
-      hash = "sha256-Bw0Iq+ILUQMq9WMCN5FsJXN6+nF7JKxNtKmfZHd6CfU=";
+      url = "https://github.com/itgmania/itgmania/releases/download/v0.8.0/ITGmania-0.8.0-Linux.tar.gz";
+      hash = "sha256-GnSFxQAmI1LTtgor2xIxe8daEZ+mdi2c4BChYK5TS88=";
     };
   }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
