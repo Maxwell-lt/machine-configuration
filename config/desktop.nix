@@ -207,7 +207,10 @@ in
         dolphinEmuMaster
         lutris
         pcsx2
-        (prismlauncher.override { jdks = [ jdk8 jdk17 jdk19 ]; })
+        (prismlauncher.override {
+          jdks = [ jdk8 jdk17 jdk19 ];
+          withWaylandGLFW = true;
+        })
         (callPackage ../pkgs/itgmania-bin {})
         (callPackage ../pkgs/outfox {})
       ];
