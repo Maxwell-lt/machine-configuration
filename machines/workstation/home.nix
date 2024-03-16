@@ -25,6 +25,7 @@ in
     #lutris
     playonlinux
     playlist-scan
+    hyprpaper
   ];
 
   programs.ssh = {
@@ -47,26 +48,102 @@ in
     enable = true;
     plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [ hyprbars ];
     settings = {
+      "$mainMod" = "SUPER";
+      "$terminal" = "konsole";
+      "$fileManager" = "dolphin";
+      "$menu" = "anyrun";
+      "$monLeft" = "AOC Q27G1WG4 0x00019CE9";
+      "$monRight" = "AOC Q27G1WG4 0x00018D10";
       monitor = [
-        "DP-1, 2560x1440@144, 0x0, 1"
-        "DP-2, 2560x1440@144, 2560x0, 1"
+        "$monLeft, 2560x1440@144, 0x0, 1"
+        "$monRight, 2560x1440@144, 2560x0, 1"
       ];
       bind = [
-        "SUPER,T,exec,konsole"
+        "$mainMod, T, exec, $terminal"
+        "$mainMod, C, killactive,"
+        "$mainMod, M, exit,"
+        "$mainMod, E, exec, $fileManager"
+        "$mainMod, V, togglefloating,"
+        "$mainMod, R, exec, $menu"
+        "$mainMod, P, pseudo, # dwindle"
+        "$mainMod, J, togglesplit, # dwindle"
+        "$mainMod, L, exec, swaylock -c 04061f"
+
+        "$mainMod, left, movefocus, l"
+        "$mainMod, right, movefocus, r"
+        "$mainMod, up, movefocus, u"
+        "$mainMod, down, movefocus, d"
+      ];
+      bindm = [
+        "$mainMod, mouse:272, movewindow"
+        "$mainMod, mouse:273, resizewindow"
       ];
       bindl = [
-        "XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
-        "XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
-        "XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
       exec-once = [
-        "waybar"
+        "dunst & waybar"
+        "hyprpaper"
       ];
       general = {
         allow_tearing = true;
       };
       env = [
         "WLR_DRM_NO_ATOMIC, 1"
+      ];
+      decoration = {
+        rounding = 5;
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+          vibrancy = 0.1696;
+        };
+      };
+      plugin = {
+        hyprbars = {
+          bar_height = 20;
+          hyprbars-button = [
+            "rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive"
+            "rgb(eeee11), 10, , hyprctl dispatch fullscreen 1"
+          ];
+        };
+      };
+    };
+  };
+
+  home.file.".config/hypr/hyprpaper.conf".text = ''
+    preload = ~/Pictures/wallpapers/Cover.png
+    preload = ~/Pictures/wallpapers/nge6.png
+    wallpaper = desc:AOC Q27G1WG4 0x00019CE9,~/Pictures/wallpapers/nge6.png
+    wallpaper = desc:AOC Q27G1WG4 0x00018D10,~/Pictures/wallpapers/Cover.png
+    ipc = off
+  '';
+
+  programs.waybar = {
+    enable = true;
+    systemd.enable = false;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        modules-center = [ "hyprland/window" ];
+      };
+    };
+  };
+
+  programs.anyrun = {
+    enable = true;
+    config = {
+      plugins = with inputs.anyrun.packages.${pkgs.system}; [
+        applications
+        dictionary
+        rink
+        symbols
+        translate
+        websearch
       ];
     };
   };
@@ -81,17 +158,17 @@ in
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.flat-remix-gtk;
-      name = "Flat-Remix-GTK-Grey-Darkest";
+      package = pkgs.libsForQt5.breeze-gtk;
+      name = "Breeze Dark";
     };
 
     iconTheme = {
-      package = pkgs.gnome.adwaita-icon-theme;
-      name = "Adwaita";
+      package = pkgs.libsForQt5.breeze-icons;
+      name = "Breeze";
     };
 
     font = {
-      name = "Sans";
+      name = "Noto Sans";
       size = 11;
     };
   };

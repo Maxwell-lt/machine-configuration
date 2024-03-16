@@ -105,6 +105,10 @@ in
         # Chat
         discord # Discord client
         hexchat # IRC client
+
+        # Experimental: packages for Hyprland
+        swaylock
+        dunst
       ];
 
       # Enable Plasma/Wayland
@@ -203,9 +207,7 @@ in
 
       # Experimental: enable Hyprland
       programs.hyprland.enable = true;
-      programs.waybar = {
-        enable = true;
-      };
+      security.pam.services.swaylock = {};
     })
 
     (mkIf cfg.gaming {
