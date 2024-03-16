@@ -218,7 +218,7 @@
         vim-json    # JSON
       ];
       extraPackages = with pkgs; [
-        rnix-lsp
+        nil
         rust-analyzer
         pyright
         fd

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   playlist-scan = pkgs.writers.writePython3Bin "playlist-scan" {} ''
@@ -40,6 +40,59 @@ in
         port = 22;
         user = "maxwell";
       };
+    };
+  };
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [ hyprbars ];
+    settings = {
+      monitor = [
+        "DP-1, 2560x1440@144, 0x0, 1"
+        "DP-2, 2560x1440@144, 2560x0, 1"
+      ];
+      bind = [
+        "SUPER,T,exec,konsole"
+      ];
+      bindl = [
+        "XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
+        "XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
+        "XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ];
+      exec-once = [
+        "waybar"
+      ];
+      general = {
+        allow_tearing = true;
+      };
+      env = [
+        "WLR_DRM_NO_ATOMIC, 1"
+      ];
+    };
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.flat-remix-gtk;
+      name = "Flat-Remix-GTK-Grey-Darkest";
+    };
+
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+
+    font = {
+      name = "Sans";
+      size = 11;
     };
   };
 

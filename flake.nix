@@ -15,9 +15,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -33,6 +40,7 @@
                 };
             }
           ];
+          specialArgs = { inherit inputs; };
         };
       in
       {
@@ -73,11 +81,13 @@
         buildHome = config: home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = config;
+          extraSpecialArgs = { inherit inputs; };
         };
       in
       {
         "maxwell@maxwell-nixos" = buildHome [
           machines/workstation/home.nix
+          hyprland.homeManagerModules.default
         ];
         "maxwell@media-server-alpha" = buildHome [
           machines/mediaserver/home.nix

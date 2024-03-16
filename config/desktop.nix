@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib;
 let
@@ -200,6 +200,12 @@ in
 
       # Enable NoiseTorch for microphone noise removal
       programs.noisetorch.enable = true;
+
+      # Experimental: enable Hyprland
+      programs.hyprland.enable = true;
+      programs.waybar = {
+        enable = true;
+      };
     })
 
     (mkIf cfg.gaming {
