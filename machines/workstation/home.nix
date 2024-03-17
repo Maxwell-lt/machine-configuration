@@ -33,6 +33,20 @@ in
     libnotify
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      # This commit fixes the jq function
+      eww = prev.eww.overrideAttrs (old: {
+        src = pkgs.fetchFromGitHub {
+          owner = "elkowar";
+          repo = "eww";
+          rev = "4ce42455a4744b0dc00dd356ba9b32c1ca558a0e";
+          hash = "sha256-M1MCbKXTI/Z7eWRi9jweloyUTIOMpqN33h5X6hOgeKU=";
+        };
+      });
+    })
+  ];
+
   programs.ssh = {
     enable = true;
     matchBlocks = {
@@ -123,6 +137,7 @@ in
       ];
       general = {
         allow_tearing = true;
+        gaps_out = 10;
       };
       env = [
         "WLR_DRM_NO_ATOMIC, 1"

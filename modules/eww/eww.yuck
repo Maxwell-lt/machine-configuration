@@ -10,11 +10,14 @@
            :exclusive true
            (centerbox :orientation "horizontal"
                       :halign "fill"
-                      (box :orientation "horizontal")
                       (box :orientation "horizontal"
-                           :hexpand true)
+                           (label :text "Left"))
+                      (box :orientation "horizontal"
+                           (windows :monitor 0))
                       (box :orientation "horizontal"
                            :halign "end"
+                           :spacing 5
+                           :space-evenly false
                            (music)
                            (clock))))
 
@@ -31,17 +34,16 @@
            (centerbox :orientation "horizontal"
                       :halign "fill"
                       (box :orientation "horizontal")
-                      (box :orientation "horizontal")
+                      (box :orientation "horizontal"
+                           (windows :monitor 1))
                       (box :orientation "horizontal"
                            :halign "end"
                            (clock))))
 
-(defpoll time :interval "1s"
-         `date +%H:%M:%S`)
-
 (defwidget clock []
            (box :class "clock"
-                time))
+                (label :gravity "east"
+                       :text time)))
 
 (defwidget music []
            (box :class "music"
@@ -49,11 +51,27 @@
                 :space-evenly false
                 :halign "center"
                 {music != "" ? "${music}" : ""}
-                (image :path {replace(albumart, "file://", "")}
+                (image :path {albumart != "" ? replace(albumart, "file://", "") : "~/Pictures/strawberry.png"}
                        :image-width 40
                        :image-height 40
-                       :visible {music != ""})
+                       :visible {albumart != ""})
                 ))
+
+(defwidget windows [monitor]
+           (box :class "windowbar"
+                (for window in 
+                     {jq(clients, '[.[] | select(.workspace.name == ${jq(monitors, ".[] | select(.id == ${monitor}) | .activeWorkspace.name")})]')}
+                     (button :onclick "hyprctl dispatch focuswindow pid:${window.pid}"
+                             {window.title}))))
+
+(defpoll time :interval "1s"
+         `date '+%H:%M:%S %Y-%m-%d'`)
+
+(defpoll clients :interval "0.25s"
+         "hyprctl clients -j")
+
+(defpoll monitors :interval "0.25s"
+         "hyprctl monitors -j")
 
 (deflisten albumart :initial ""
            "playerctl --follow -p strawberry metadata mpris:artUrl || true")
