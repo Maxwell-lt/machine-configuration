@@ -105,10 +105,6 @@ in
         # Chat
         discord # Discord client
         hexchat # IRC client
-
-        # Experimental: packages for Hyprland
-        swaylock
-        dunst
       ];
 
       # Enable Plasma/Wayland

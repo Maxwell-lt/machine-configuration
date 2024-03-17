@@ -158,6 +158,8 @@
 
         local file_browser = require('telescope').extensions.file_browser
         vim.keymap.set('n', '<leader>fd', file_browser.file_browser, {})
+
+        vim.g.yuck_lisp_indentation = 1
       '';
       plugins = with pkgs.vimPlugins; [
         {
@@ -212,10 +214,13 @@
             ]
         ))
 
+        vim-parinfer  # Balance parentheses when writing Lisp-style code
+
         # Language support
         vim-nix     # Nix
         vim-toml    # TOML
         vim-json    # JSON
+        yuck-vim    # Yuck
       ];
       extraPackages = with pkgs; [
         nil

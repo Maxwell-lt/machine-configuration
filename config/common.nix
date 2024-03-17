@@ -193,7 +193,10 @@ in
         # Enable and configure ZSH
         zsh = {
           enable = true;
-          autosuggestions.enable = true;
+          autosuggestions = {
+            enable = true;
+            highlightStyle = "fg=10";
+          };
           syntaxHighlighting.enable = true;
           ohMyZsh = {
             enable = true;
@@ -205,16 +208,7 @@ in
           };
           # Fix paste into zsh writing character-by-character
           shellInit = ''
-            pasteinit() {
-              OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
-              zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
-            }
-
-            pastefinish() {
-              zle -N self-insert $OLD_SELF_INSERT
-            }
-            zstyle :bracketed-paste-magic paste-init pasteinit
-            zstyle :bracketed-paste-magic paste-finish pastefinish
+            DISABLE_MAGIC_FUNCTIONS="true"
           '';
           shellAliases = {
             ls = "eza --icons";
