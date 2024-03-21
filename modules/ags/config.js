@@ -1,0 +1,4 @@
+App.config({
+	windows: [
+	]
+})

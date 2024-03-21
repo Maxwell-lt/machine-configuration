@@ -27,9 +27,14 @@
       url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -94,6 +99,7 @@
           machines/workstation/home.nix
           hyprland.homeManagerModules.default
           anyrun.homeManagerModules.default
+          ags.homeManagerModules.default
         ];
         "maxwell@media-server-alpha" = buildHome [
           machines/mediaserver/home.nix

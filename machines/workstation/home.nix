@@ -243,6 +243,12 @@ in
     recursive = true;
   };
 
+  programs.ags = {
+    enable = true;
+    configDir = ../../modules/ags;
+    extraPackages = with pkgs; [];
+  };
+
   programs.kitty = {
     enable = true;
     theme = "Solarized Dark";
