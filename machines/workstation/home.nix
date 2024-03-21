@@ -77,9 +77,10 @@ in
       "$menu" = "anyrun";
       "$monLeft" = "AOC Q27G1WG4 0x00019CE9";
       "$monRight" = "AOC Q27G1WG4 0x00018D10";
+      "$monitorConfig" = "2560x1440@143.912003";
       monitor = [
-        "$monLeft, 2560x1440@144, 0x0, 1"
-        "$monRight, 2560x1440@144, 2560x0, 1"
+        "$monLeft, $monitorConfig, 0x0, 1"
+        "$monRight, $monitorConfig, 2560x0, 1"
       ];
       bind = [
         "$mainMod, T, exec, $terminal"
