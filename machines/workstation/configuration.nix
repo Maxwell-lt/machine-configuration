@@ -54,6 +54,8 @@
     }
   ];
 
+  virtualisation.waydroid.enable = true;
+
   networking.networkmanager.enable = true;
 
   # Disable HDMI audio output (gets set to the default on reboot/sleep/unlock)
