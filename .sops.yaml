@@ -17,6 +17,11 @@ creation_rules:
     - *admin_workstation
     - *host_babel
     - *host_media
+- path_regex: secrets/wireguard.yaml$
+  key_groups:
+  - age:
+    - *admin_workstation
+    - *host_media
   # Generic all-host secrets
 - path_regex: secrets/[^/]+\.yaml$
   key_groups:
