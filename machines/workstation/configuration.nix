@@ -13,11 +13,15 @@
         enable = true;
         password = true;
       };
+      java = {
+        enable = true;
+        version = "21";
+      };
     };
-    docker.enable = true;
+    docker.enable = false;
     desktop = {
       enable = true;
-      gpu = "amdgpu";
+      gpu = "modesetting"; # recommended for AMD drivers over amdgpu
       gaming = true;
       productivity = true;
       email = true;
@@ -49,6 +53,8 @@
       value = "16384";
     }
   ];
+
+  virtualisation.waydroid.enable = true;
 
   networking.networkmanager.enable = true;
 

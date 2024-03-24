@@ -26,6 +26,8 @@
         vim.opt.mouse = ""
 
         vim.cmd('autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab')
+        vim.cmd('autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab')
+        vim.cmd('autocmd FileType typescript setlocal ts=4 sts=4 sw=4 expandtab')
 
         -- nvim-cmp / nvim-lspconfig setup
         -- Add additional capabilities supported by nvim-cmp
@@ -54,11 +56,14 @@
             on_attach(client, buffer)
           end,
           capabilities = capabilitiesWithoutFormatting,
+          init_options = {
+            tsserver = {
+              path = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/"
+            }
+          },
           cmd = { 
             "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
-            "--stdio", 
-            "--tsserver-path", 
-            "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/" 
+            "--stdio" 
           }
         })
         
@@ -158,6 +163,8 @@
 
         local file_browser = require('telescope').extensions.file_browser
         vim.keymap.set('n', '<leader>fd', file_browser.file_browser, {})
+
+        vim.g.yuck_lisp_indentation = 1
       '';
       plugins = with pkgs.vimPlugins; [
         {
@@ -212,13 +219,16 @@
             ]
         ))
 
+        vim-parinfer  # Balance parentheses when writing Lisp-style code
+
         # Language support
         vim-nix     # Nix
         vim-toml    # TOML
         vim-json    # JSON
+        yuck-vim    # Yuck
       ];
       extraPackages = with pkgs; [
-        rnix-lsp
+        nil
         rust-analyzer
         pyright
         fd

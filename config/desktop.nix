@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib;
 let
@@ -10,7 +10,7 @@ in
       enable = mkEnableOption "desktop";
       gpu = mkOption {
         description = "GPU type installed";
-        type = nullOr (enum [ "amdgpu" "nvidia" ]);
+        type = nullOr (enum [ "amdgpu" "nvidia" "modesetting" ]);
         default = null;
       };
       gaming = mkEnableOption "gaming";
@@ -29,8 +29,7 @@ in
       environment.systemPackages = with pkgs; [
         kmymoney      # Double-entry accounting platform
         libreoffice   # Office suite
-        # Disabled due to EOL electron_25 dependency.
-        #logseq       # Knowledge management platform
+        logseq        # Knowledge management platform
       ];
     })
 
@@ -52,10 +51,14 @@ in
         # Audio
         ardour        # DAW
         lsp-plugins   # Pack of VST plugins
-        surge-XT      # Synthesizer VST
+        #surge-XT      # Synthesizer VST
         zam-plugins   # Pack of VST plugins by ZamAudio
+        # 3D Printing
+        prusa-slicer  # Slicer
+        freecad       # CAD (traditional)
+        openscad      # CAD (text-based modeling)
         # Other
-        prusa-slicer  # Slicer for 3D printing
+        plantuml-c4   # UML renderer, with support for C4 diagrams
         yed           # Graph drawing tool
       ];
     })
@@ -111,9 +114,9 @@ in
         layout = "us";
         displayManager = {
           sddm.enable = true;
-          defaultSession = "plasmawayland";
+          defaultSession = "plasma";
         };
-        desktopManager.plasma5.enable = true;
+        desktopManager.plasma6.enable = true;
       };
 
       mlt.common.user.additionalExtraGroups = [ "video" "audio" "networkmanager" ];
@@ -121,7 +124,11 @@ in
       # Enable IME
       i18n.inputMethod = {
         enabled = "fcitx5";
-        fcitx5.addons = [ pkgs.fcitx5-mozc ];
+        fcitx5 = {
+          addons = [ pkgs.fcitx5-mozc ];
+          waylandFrontend = true;
+          plasma6Support = true;
+        };
       };
 
       # Override MPV to include mpris (for media controls integration with DE)
@@ -173,16 +180,30 @@ in
         alsa.support32Bit = true;
         pulse.enable = true;
         jack.enable = true;
+        wireplumber.configPackages = [
+          (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+            bluez_monitor.properties = {
+              ["bluez5.enable-hw-volume"] = false,
+              ["bluez5.hfphsp-backend"] = "none",
+            }
+          '')
+        ];
       };
 
       # Enable bluetooth
       hardware.bluetooth = {
         enable = true;
-        settings.General.Enable = "Source,Sink,Media,Socket";
+        settings.General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
       };
 
       # Enable NoiseTorch for microphone noise removal
       programs.noisetorch.enable = true;
+
+      # Experimental: enable Hyprland
+      programs.hyprland.enable = true;
+      security.pam.services.swaylock = {};
     })
 
     (mkIf cfg.gaming {
@@ -190,7 +211,12 @@ in
         dolphinEmuMaster
         lutris
         pcsx2
-        (prismlauncher.override { jdks = [ jdk8 jdk17 jdk19 ]; })
+        (prismlauncher.override {
+          jdks = [ jdk8 jdk17 jdk19 ];
+          withWaylandGLFW = true;
+        })
+        (callPackage ../pkgs/itgmania-bin {})
+        (callPackage ../pkgs/outfox {})
       ];
       programs.steam.enable = true;
       hardware.opentabletdriver.enable = true;

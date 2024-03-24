@@ -15,9 +15,26 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    anyrun = {
+      url = "github:Kirottu/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -26,7 +43,14 @@
           modules = config ++ [ 
             sops-nix.nixosModules.sops
             ./config
+            {
+                nix.settings = {
+                  substituters = ["https://hyprland.cachix.org"];
+                  trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+                };
+            }
           ];
+          specialArgs = { inherit inputs; };
         };
       in
       {
@@ -44,8 +68,8 @@
               })
             ];
             nix.settings = {
-              trusted-substituters = [ "https://ai.cachix.org" ];
-              trusted-public-keys = [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
+              trusted-substituters = [ "https://ai.cachix.org" "https://anyrun.cachix.org" ];
+              trusted-public-keys = [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s=" ];
             };
           }
         ]) // { specialArgs = { inherit nixified-ai; }; };
@@ -67,11 +91,15 @@
         buildHome = config: home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = config;
+          extraSpecialArgs = { inherit inputs; };
         };
       in
       {
         "maxwell@maxwell-nixos" = buildHome [
           machines/workstation/home.nix
+          hyprland.homeManagerModules.default
+          anyrun.homeManagerModules.default
+          ags.homeManagerModules.default
         ];
         "maxwell@media-server-alpha" = buildHome [
           machines/mediaserver/home.nix
