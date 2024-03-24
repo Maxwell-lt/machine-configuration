@@ -17,7 +17,11 @@
     };
     jellyfin.enable = true;
     zfs.enable = true;
-    nextcloud.enable = true;
+    photoprism = {
+     enable = true;
+     storagePath = "/mnt/media/photoprism/originals";
+     importPath = /mnt/media/photoprism/import;
+   };
   };
 
   boot.loader.systemd-boot.enable = true;
