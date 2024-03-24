@@ -141,6 +141,7 @@ in
         "dunst"
         "hyprpaper"
         "eww daemon; sleep 0.25s; eww open-many leftmon rightmon"
+        "insync start"
       ];
       workspace = [
         "special:keepass, on-created-empty:keepassxc"
