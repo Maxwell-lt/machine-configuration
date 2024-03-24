@@ -31,6 +31,7 @@ in
     eww
     playerctl
     libnotify
+    bun
   ];
 
   nixpkgs.overlays = [
@@ -77,7 +78,7 @@ in
       "$menu" = "anyrun";
       "$monLeft" = "AOC Q27G1WG4 0x00019CE9";
       "$monRight" = "AOC Q27G1WG4 0x00018D10";
-      "$monitorConfig" = "2560x1440@143.912003";
+      "$monitorConfig" = "2560x1440@143.912";
       monitor = [
         "$monLeft, $monitorConfig, 0x0, 1"
         "$monRight, $monitorConfig, 2560x0, 1"
