@@ -27,7 +27,6 @@ in
     playlist-scan
     hyprpaper
     swaylock-effects
-    dunst
     eww
     playerctl
     libnotify
@@ -138,7 +137,6 @@ in
         ", XF86AudioNext, exec, playerctl next"
       ];
       exec-once = [
-        "dunst"
         "hyprpaper"
         "eww daemon; sleep 0.25s; eww open-many leftmon rightmon"
         "insync start"
@@ -222,6 +220,22 @@ in
         font-family: Hack Nerd Font;
       }
     '';
+  };
+
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        monitor = "DP-1";
+        font = "Hack Nerd Font 10";
+        format = "<b>%s</b>\\n<i>%a</i>\\n\\n%b";
+        history_length = 100;
+        corner_radius = 5;
+        mouse_left_click = "do_action, close_current";
+        mouse_right_click = "close_current";
+        mouse_middle_click = "close_all";
+      };
+    };
   };
 
   programs.anyrun = {
