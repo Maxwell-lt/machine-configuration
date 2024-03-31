@@ -80,6 +80,7 @@ in
         ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
         filelight               # Disk space usage viewer
+        filezilla               # FTP client
         firefox                 # Browser
         gparted                 # Manage partitions graphically
         kate                    # Text editor
