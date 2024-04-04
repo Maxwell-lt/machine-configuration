@@ -65,22 +65,31 @@
   ];
 
   # Setup Wireguard client
-  networking.wireguard.interfaces.wg0 = {
-    ips = [ "10.100.0.5/24" ];
-
-    privateKeyFile = "/root/private";
-
-    peers = [
-      {
-        publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
-
-        allowedIPs = [ "10.100.0.0/24" ];
-
-        endpoint = "158.69.224.168:51820";
-
-        persistentKeepalive = 25;
-      }
-    ];
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "10.100.0.5/24" ];
+      privateKeyFile = "/root/private";
+      peers = [
+        {
+          publicKey = "UDyx2aHj21Qn7YmxzhVZq8k82Ke+1f5FaK8N1r34EXY=";
+          allowedIPs = [ "10.100.0.0/24" ];
+          endpoint = "158.69.224.168:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+    wg1 = {
+      ips = [ "10.171.0.5/24" ];
+      privateKeyFile = "/root/private";
+      peers = [
+        {
+          publicKey = "bKpFQfksgXYgL+5u1WjA719quJPiZVxShDBJzmIdlE8=";
+          allowedIPs = [ "10.171.0.1/32" ];
+          endpoint = "brage.info:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
   };
 
   services.zrepl = {
