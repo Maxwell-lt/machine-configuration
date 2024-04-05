@@ -92,7 +92,7 @@ in
         "$mainMod, R, exec, $menu"
         "$mainMod, P, pseudo, # dwindle"
         "$mainMod, J, togglesplit, # dwindle"
-        "$mainMod, L, exec, swaylock -c 04061f --clock --indicator"
+        "$mainMod, L, exec, loginctl lock-session"
 
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
@@ -171,6 +171,21 @@ in
         mouse_move_enables_dpms = true;
       };
     };
+  };
+
+  services.hypridle = {
+    enable = true;
+    lockCmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
+    listeners = [
+      {
+        timeout = 900;
+        onTimeout = "${pkgs.systemd}/bin/loginctl lock-session";
+      }
+      {
+        timeout = 1800;
+        onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+      }
+    ];
   };
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
