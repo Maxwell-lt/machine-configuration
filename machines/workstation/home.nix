@@ -164,6 +164,12 @@ in
           vibrancy = 0.1696;
         };
       };
+      input = {
+        numlock_by_default = true;
+      };
+      misc = {
+        mouse_move_enables_dpms = true;
+      };
     };
   };
 
