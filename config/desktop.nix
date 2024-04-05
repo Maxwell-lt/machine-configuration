@@ -114,10 +114,19 @@ in
         videoDrivers = mkIf (cfg.gpu != null) [ cfg.gpu ];
         layout = "us";
         displayManager = {
-          sddm.enable = true;
-          defaultSession = "plasma";
+          sddm.enable = false;
+          defaultSession = "hyprland";
         };
-        desktopManager.plasma6.enable = true;
+        desktopManager.plasma6.enable = false;
+      };
+
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${pkgs.greetd.greetd}/bin/agreety --cmd Hyprland";
+          };
+        };
       };
 
       mlt.common.user.additionalExtraGroups = [ "video" "audio" "networkmanager" ];
