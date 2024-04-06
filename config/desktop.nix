@@ -191,10 +191,10 @@ in
         pulse.enable = true;
         jack.enable = true;
         wireplumber.configPackages = [
-          (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-            bluez_monitor.properties = {
-              ["bluez5.enable-hw-volume"] = false,
-              ["bluez5.hfphsp-backend"] = "none",
+          (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/51-bluez-config.conf" ''
+            monitor.bluez.properties = {
+              bluez5.enable-hw-volume = false
+              bluez5.hfphsp-backend = "none"
             }
           '')
         ];
