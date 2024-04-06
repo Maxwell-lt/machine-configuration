@@ -140,6 +140,9 @@ in
         "hyprpaper"
         "eww daemon; sleep 0.25s; eww open-many leftmon rightmon"
         "insync start"
+        "fcitx5-remote -r"
+        "fcitx5 -d --replace"
+        "fcitx5-remote -r"
       ];
       workspace = [
         "special:keepass, on-created-empty:keepassxc"
@@ -154,6 +157,7 @@ in
       windowrulev2 = [
         "immediate, class:^(steam_app_)(.*)$"
         "tile, class:^(thunderbird)$"
+        "pseudo,class:fcitx"
       ];
       decoration = {
         rounding = 5;
