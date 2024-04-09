@@ -185,10 +185,10 @@ in
         timeout = 900;
         onTimeout = "${pkgs.systemd}/bin/loginctl lock-session";
       }
-      {
-        timeout = 1800;
-        onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
-      }
+      #{
+      #  timeout = 1800;
+      #  onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+      #}
     ];
   };
 
