@@ -94,6 +94,13 @@
           system = "aarch64-linux";
           modules = [ ./machines/r4spberrypi/configuration.nix ];
         };
+        itg = nixpkgs.lib.nixosSystem {
+          system = linux64System;
+          modules = [ 
+            sops-nix.nixosModules.sops
+            ./machines/itg/configuration.nix
+          ];
+        };
       };
     homeConfigurations =
       let
