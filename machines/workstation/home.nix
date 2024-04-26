@@ -27,7 +27,6 @@ in
     playlist-scan
     hyprpaper
     swaylock-effects
-    dunst
     eww
     playerctl
     libnotify
@@ -93,7 +92,7 @@ in
         "$mainMod, R, exec, $menu"
         "$mainMod, P, pseudo, # dwindle"
         "$mainMod, J, togglesplit, # dwindle"
-        "$mainMod, L, exec, swaylock -c 04061f --clock --indicator"
+        "$mainMod, L, exec, loginctl lock-session"
 
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
@@ -138,10 +137,12 @@ in
         ", XF86AudioNext, exec, playerctl next"
       ];
       exec-once = [
-        "dunst"
         "hyprpaper"
         "eww daemon; sleep 0.25s; eww open-many leftmon rightmon"
         "insync start"
+        "fcitx5-remote -r"
+        "fcitx5 -d --replace"
+        "fcitx5-remote -r"
       ];
       workspace = [
         "special:keepass, on-created-empty:keepassxc"
@@ -156,6 +157,7 @@ in
       windowrulev2 = [
         "immediate, class:^(steam_app_)(.*)$"
         "tile, class:^(thunderbird)$"
+        "pseudo,class:fcitx"
       ];
       decoration = {
         rounding = 5;
@@ -166,7 +168,28 @@ in
           vibrancy = 0.1696;
         };
       };
+      input = {
+        numlock_by_default = true;
+      };
+      misc = {
+        mouse_move_enables_dpms = true;
+      };
     };
+  };
+
+  services.hypridle = {
+    enable = true;
+    lockCmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
+    listeners = [
+      {
+        timeout = 900;
+        onTimeout = "${pkgs.systemd}/bin/loginctl lock-session";
+      }
+      #{
+      #  timeout = 1800;
+      #  onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+      #}
+    ];
   };
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
@@ -222,6 +245,22 @@ in
         font-family: Hack Nerd Font;
       }
     '';
+  };
+
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        monitor = "DP-1";
+        font = "Hack Nerd Font 10";
+        format = "<b>%s</b>\\n<i>%a</i>\\n\\n%b";
+        history_length = 100;
+        corner_radius = 5;
+        mouse_left_click = "do_action, close_current";
+        mouse_right_click = "close_current";
+        mouse_middle_click = "close_all";
+      };
+    };
   };
 
   programs.anyrun = {

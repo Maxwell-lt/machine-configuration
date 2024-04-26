@@ -23,6 +23,11 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     anyrun = {
       url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,9 +42,14 @@
       url = "github:Maroka-chan/VPN-Confinement";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    playerctl-inhibit = {
+      url = "github:jchv/playerctl-inhibit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, vpnconfinement, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, hypridle, anyrun, ags, vpnconfinement, playerctl-inhibit, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -61,6 +71,7 @@
       {
         maxwell-nixos = buildSystem [
           ./machines/workstation/configuration.nix
+          playerctl-inhibit.nixosModules.playerctl-inhibit
         ];
         media-server-alpha = (buildSystem [
           ./machines/mediaserver/configuration.nix
@@ -89,6 +100,13 @@
           system = "aarch64-linux";
           modules = [ ./machines/r4spberrypi/configuration.nix ];
         };
+        itg = nixpkgs.lib.nixosSystem {
+          system = linux64System;
+          modules = [ 
+            sops-nix.nixosModules.sops
+            ./machines/itg/configuration.nix
+          ];
+        };
       };
     homeConfigurations =
       let
@@ -104,6 +122,7 @@
         "maxwell@maxwell-nixos" = buildHome [
           machines/workstation/home.nix
           hyprland.homeManagerModules.default
+          hypridle.homeManagerModules.default
           anyrun.homeManagerModules.default
           ags.homeManagerModules.default
         ];

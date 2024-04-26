@@ -80,6 +80,7 @@ in
         ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
         filelight               # Disk space usage viewer
+        filezilla               # FTP client
         firefox                 # Browser
         gparted                 # Manage partitions graphically
         kate                    # Text editor
@@ -113,10 +114,19 @@ in
         videoDrivers = mkIf (cfg.gpu != null) [ cfg.gpu ];
         layout = "us";
         displayManager = {
-          sddm.enable = true;
-          defaultSession = "plasma";
+          sddm.enable = false;
+          defaultSession = "hyprland";
         };
-        desktopManager.plasma6.enable = true;
+        desktopManager.plasma6.enable = false;
+      };
+
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${pkgs.greetd.greetd}/bin/agreety --cmd Hyprland";
+          };
+        };
       };
 
       mlt.common.user.additionalExtraGroups = [ "video" "audio" "networkmanager" ];
@@ -181,10 +191,10 @@ in
         pulse.enable = true;
         jack.enable = true;
         wireplumber.configPackages = [
-          (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-            bluez_monitor.properties = {
-              ["bluez5.enable-hw-volume"] = false,
-              ["bluez5.hfphsp-backend"] = "none",
+          (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/51-bluez-config.conf" ''
+            monitor.bluez.properties = {
+              bluez5.enable-hw-volume = false
+              bluez5.hfphsp-backend = "none"
             }
           '')
         ];

@@ -267,6 +267,9 @@ in
       users.users.root = {
         shell = pkgs.zsh;
       };
+
+      # Enable udisksd
+      services.udisks2.enable = true;
     })
     (mkIf cfg.java.enable {
       programs.java = {
