@@ -60,6 +60,11 @@ in
         port = 22;
         user = "maxwell";
       };
+      "itg" = {
+        hostname = "10.0.0.243";
+        port = 22;
+        user = "itg";
+      };
     };
   };
 
