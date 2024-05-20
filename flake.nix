@@ -23,11 +23,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    hypridle = {
-      url = "github:hyprwm/hypridle";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     anyrun = {
       url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +39,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, hypridle, anyrun, ags, playerctl-inhibit, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, playerctl-inhibit, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -116,7 +111,6 @@
         "maxwell@maxwell-nixos" = buildHome [
           machines/workstation/home.nix
           hyprland.homeManagerModules.default
-          hypridle.homeManagerModules.default
           anyrun.homeManagerModules.default
           ags.homeManagerModules.default
         ];

@@ -184,17 +184,19 @@ in
 
   services.hypridle = {
     enable = true;
-    lockCmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
-    listeners = [
-      {
-        timeout = 900;
-        onTimeout = "${pkgs.systemd}/bin/loginctl lock-session";
-      }
-      #{
-      #  timeout = 1800;
-      #  onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
-      #}
-    ];
+    settings = {
+      lockCmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
+      listeners = [
+        {
+          timeout = 900;
+          onTimeout = "${pkgs.systemd}/bin/loginctl lock-session";
+        }
+        #{
+        #  timeout = 1800;
+        #  onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+        #}
+      ];
+    };
   };
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
