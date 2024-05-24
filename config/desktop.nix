@@ -97,7 +97,8 @@ in
         pavucontrol # Audio device manager
         puddletag   # Music tagger
         strawberry  # Music player, forked from Clementine
-        syncplay    # Syncronize video watching within a group
+        # waiting for pyside 6.7.1
+        #syncplay    # Syncronize video watching within a group
 
         # Sync
         dropbox # Official Dropbox sync client
