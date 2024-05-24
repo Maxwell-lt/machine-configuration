@@ -33,20 +33,6 @@ in
     bun
   ];
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      # This commit fixes the jq function
-      eww = prev.eww.overrideAttrs (old: {
-        src = pkgs.fetchFromGitHub {
-          owner = "elkowar";
-          repo = "eww";
-          rev = "4ce42455a4744b0dc00dd356ba9b32c1ca558a0e";
-          hash = "sha256-M1MCbKXTI/Z7eWRi9jweloyUTIOMpqN33h5X6hOgeKU=";
-        };
-      });
-    })
-  ];
-
   programs.ssh = {
     enable = true;
     matchBlocks = {
@@ -185,11 +171,13 @@ in
   services.hypridle = {
     enable = true;
     settings = {
-      lockCmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
-      listeners = [
+      general = {
+        lock_cmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
+      };
+      listener = [
         {
           timeout = 900;
-          onTimeout = "${pkgs.systemd}/bin/loginctl lock-session";
+          on-timeout = "${pkgs.systemd}/bin/loginctl lock-session";
         }
         #{
         #  timeout = 1800;
@@ -347,7 +335,7 @@ in
       name = "breeze-dark";
       package = pkgs.kdePackages.breeze;
     };
-    platformTheme = "kde";
+    platformTheme.name = "kde";
   };
 
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
