@@ -213,7 +213,14 @@ in
       programs.noisetorch.enable = true;
 
       # Experimental: enable Hyprland
-      programs.hyprland.enable = true;
+      programs.hyprland = {
+        enable = true;
+        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      };
+      hardware.opengl = {
+        package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
+        package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa.drivers;
+      };
       security.pam.services.swaylock = {};
     })
 
@@ -223,7 +230,7 @@ in
         lutris
         pcsx2
         (prismlauncher.override {
-          jdks = [ jdk8 jdk17 jdk19 ];
+          jdks = [ jdk8 jdk17 jdk21 ];
           withWaylandGLFW = true;
         })
         (callPackage ../pkgs/itgmania-bin {})
