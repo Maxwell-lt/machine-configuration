@@ -79,6 +79,7 @@ in
         # Basic utilities
         ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
+        dolphin                 # KDE file manager
         filelight               # Disk space usage viewer
         filezilla               # FTP client
         firefox                 # Browser
