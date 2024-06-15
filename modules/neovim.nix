@@ -35,17 +35,10 @@
 
         local lspconfig = require('lspconfig')
 
-        local inlay_on_attach = function(client, bufnr)
-          if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint(bufnr, true)
-          end
-        end
-
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
         local servers = { 'rust_analyzer', 'pyright' }
         for _, lsp in ipairs(servers) do
           lspconfig[lsp].setup {
-            on_attach = inlay_on_attach,
             capabilities = capabilities,
           }
         end
@@ -96,6 +89,12 @@
             vim.keymap.set('n', '<space>f', function()
               vim.lsp.buf.format { async = true }
             end, opts)
+
+            -- Inlay setup
+            local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            if client.server_capabilities.inlayHintProvider then
+              vim.lsp.inlay_hint.enable(true, { ev.buf })
+            end
           end,
         })
 
