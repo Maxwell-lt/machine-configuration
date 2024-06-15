@@ -66,9 +66,9 @@ in
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
       "$menu" = "anyrun";
-      "$monLeft" = "AOC Q27G1WG4 0x00019CE9";
-      "$monRight" = "AOC Q27G1WG4 0x00018D10";
-      "$monitorConfig" = "2560x1440@143.912";
+      "$monLeft" = "ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
+      "$monRight" = "ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
+      "$monitorConfig" = "highrr";
       monitor = [
         "$monLeft, $monitorConfig, 0x0, 1"
         "$monRight, $monitorConfig, 2560x0, 1"
@@ -147,6 +147,7 @@ in
       ];
       windowrulev2 = [
         "immediate, class:^(steam_app_)(.*)$"
+        "immediate, class:^ITGmania$"
         "tile, class:^(thunderbird)$"
         "pseudo,class:fcitx"
       ];
@@ -179,10 +180,10 @@ in
           timeout = 900;
           on-timeout = "${pkgs.systemd}/bin/loginctl lock-session";
         }
-        #{
-        #  timeout = 1800;
-        #  onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
-        #}
+        {
+          timeout = 1800;
+          on-timeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+        }
       ];
     };
   };
@@ -190,8 +191,8 @@ in
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ~/Pictures/wallpapers/Cover.png
     preload = ~/Pictures/wallpapers/nge6.png
-    wallpaper = desc:AOC Q27G1WG4 0x00019CE9,~/Pictures/wallpapers/Cover.png
-    wallpaper = desc:AOC Q27G1WG4 0x00018D10,~/Pictures/wallpapers/nge6.png
+    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526,~/Pictures/wallpapers/Cover.png
+    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517,~/Pictures/wallpapers/nge6.png
     splash = false
     ipc = off
   '';

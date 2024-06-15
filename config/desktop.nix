@@ -90,6 +90,7 @@ in
         kfind                   # Search tool
         okular                  # PDF and image viewer
         psensor                 # View graphs of CPU temperature, etc.
+        wlr-randr               # Configure monitors on Wayland
         xdg-desktop-portal-kde  # File picker used by Firefox, Flatpak, and others
 
         # Media
@@ -99,7 +100,7 @@ in
         puddletag   # Music tagger
         strawberry  # Music player, forked from Clementine
         # waiting for pyside 6.7.1
-        #syncplay    # Syncronize video watching within a group
+        syncplay    # Syncronize video watching within a group
 
         # Sync
         dropbox # Official Dropbox sync client
