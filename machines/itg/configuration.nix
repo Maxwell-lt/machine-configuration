@@ -11,23 +11,84 @@ in
   environment.systemPackages = [
     itgmania
     pkgs.comma
+    pkgs.gitMinimal
+    pkgs.rsync
   ];
 
-  services.cage = {
-    enable = true;
-    program = "${itgmania}/opt/itgmania/itgmania";
-    user = "itg";
-  };
+  #services.cage = {
+  #  enable = true;
+  #  program = "${itgmania}/bin/itgmania";
+  #  user = "itg";
+  #};
 
-  systemd.services."cage-tty1" = {
-    after = [
-      "network-online.target"
-      "systemd-resolved.service"
-    ];
-    serviceConfig = {
-      Restart = "on-failure";
+  #systemd.services."cage-tty1" = {
+  #  after = [
+  #    "network-online.target"
+  #    "systemd-resolved.service"
+  #  ];
+  #  serviceConfig = {
+  #    Restart = "on-failure";
+  #  };
+  #};
+
+  services.xserver = {
+    enable = true;
+    desktopManager.plasma5 = {
+      enable = true;
+    };
+    displayManager = {
+      autoLogin = {
+        user = "itg";
+	enable = true;
+      };
+      sddm = {
+        enable = true;
+	wayland.enable = true;
+      };
     };
   };
+
+  # programs.hyprland.enable = true;
+
+  # home-manager.users.itg = {
+  #   home = {
+  #     username = "itg";
+  #     homeDirectory = "/home/itg";
+  #     stateVersion = "23.11";
+  #   };
+
+  #   wayland.windowManager.hyprland = {
+  #     enable = true;
+  #     systemd.enable = true;
+  #     settings = {
+  #       "$mainMod" = "SUPER";
+  #       bind = [
+  #         "$mainMod, M, exit"
+  #         "$mainMod, F, fullscreen"
+  #         "$mainMod, G, exec, itgmania"
+  #         "$mainMod, C, killactive"
+  #       ];
+  #       bindl = [
+  #         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
+  #         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
+  #         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  #       ];
+  #       exec-once = [
+  #         "itgmania"
+  #       ];
+  #       windowrulev2 = [
+  #         "fullscreen, class:ITGmania"
+  #         "immediate, class:ITGmania"
+  #       ];
+  #       general = {
+  #         allow_tearing = true;
+  #       };
+  #       env = [
+  #         "WLR_DRM_NO_ATOMIC, 1"
+  #       ];
+  #     };
+  #   };
+  # };
 
   users.mutableUsers = false;
   users.allowNoPasswordLogin = true;
@@ -43,6 +104,19 @@ in
   users.users.root.openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKXD8KKr1XyV3aOsb9eeagSrLY3A5L1nPgXnLO6XpSwc maxwell.lt@maxwell-nixos"
   ];
+
+  nix = {
+    extraOptions = ''
+      auto-optimise-store = true
+      experimental-features = nix-command flakes
+    '';
+    gc.automatic = true;
+    gc.dates = "Sat 05:00";
+    gc.options = "--delete-older-than 14d";
+    package = pkgs.nixFlakes;
+  };
+
+  security.sudo.wheelNeedsPassword = false;
 
   # Enable fail2ban to block malicious SSH login attempts
   services.fail2ban.enable = true;
@@ -70,7 +144,7 @@ in
 
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
-  networking.interfaces.wlp2s0.useDHCP = true;
+  networking.interfaces.wlo1.useDHCP = true;
   networking.networkmanager.enable = false;
   networking.wireless = {
     environmentFile = config.sops.secrets."wireless.env".path;
