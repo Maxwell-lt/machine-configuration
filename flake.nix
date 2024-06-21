@@ -33,13 +33,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vpnconfinement = {
+      url = "github:Maroka-chan/VPN-Confinement";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     playerctl-inhibit = {
       url = "github:jchv/playerctl-inhibit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, playerctl-inhibit, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, vpnconfinement, playerctl-inhibit, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -65,6 +70,7 @@
         ];
         media-server-alpha = (buildSystem [
           ./machines/mediaserver/configuration.nix
+          vpnconfinement.nixosModules.default
           nixified-ai.nixosModules.invokeai
           {
             environment.systemPackages = [ nixified-ai.packages.x86_64-linux.textgen-nvidia nixified-ai.packages.x86_64-linux.invokeai-nvidia ];
