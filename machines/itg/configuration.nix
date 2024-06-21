@@ -36,15 +36,16 @@ in
     desktopManager.plasma5 = {
       enable = true;
     };
-    displayManager = {
-      autoLogin = {
-        user = "itg";
-	enable = true;
-      };
-      sddm = {
-        enable = true;
-	wayland.enable = true;
-      };
+  };
+
+  services.displayManager = {
+    autoLogin = {
+      user = "itg";
+      enable = true;
+    };
+    sddm = {
+      enable = true;
+      wayland.enable = true;
     };
   };
 
