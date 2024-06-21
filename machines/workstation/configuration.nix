@@ -30,6 +30,7 @@
       printing = true;
       kdeconnect = true;
       development = true;
+      tex = true;
     };
     openrgb = {
       enable = true;
