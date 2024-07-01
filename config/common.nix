@@ -244,7 +244,10 @@ in
       # Enable SSH with password authentication disabled.
       services.openssh = {
         enable = true;
-        settings.PasswordAuthentication = false;
+        settings = {
+          PasswordAuthentication = false;
+          LoginGraceTime = 0;
+        };
       };
 
       # Allow unfree packages to be installed.
