@@ -26,21 +26,6 @@ in
       };
     };
 
-    systemd.services.transmission.vpnconfinement = {
-      enable = true;
-      vpnnamespace = "wg";
-    };
-
     mlt.common.user.additionalExtraGroups = [ "jellyfin" ];
-
-    sops.secrets."wg-quick.conf" = {
-      sopsFile = ../secrets/wireguard.yaml;
-      path = "/var/lib/nixarr/wg-quick.conf";
-    };
-
-    vpnnamespaces."wg" = {
-      enable = true;
-      wireguardConfigFile = config.sops.secrets."wg-quick.conf".path;
-    };
   };
 }
