@@ -246,7 +246,6 @@ in
         enable = true;
         settings = {
           PasswordAuthentication = false;
-          LoginGraceTime = 0;
         };
       };
 

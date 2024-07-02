@@ -220,7 +220,6 @@
     allowSFTP = true;
     settings = {
       PasswordAuthentication = false;
-      LoginGraceTime = 0;
     };
   };
 
