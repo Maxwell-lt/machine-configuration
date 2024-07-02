@@ -218,7 +218,10 @@
   services.openssh = {
     enable = true;
     allowSFTP = true;
-    settings.PasswordAuthentication = false;
+    settings = {
+      PasswordAuthentication = false;
+      LoginGraceTime = 0;
+    };
   };
 
   users.mutableUsers = false;
