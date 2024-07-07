@@ -105,27 +105,6 @@
         "type": "indirect"
       }
     },
-    "flake-parts_4": {
-      "inputs": {
-        "nixpkgs-lib": [
-          "vpnconfinement",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1717285511,
-        "narHash": "sha256-iKzJcpdXih14qYVcZ9QC9XuZYnPc6T8YImb6dX166kw=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "2a55567fcf15b1b1c7ed712a2c6fadaec7412ea8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": "flake-parts_3",
@@ -508,8 +487,7 @@
         "nixified-ai": "nixified-ai",
         "nixpkgs": "nixpkgs_3",
         "playerctl-inhibit": "playerctl-inhibit",
-        "sops-nix": "sops-nix",
-        "vpnconfinement": "vpnconfinement"
+        "sops-nix": "sops-nix"
       }
     },
     "sops-nix": {
@@ -575,27 +553,6 @@
         "owner": "oobabooga",
         "ref": "v1.7",
         "repo": "text-generation-webui",
-        "type": "github"
-      }
-    },
-    "vpnconfinement": {
-      "inputs": {
-        "flake-parts": "flake-parts_4",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1718924235,
-        "narHash": "sha256-lu78iQzZGBE9bIvlYgbBYiJ85wR5zSBUPjIQkg6cRQc=",
-        "owner": "Maroka-chan",
-        "repo": "VPN-Confinement",
-        "rev": "790f70888c69d55c92442e702647dc619dd7bc61",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Maroka-chan",
-        "repo": "VPN-Confinement",
         "type": "github"
       }
     },
