@@ -174,7 +174,7 @@ in
     enable = true;
     settings = {
       general = {
-        lock_cmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator";
+        lock_cmd = "${pkgs.swaylock-effects}/bin/swaylock -c 04061f --clock --indicator --grace 10 --grace-no-mouse --fade-in 8";
       };
       listener = [
         {
