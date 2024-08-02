@@ -55,6 +55,10 @@
     }
   ];
 
+  environment.systemPackages = with pkgs; [
+    zoom-us
+  ];
+
   virtualisation.waydroid.enable = true;
 
   networking.networkmanager.enable = true;
