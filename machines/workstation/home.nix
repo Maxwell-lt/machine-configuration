@@ -23,7 +23,7 @@ in
 
   home.packages = with pkgs; [
     #lutris
-    playonlinux
+    #playonlinux
     playlist-scan
     hyprpaper
     swaylock-effects
