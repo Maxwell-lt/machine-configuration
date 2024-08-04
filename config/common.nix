@@ -58,7 +58,8 @@ in
     (mkIf cfg.media {
       environment.systemPackages = with pkgs; [
         abcde           # One-step CD ripping tool
-        whipper         # Secure ripper, Linux equivalent of EAC
+        # Broken build, see NixOS/nixpkgs#331094
+        #whipper         # Secure ripper, Linux equivalent of EAC
         flac            # FLAC CLI encoder, can also validate a .flac's internal checksum
         ffmpeg-full     # Fully featured media file manipulation tool
         imagemagickBig  # xkcd::2347
