@@ -231,6 +231,7 @@ in
     (mkIf cfg.gaming {
       environment.systemPackages = with pkgs; [
         dolphinEmuMaster
+        ryujinx
         lutris
         pcsx2
         (prismlauncher.override {
