@@ -117,13 +117,13 @@ in
       services.xserver = {
         enable = true;
         videoDrivers = mkIf (cfg.gpu != null) [ cfg.gpu ];
-        layout = "us";
-        displayManager = {
-          sddm.enable = false;
-          defaultSession = "hyprland";
-        };
-        desktopManager.plasma6.enable = false;
+        xkb.layout = "us";
       };
+      services.displayManager = {
+        sddm.enable = false;
+        defaultSession = "hyprland";
+      };
+      services.desktopManager.plasma6.enable = false;
 
       services.greetd = {
         enable = true;
@@ -138,7 +138,8 @@ in
 
       # Enable IME
       i18n.inputMethod = {
-        enabled = "fcitx5";
+        enable = true;
+        type = "fcitx5";
         fcitx5 = {
           addons = [ pkgs.fcitx5-mozc ];
           waylandFrontend = true;
@@ -221,7 +222,7 @@ in
         enable = true;
         package = inputs.hyprland.packages.${pkgs.system}.hyprland;
       };
-      hardware.opengl = {
+      hardware.graphics = {
         package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
         package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa.drivers;
       };
@@ -235,8 +236,7 @@ in
         lutris
         pcsx2
         (prismlauncher.override {
-          jdks = [ jdk8 jdk17 jdk21 ];
-          withWaylandGLFW = true;
+          jdks = [ jdk8 jdk17 jdk21 jdk22 ];
         })
         (callPackage ../pkgs/itgmania-bin {})
         (callPackage ../pkgs/outfox {})
@@ -247,7 +247,7 @@ in
 
     (mkIf cfg.printing {
       environment.systemPackages = with pkgs; [
-        gnome3.simple-scan
+        simple-scan
       ];
 
       # Enable printing.
