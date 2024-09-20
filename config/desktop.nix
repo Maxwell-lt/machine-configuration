@@ -201,6 +201,7 @@ in
             monitor.bluez.properties = {
               bluez5.enable-hw-volume = false
               bluez5.hfphsp-backend = "none"
+              bluez5.a2dp.ldac.quality = "hq"
             }
           '')
         ];
