@@ -31,6 +31,7 @@ in
     playerctl
     libnotify
     bun
+    anki
   ];
 
   programs.ssh = {
