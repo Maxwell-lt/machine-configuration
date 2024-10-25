@@ -91,7 +91,6 @@ in
         keepassxc               # Secure local password manager
         kfind                   # Search tool
         okular                  # PDF and image viewer
-        psensor                 # View graphs of CPU temperature, etc.
         wlr-randr               # Configure monitors on Wayland
         xdg-desktop-portal-kde  # File picker used by Firefox, Flatpak, and others
 
@@ -163,7 +162,7 @@ in
       fonts.packages = with pkgs; [
         corefonts
         noto-fonts
-        noto-fonts-cjk
+        noto-fonts-cjk-sans
         noto-fonts-emoji
         noto-fonts-extra
         nerdfonts
@@ -232,7 +231,7 @@ in
 
     (mkIf cfg.gaming {
       environment.systemPackages = with pkgs; [
-        dolphinEmuMaster
+        dolphin-emu-beta
         ryujinx
         lutris
         pcsx2

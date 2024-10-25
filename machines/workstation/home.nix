@@ -299,7 +299,7 @@ in
 
   programs.kitty = {
     enable = true;
-    theme = "Solarized Dark";
+    themeFile = "Solarized_Dark";
     font = {
       name = "Hack Nerd Font";
       size = 10;

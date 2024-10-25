@@ -178,7 +178,7 @@
     ffmpeg-full mkvtoolnix-cli imagemagickBig youtube-dl
     r128gain
     # Fonts
-    powerline-fonts corefonts noto-fonts noto-fonts-cjk
+    powerline-fonts corefonts noto-fonts noto-fonts-cjk-sans
     noto-fonts-emoji noto-fonts-extra
   ];
 
