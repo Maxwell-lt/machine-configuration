@@ -236,7 +236,7 @@ in
         lutris
         pcsx2
         (prismlauncher.override {
-          jdks = [ jdk8 jdk17 jdk21 jdk22 ];
+          jdks = [ jdk8 jdk17 jdk21 jdk23 ];
         })
         (callPackage ../pkgs/itgmania-bin {})
         (callPackage ../pkgs/outfox {})
