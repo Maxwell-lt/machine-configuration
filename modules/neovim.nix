@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     ripgrep
     nodejs yarn
+    nixd
   ];
 
   programs = {
@@ -36,13 +37,13 @@
         local lspconfig = require('lspconfig')
 
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-        local servers = { 'rust_analyzer', 'pyright' }
+        local servers = { 'rust_analyzer', 'pyright', 'nixd' }
         for _, lsp in ipairs(servers) do
           lspconfig[lsp].setup {
             capabilities = capabilities,
           }
         end
-        lspconfig["tsserver"].setup({
+        lspconfig["ts_ls"].setup({
           on_attach = function (client, buffer)
             client.resolved_capabilities.document_formatting = false
             client.resolved_capabilities.document_range_formatting = false
