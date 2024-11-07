@@ -44,12 +44,7 @@
           }
         end
         lspconfig["ts_ls"].setup({
-          on_attach = function (client, buffer)
-            client.resolved_capabilities.document_formatting = false
-            client.resolved_capabilities.document_range_formatting = false
-            on_attach(client, buffer)
-          end,
-          capabilities = capabilitiesWithoutFormatting,
+          capabilities = capabilities,
           init_options = {
             tsserver = {
               path = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/"
