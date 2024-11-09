@@ -30,7 +30,8 @@ in
       environment.systemPackages = with pkgs; [
         kmymoney      # Double-entry accounting platform
         libreoffice   # Office suite
-        logseq        # Knowledge management platform
+        # Electron is EOL again...
+        #logseq        # Knowledge management platform
       ];
     })
 
