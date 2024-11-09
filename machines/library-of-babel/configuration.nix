@@ -312,6 +312,18 @@
           '';
         };
       };
+      "photos.maxwell-lt.dev" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://10.100.0.2:3001";
+          proxyWebsockets = true;
+          extraConfig = ''
+            client_max_body_size 10G;
+          '';
+        };
+      };
+
       #"~^[a-zA-Z0-9\\-_]+\\.kube.maxwell-lt.dev$" = {
       #  addSSL = true;
       #  useACMEHost = "kube.maxwell-lt.dev";
