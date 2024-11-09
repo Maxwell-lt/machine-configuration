@@ -316,7 +316,7 @@
         addSSL = true;
         enableACME = true;
         locations."/" = {
-          proxyPass = "http://10.100.0.2:3001";
+          proxyPass = "http://10.100.0.2:2283";
           proxyWebsockets = true;
           extraConfig = ''
             client_max_body_size 10G;
