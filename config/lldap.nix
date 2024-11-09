@@ -17,6 +17,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    sops.secrets.lldap_jwt_secret = {};
+    sops.secrets.lldap_user_pass = {};
+
     services.lldap = {
       enable = true;
       settings = {
