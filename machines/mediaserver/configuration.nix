@@ -167,7 +167,7 @@
   };
 
   # Needed for tc to work in the firewall script
-  networking.firewall.extraPackages = with pkgs; [ iproute ];
+  networking.firewall.extraPackages = with pkgs; [ iproute2 ];
 
   networking.useDHCP = false;
   networking.interfaces.enp39s0.useDHCP = true;
