@@ -27,6 +27,17 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  services.immich = {
+    enable = true;
+    host = "0.0.0.0";
+    openFirewall = true;
+    mediaLocation = "/mnt/media/immich";
+  };
+
+  users.users.immich.extraGroups = [ "video" "render" ];
+
+  services.postgresql.package = pkgs.postgresql;
+
   services.invokeai = {
     enable = true;
     package = pkgs.invokeai-nvidia;
@@ -194,12 +205,12 @@
   };
 
   services.zpool-exporter = {
-    enable = true;
+    enable = false;
     datasets = [ "ssdpool" "rustpool" ];
   };
 
   services.powerpanel-exporter = {
-    enable = true;
+    enable = false;
   };
 
   services.powerpanel = {
