@@ -93,7 +93,7 @@ in
 
     (mkIf cfg.enable {
       sops = {
-        defaultSopsFile = ../secrets/general.yaml;
+        defaultSopsFile = lib.mkDefault ../secrets/general.yaml;
         age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
 

@@ -16,5 +16,6 @@
     ./jellyfin.nix              # Jellyfin media server
     ./photoprism.nix            # PhotoPrism photo management server
     ./nextcloud.nix             # NextCloud
+    ./lldap.nix                 # Light LDAP
   ];
 }
