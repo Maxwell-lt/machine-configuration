@@ -175,7 +175,7 @@
     # File transfer
     wget sshfs-fuse rsync
     # Media manipulation
-    ffmpeg-full mkvtoolnix-cli imagemagickBig youtube-dl
+    ffmpeg-full mkvtoolnix-cli imagemagickBig yt-dlp
     r128gain
     # Fonts
     powerline-fonts corefonts noto-fonts noto-fonts-cjk-sans
