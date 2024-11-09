@@ -416,7 +416,7 @@
     };
   };
   services.zpool-exporter = {
-    enable = true;
+    enable = false;
     datasets = [ "rpool" ];
     properties = [ "used" "available" ];
   };
