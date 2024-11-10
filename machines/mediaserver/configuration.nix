@@ -19,7 +19,7 @@
     };
     jellyfin.enable = true;
     zfs.enable = true;
-    lldap.enable = true;
+    lldap.enable = false;
   };
 
   boot.loader.systemd-boot.enable = true;
@@ -34,7 +34,12 @@
 
   users.users.immich.extraGroups = [ "video" "render" ];
 
-  services.postgresql.package = pkgs.postgresql;
+  services.postgresql = {
+    package = pkgs.postgresql;
+    identMap = ''
+      superuser_map   root    postgres
+    '';
+  };
 
   services.invokeai = {
     enable = true;
