@@ -17,8 +17,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.lldap_jwt_secret = {};
-    sops.secrets.lldap_user_pass = {};
+    sops.secrets.lldap_jwt_secret = {
+      mode = "0440";
+      group = "lldap-secrets";
+    };
+    sops.secrets.lldap_user_pass = {
+      mode = "0440";
+      group = "lldap-secrets";
+    };
 
     services.lldap = {
       enable = true;
@@ -32,6 +38,12 @@ in
         LLDAP_LDAP_USER_PASS_FILE = secrets.lldap_user_pass.path;
       };
     };
+
+    users.groups = {
+      lldap-secrets = { };
+    };
+
+    systemd.services.lldap.serviceConfig.SupplementaryGroups = [ "lldap-secrets" ];
 
     services.postgresql = {
       enable = true;
