@@ -19,7 +19,7 @@
     };
     jellyfin.enable = true;
     zfs.enable = true;
-    lldap.enable = false;
+    lldap.enable = true;
   };
 
   boot.loader.systemd-boot.enable = true;
@@ -36,9 +36,6 @@
 
   services.postgresql = {
     package = pkgs.postgresql;
-    identMap = ''
-      superuser_map   root    postgres
-    '';
   };
 
   services.invokeai = {
