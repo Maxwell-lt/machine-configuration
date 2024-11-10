@@ -231,7 +231,7 @@
     hashedPassword = "$6$bJuwDnHiYHpdz$dSsXMl79Rx78pS.W.nQq7eLeoO1lA1OKiG.yq0Mo8vy4Vh66EjZDKvm1AC.aRU47zuvyiUwOx34wTHdM6hdiZ1";
     openssh.authorizedKeys.keys = [
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD5LS315i42OMhMxkRjLrvdP65zDYdlD0hAOjXslf6JAhgvQu7CUbnLmMhivKlXp7z825NWrB66jlR5R6muO6bwoSDC9RID01ixcRv1iF4fmveDDXkSUy1MjeOdUOcml+zhh+IIi/SkGsjI7weqe0fKJCj1uIoru+UoIOjPeL0uC32Sl/GC9VRVGqiH57lIjkUaf9j3Ja9MvY63nx5W1+BIQuOlabEB2XD8hIUiEQEi0jNCCkAuvhnJjHIGSIRvUQBijInUGOR7M8eRmEwTrbl36DFIphnKKP+mhAefy5zIIMctdDucqyfweizLBg2D4qY1WiXHflng5k63h5WRYwvAyLJQ7Jy9/Dvm2eNYWhQ0bdGV0a3l3oRvthIReXgLuygWs9M/quCyb1VnNRYbxs1vRwI1MzN1EZ7W8OfX/5S3XNy3DBENoga4eA8xXanhSM3StRFpaYfx05E4x2tdQYQ2CMbps14oMEZ8bYc1cxD5r1aDfzzo2/0YkLGhVJVpoBrmCaQsHc07klqb+XwWTkqxdE/jTiNV3ZXXHlzD3Vt1jD8Goo2kMqjC1MGwFTUJAz20St3O/3ntka1sYZZJ8dDzU/ly6xI3xW1IN+o0A7Q9qpIIw4Lgc1eWEURH3/D2fnDTcFPIIh9h1oEEXldl0j6dWrw8f3XySBVBk7yNJzB0/Q== maxwell.lt@live.com"
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDLiENW3t+GR07SPLqU05udjHRQ6KZPFk4VMRBaLPxK9Q4jL8TgJjAEJoWo1tGQUfg8XefUS1VJkoENnLXdoLFkF0W5yHBYqy3UdQpEiuCtW7zs7MxOcAdqfhkr8n8YIz7ud2VyxUXoeVaAQDrXjUYcXIDPJEkXSTQLd6+1vgBuUfPoAQpbgDQGodBcxFPxMz4wXFcV2gvvRtVukUsQ56ux2kQzXyyqMXLO2BAJgiSMojCOSPdCq9ZhUr0gD1/Lf+DW6JAGo2BNNqjyw1ocHTU0cwhxpB9ZyPS78vAVhkzKcsUbnlJLSdLNd/0ybNBuZJKNUzQsNcOsID74mIAn3AfidFBNRKZLuBm2dCMtss22jTUC+MXKvM/2PS9xY97fOjic3yHEZBIx8u6VNen7sCubaC/impgetOJTRsQOlyoMD3uMrGoQeqn+jqi3+/c31+x5qELmo/VsYQxPuF9M5KoiBqhPDrh28H+vcpkw7bTqNOSaZA7ZGSIT1JqfAH6CtJo+hoRsH65WQCS3vIPrvpN6Y7vW6sSS8eYs22YvCGnow8KJ12dJGDa3rMsn3ZJj02xnfUbPuLnJMcx1B5fWDBXPlCPBGDxVaTw9mhIUtvokWBPUVzQg6t+x32i7ZbOEQR4s7DeWSK7aM2peLsaQXs44tlES79W9qG5UDrEM6JviIQ== maxwell@nix-portable-omega"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6RnS6RiN5u9vyXVKMZgnCsLJOuXaqADbDQWfShufCv maxwell@nix-portable-omega"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/qNB6f8IaU2BuI9AsHodHuOoaPabGNogUJQUs2etXE maxwell@pixel"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2M9+aenrZ9xCtrF1zsQTgmUeQjj5mzSgD6Y9lARWB+ JuiceSSH"
         ];
@@ -239,18 +239,14 @@
   };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
-    53 # Forwarded DNS for kube.maxwell-lt.dev. domain
     80
     443
     25565
     8550 # zrepl
   ];
   networking.firewall.allowedUDPPorts = [ 
-    53      # Forwarded DNS for kube.maxwell-lt.dev. domain
     51820   # Wireguard
   ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # Setup nginx
   services.nginx = {
@@ -278,28 +274,28 @@
           proxyPass = "http://10.100.0.2:8096";
         };
       };
-      "grafana.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:3000";
-        };
-      };
-      "minecraft.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          root = "/var/www/minecraft";
-          tryFiles = "\$uri \$uri/ =404";
-        };
-      };
-      "map.minecraft.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:8123";
-        };
-      };
+      #"grafana.maxwell-lt.dev" = {
+      #  addSSL = true;
+      #  enableACME = true;
+      #  locations."/" = {
+      #    proxyPass = "http://localhost:3000";
+      #  };
+      #};
+      #"minecraft.maxwell-lt.dev" = {
+      #  addSSL = true;
+      #  enableACME = true;
+      #  locations."/" = {
+      #    root = "/var/www/minecraft";
+      #    tryFiles = "\$uri \$uri/ =404";
+      #  };
+      #};
+      #"map.minecraft.maxwell-lt.dev" = {
+      #  addSSL = true;
+      #  enableACME = true;
+      #  locations."/" = {
+      #    proxyPass = "http://localhost:8123";
+      #  };
+      #};
       "hass.maxwell-lt.dev" = {
         addSSL = true;
         enableACME = true;
@@ -323,29 +319,7 @@
           '';
         };
       };
-
-      #"~^[a-zA-Z0-9\\-_]+\\.kube.maxwell-lt.dev$" = {
-      #  addSSL = true;
-      #  useACMEHost = "kube.maxwell-lt.dev";
-      #  locations."/" = {
-      #    proxyPass = "http://10.100.0.2:80";
-      #  };
-      #};
     };
-
-    #streamConfig = ''
-    #  server {
-    #    listen 53 udp;
-    #    proxy_pass 10.100.0.2:9053;
-    #    proxy_timeout 20s;
-    #  }
-
-    #  server {
-    #    listen 53;
-    #    proxy_pass 10.100.0.2:9054;
-    #    proxy_timeout 20s;
-    #  }
-    #'';
   };
 
   security.acme = {
@@ -353,22 +327,17 @@
     defaults = {
       email = "maxwell.lt@live.com";
     };
-    #certs."kube.maxwell-lt.dev" = {
-    #  domain = "*.kube.maxwell-lt.dev";
-    #  dnsProvider = "rfc2136";
-    #  credentialsFile = "/var/lib/secrets/certs.secret";
-    #};
   };
 
   users.users.nginx.extraGroups = [ "acme" ];
 
   services.grafana = {
-    enable = true;
+    enable = false;
     settings."auth.anonymous".enabled = true;
   };
 
   services.prometheus = {
-    enable = true;
+    enable = false;
     globalConfig = {
       evaluation_interval = "20s";
       scrape_interval = "20s";
@@ -421,7 +390,7 @@
     properties = [ "used" "available" ];
   };
 
-  nix.settings.sandbox = "relaxed";
+  #nix.settings.sandbox = "relaxed";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
