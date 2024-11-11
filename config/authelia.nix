@@ -56,6 +56,7 @@ in
         duo_api = {
           hostname = "api-f5e1c025.duosecurity.com";
           integration_key = "DIVEOA4MM83TBMPQ67I5";
+          enable_self_enrollment = true;
         };
         password_policy.zxcvbn.enabled = true;
         authentication_backend = {
