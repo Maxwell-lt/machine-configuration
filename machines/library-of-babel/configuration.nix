@@ -276,7 +276,7 @@
       # Auth portal
       auth.maxwell-lt.dev {
         import headers
-        reverse_proxy 10.100.0.2:9101
+        reverse_proxy 10.100.0.2:9091
       }
 
       # static home page
