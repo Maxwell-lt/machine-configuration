@@ -67,9 +67,7 @@ in
             start_tls = "false";
             base_dn = "dc=maxwell-lt,dc=dev";
             additional_users_dn = "ou=people";
-            users_filter = "(&({username_attribute}={input})(objectClass=person))";
             additional_groups_dn = "ou=groups";
-            groups_filter = "(member={dn})";
             user = "cn=authelia_bind_user,dc=maxwell-lt,dc=dev";
           };
         };
