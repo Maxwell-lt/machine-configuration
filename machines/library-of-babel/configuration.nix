@@ -277,6 +277,7 @@
       auth.maxwell-lt.dev {
         import headers
         reverse_proxy 10.100.0.2:9101
+      }
 
       # static home page
       maxwell-lt.dev, www.maxwell-lt.dev {
@@ -304,7 +305,7 @@
         request_body {
           max_size 10GB
         }
-        revese_proxy 10.100.0.2:2283
+        reverse_proxy 10.100.0.2:2283
       }
     '';
   };
