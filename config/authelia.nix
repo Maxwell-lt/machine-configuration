@@ -68,7 +68,7 @@ in
             base_dn = "dc=maxwell-lt,dc=dev";
             additional_users_dn = "ou=people";
             additional_groups_dn = "ou=groups";
-            user = "cn=authelia_bind_user,dc=maxwell-lt,dc=dev";
+            user = "uid=authelia_bind_user,ou=people,dc=maxwell-lt,dc=dev";
           };
         };
         access_control = {
@@ -98,7 +98,7 @@ in
         server.endpoints.authz.forward-auth.implementation = "ForwardAuth";
         notifier.smtp = {
           address = "submission://smtp.gmail.com:587";
-          username = "{{secret \"${secrets.authelia_smtp_username.path}\" }}";
+          username = "appliedarctan@gmail.com";
           sender = "maxwell-lt.dev Auth Server <noreply@auth.maxwell-lt.dev>";
         };
       };
