@@ -123,6 +123,9 @@ in
       port = 0;
     };
 
-    systemd.services.authelia-main.after = [ "redis-immich.service" "lldap.service" "postgresql.service" ];
+    systemd.services.authelia-main = {
+      serviceConfig.SupplementaryGroups = [ "redis-authelia" ];
+      after = [ "redis-immich.service" "lldap.service" "postgresql.service" ];
+    };
   };
 }
