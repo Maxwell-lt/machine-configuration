@@ -17,5 +17,6 @@
     ./photoprism.nix            # PhotoPrism photo management server
     ./nextcloud.nix             # NextCloud
     ./lldap.nix                 # Light LDAP
+    ./authelia.nix              # Authelia auth server
   ];
 }

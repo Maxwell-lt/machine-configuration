@@ -20,6 +20,7 @@
     jellyfin.enable = true;
     zfs.enable = true;
     lldap.enable = true;
+    authelia.enable = true;
   };
 
   boot.loader.systemd-boot.enable = true;
