@@ -38,8 +38,8 @@ in
       enable = true;
       secrets = {
         jwtSecretFile = secrets.authelia_jwt_secret.path;
-        #oidcHmacSecretFile = secrets.authelia_hmac_secret.path;
-        #oidcIssuerPrivateKeyFile = secrets.authelia_issuer_priv_key.path;
+        oidcHmacSecretFile = secrets.authelia_hmac_secret.path;
+        oidcIssuerPrivateKeyFile = secrets.authelia_issuer_priv_key.path;
         sessionSecretFile = secrets.authelia_session_secret.path;
         storageEncryptionKeyFile = secrets.authelia_storage_encryption_key.path;
       };
@@ -70,6 +70,49 @@ in
             additional_users_dn = "ou=people";
             additional_groups_dn = "ou=groups";
             user = "uid=authelia_bind_user,ou=people,dc=maxwell-lt,dc=dev";
+          };
+        };
+        identity_providers = {
+          oidc = {
+            authorization_policies = {
+              exclude_sa = {
+                default_policy = "two_factor";
+                rules = [
+                  {
+                    policy = "deny";
+                    subject = "group:service_account";
+                  }
+                ];
+              };
+            };
+            cors = {
+              endpoints = [
+                "authorization"
+                "token"
+                "revocation"
+                "introspection"
+              ];
+              allowed_origins_from_client_redirect_uris = true;
+            };
+            clients = [
+              {
+                client_name = "Immich";
+                client_id = "cb5ea2da-5e3b-485c-9ca3-9f4383d8a740";
+                client_secret = "$pbkdf2-sha512$310000$CgnWht7UOdtIaAJw20YDpA$E.kduTGxMCzCtYp0dNCsNguyXNLWNRgG7y.sv9nidqetx70BQgj.p4nLhadLizXrPafL4RzukZKKyNJaNw4wfA";
+                public = false;
+                authorization_policy = "exclude_sa";
+                redirect_uris = [
+                  "https://photos.maxwell-lt.dev/auth/login"
+                  "https://photos.maxwell-lt.dev/user-settings"
+                  "app.immich:///oauth-callback"
+                ];
+                scopes = [
+                  "openid"
+                  "profile"
+                  "email"
+                ];
+              }
+            ];
           };
         };
         access_control = {
