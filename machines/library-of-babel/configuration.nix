@@ -207,7 +207,7 @@
         plugins = [ "git" "python" "nmap" "safe-paste" "spring" "gradle" "rust" ];
         theme = "agnoster";
         customPkgs = with pkgs; [
-          pkgs.nix-zsh-completions
+          nix-zsh-completions
         ];
       };
     };
@@ -239,97 +239,75 @@
   };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
-    80
     443
-    25565
     8550 # zrepl
   ];
   networking.firewall.allowedUDPPorts = [ 
     51820   # Wireguard
   ];
 
-  # Setup nginx
-  services.nginx = {
+  # Setup caddy
+  services.caddy = {
     enable = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
+    email = "maxwell.lt@live.com";
+    globalConfig = ''
+      grace_period 1m
+    '';
+    extraConfig = ''
+      (headers) {
+        header X-Clacks-Overhead "GNU Terry Pratchett"
+        header X-XSS-Protection "1; mode=block"
+        header Referrer-Policy "no-referrer-when-downgrade"
 
-    virtualHosts = {
-      "maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        root = "/var/www/infosite";
-      };
-      "www.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        root = "/var/www/infosite";
-      };
-      "media.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://10.100.0.2:8096";
-        };
-      };
-      #"grafana.maxwell-lt.dev" = {
-      #  addSSL = true;
-      #  enableACME = true;
-      #  locations."/" = {
-      #    proxyPass = "http://localhost:3000";
-      #  };
-      #};
-      #"minecraft.maxwell-lt.dev" = {
-      #  addSSL = true;
-      #  enableACME = true;
-      #  locations."/" = {
-      #    root = "/var/www/minecraft";
-      #    tryFiles = "\$uri \$uri/ =404";
-      #  };
-      #};
-      #"map.minecraft.maxwell-lt.dev" = {
-      #  addSSL = true;
-      #  enableACME = true;
-      #  locations."/" = {
-      #    proxyPass = "http://localhost:8123";
-      #  };
-      #};
-      "hass.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://10.100.0.3:8123";
-          extraConfig = ''
-            proxy_buffering off;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-          '';
-        };
-      };
-      "photos.maxwell-lt.dev" = {
-        addSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://10.100.0.2:2283";
-          proxyWebsockets = true;
-          extraConfig = ''
-            client_max_body_size 10G;
-          '';
-        };
-      };
-    };
+        encode zstd gzip
+        handle_errors {
+          header content-type "text/plain"
+          respond "{http.error.status_code} {http.error.status_text}"
+        }
+      }
+
+      (auth) {
+        forward_auth 10.100.0.2:9091 {
+          uri /api/authz/forward-auth
+          copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+        }
+      }
+
+      # Auth portal
+      auth.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:9101
+
+      # static home page
+      maxwell-lt.dev, www.maxwell-lt.dev {
+        import headers
+        root * /var/www/infosite
+        file_server
+      }
+
+      # Jellyfin media server
+      media.maxwell-lt.dev {
+        import headers
+        import auth
+        reverse_proxy 10.100.0.2:8096
+      }
+
+      # Home Assistant
+      hass.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.3:8123
+      }
+
+      # Immich photo repository
+      photos.maxwell-lt.dev {
+        import headers
+        request_body {
+          max_size 10GB
+        }
+        revese_proxy 10.100.0.2:2283
+      }
+    '';
   };
-
-  security.acme = {
-    acceptTerms = true;
-    defaults = {
-      email = "maxwell.lt@live.com";
-    };
-  };
-
-  users.users.nginx.extraGroups = [ "acme" ];
 
   services.grafana = {
     enable = false;
