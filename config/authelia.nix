@@ -125,5 +125,7 @@ in
       serviceConfig.SupplementaryGroups = [ "redis-authelia" ];
       after = [ "redis-immich.service" "lldap.service" "postgresql.service" ];
     };
+
+    networking.firewall.allowedTCPPorts = [ 9091 ];
   };
 }
