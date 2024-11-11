@@ -77,7 +77,7 @@ in
         storage = {
           postgres = {
             address = "unix:///run/postgresql";
-            database = "authelia";
+            database = "authelia-main";
             username = "authelia-main";
             password = "unused"; # uses peer authentication
 
@@ -100,7 +100,7 @@ in
 
     services.postgresql = {
       enable = true;
-      ensureDatabases = [ "authelia" ];
+      ensureDatabases = [ "authelia-main" ];
       ensureUsers = [
         {
           name = "authelia-main";
