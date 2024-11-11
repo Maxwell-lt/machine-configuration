@@ -18,7 +18,7 @@ in
     };
 
     services.transmission = {
-      enable = true;
+      enable = false;
       settings = {
         download-dir = "/mnt/media/staging/torrents";
         watch-dir-enabled = true;
