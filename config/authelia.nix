@@ -112,6 +112,22 @@ in
                   "email"
                 ];
               }
+              {
+                client_name = "Jellyfin";
+                client_id = "1f2c0398-be8a-426d-86bc-917f9df5571e";
+                client_secret = "$pbkdf2-sha512$310000$of.DVSPmrKmiJIJ8pdDyLA$NtFvpzAHdSBCTXE4vf6SVol5ZvkhIBpBF0cjLsdDKOShw2UhEz/bJBYhf6lnl.LMewaE9LK/DTJQ8tYzD/J8sA";
+                public = false;
+                authorization_policy = "exclude_sa";
+                token_endpoint_auth_method = "client_secret_post";
+                redirect_uris = [
+                  "https://media.maxwell-lt.dev/sso/OID/redirect/authelia"
+                ];
+                scopes = [
+                  "openid"
+                  "groups"
+                  "profile"
+                ];
+              }
             ];
           };
         };
