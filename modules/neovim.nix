@@ -217,6 +217,8 @@
 
         vim-parinfer  # Balance parentheses when writing Lisp-style code
 
+        vim-wakatime  # Time tracking
+
         # Language support
         vim-nix     # Nix
         vim-toml    # TOML
