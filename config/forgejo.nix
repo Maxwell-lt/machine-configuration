@@ -20,7 +20,6 @@ in
       };
       lfs.enable = true;
       settings = {
-        APP_NAME = "";
         server = {
           DOMAIN = "git.maxwell-lt.dev";
           ROOT_URL = "https://git.maxwell-lt.dev";

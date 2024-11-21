@@ -128,6 +128,24 @@ in
                   "profile"
                 ];
               }
+              {
+                client_name = "Forgejo";
+                client_id = "648c896f-54a3-4df5-9740-ea8be50a20b1";
+                client_secret = "$pbkdf2-sha512$310000$Mr5fP5vtR9C8TgNF8IlvLg$/KK2zqDMID/xzKi2yP4.yjTVeF43ycPbuX.GbQfIeDLLzsSn2DHYmhQZfpQVYued5dCxsWnIW5BT1OmPaMcu4Q";
+                public = false;
+                authorization_policy = "exclude_sa";
+                token_endpoint_auth_method = "client_secret_basic";
+                redirect_uris = [
+                  "https://git.maxwell-lt.dev/user/oauth2/authelia/callback"
+                ];
+                scopes = [
+                  "openid"
+                  "email"
+                  "groups"
+                  "profile"
+                ];
+                userinfo_signed_response_alg = "none";
+              }
             ];
           };
         };
