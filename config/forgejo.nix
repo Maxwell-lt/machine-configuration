@@ -35,6 +35,10 @@ in
           ENABLE_OPENID_SIGNUP = true;
           WHITELISTED_URIS = "auth.maxwell-lt.dev";
         };
+        session = {
+          PROVIDER = "db";
+          COOKIE_SECURE = true;
+        };
       };
     };
     services.postgresql = {
