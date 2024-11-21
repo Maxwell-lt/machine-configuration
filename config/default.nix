@@ -18,5 +18,6 @@
     ./nextcloud.nix             # NextCloud
     ./lldap.nix                 # Light LDAP
     ./authelia.nix              # Authelia auth server
+    ./forgejo.nix               # Self-hosted Git forge
   ];
 }

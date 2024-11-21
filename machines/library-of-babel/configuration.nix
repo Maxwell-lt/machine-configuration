@@ -308,6 +308,12 @@
         reverse_proxy 10.100.0.2:2283
       }
 
+      # Forgejo Git host
+      git.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:3000
+      }
+
       # Game demo
       game-demo.maxwell-lt.dev {
         basic_auth {
