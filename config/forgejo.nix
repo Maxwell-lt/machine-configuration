@@ -25,7 +25,7 @@ in
           ROOT_URL = "https://git.maxwell-lt.dev";
         };
         service = {
-          DISABLE_REGISTRATION = true;
+          DISABLE_REGISTRATION = false;
           ALLOW_ONLY_EXTERNAL_REGISTRATION = true;
           SHOW_REGISTRATION_BUTTON = false;
           REQUIRE_SIGNIN_VIEW = true;
