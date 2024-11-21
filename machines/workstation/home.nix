@@ -32,6 +32,7 @@ in
     libnotify
     bun
     anki
+    git-credential-keepassxc
   ];
 
   programs.ssh = {
