@@ -316,10 +316,8 @@
 
       # Game demo
       game-demo.maxwell-lt.dev {
-        basic_auth {
-          demo $2a$14$RJojDsDd0ahpoEQF8ooRSOAsn3j3xFUX2JhnVZT5w9bxurCuPE3ce
-        }
         import headers
+        import auth
         root * /var/www/game
         file_server
       }
