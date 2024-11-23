@@ -12,6 +12,7 @@
       user = {
         enable = true;
         password = true;
+        additionalExtraGroups = [ "adbusers" ];
       };
       java = {
         enable = true;
@@ -161,6 +162,8 @@
   };
 
   services.flatpak.enable = true;
+
+  programs.adb.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
