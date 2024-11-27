@@ -179,6 +179,11 @@
     9100 9101 9102 9811 9812
     # InvokeAI
     9090
+
+    # Dynmap
+    8123
+    # Minecraft
+    25565
   ];
 
   # Setup Wireguard client
@@ -230,6 +235,14 @@
     enableAlarm = true;
     turnUPSOff = false;
     hibernate = false;
+  };
+
+  users.users.minecraft = {
+    description  = "Minecraft user account";
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    createHome = true;
+    linger = true;
   };
 
   # Don't change this value from 20.03!
