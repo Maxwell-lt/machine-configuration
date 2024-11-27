@@ -329,6 +329,12 @@
         import headers
         reverse_proxy 10.100.0.2:8123
       }
+
+      # e34 website
+      minecraft.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:9990
+      }
     '';
   };
 

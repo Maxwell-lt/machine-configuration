@@ -166,6 +166,16 @@
         proxyPass = "http://10.0.0.156:9811";
       };
     };
+    virtualHosts."serverpack" = {
+      serverName = "10.100.0.2";
+      listen = [{
+        addr = "10.100.0.2";
+        port = 9990;
+      }];
+      locations."/" = {
+        root = "/home/minecraft/web";
+      };
+    };
   };
 
   # Needed for tc to work in the firewall script
@@ -184,6 +194,8 @@
     8123
     # Minecraft
     25565
+    # Minecraft web site
+    9990
   ];
 
   # Setup Wireguard client
