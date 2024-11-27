@@ -323,6 +323,22 @@
         root * /var/www/game
         file_server
       }
+
+      # e34 Dynmap
+      map.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:8123
+      }
+    '';
+  };
+
+  services.nginx = {
+    enable = true;
+    streamConfig = ''
+      server {
+        listen 25565;
+        proxy_pass 10.100.0.2:25565;
+      }
     '';
   };
 
