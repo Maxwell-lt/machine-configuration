@@ -241,6 +241,7 @@
   networking.firewall.allowedTCPPorts = [
     443
     8550 # zrepl
+    25565 # Minecraft
   ];
   networking.firewall.allowedUDPPorts = [ 
     51820   # Wireguard
