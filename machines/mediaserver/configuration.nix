@@ -173,9 +173,18 @@
         port = 9990;
       }];
       locations."/" = {
-        root = "/home/minecraft/web";
+        root = "/srv/minecraft";
       };
+      extraConfig = ''
+        autoindex on;
+      '';
     };
+  };
+
+  fileSystems."/srv/minecraft" = {
+    device = "/home/minecraft/web";
+    depends = ["/home/minecraft/web"];
+    options = ["bind"];
   };
 
   # Needed for tc to work in the firewall script
@@ -255,7 +264,12 @@
     shell = pkgs.zsh;
     createHome = true;
     linger = true;
+    packages = with pkgs; [
+      tmux
+    ];
   };
+
+  nix.settings.sandbox = "relaxed";
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
