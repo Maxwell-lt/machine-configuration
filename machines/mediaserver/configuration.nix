@@ -74,6 +74,7 @@
           };
           filesystems = {
             "rustpool/media<" = true;
+            "rustpool/dynmap<" = false;
           };
           name = "rustpool_push";
           pruning = {
