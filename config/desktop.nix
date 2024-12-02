@@ -165,7 +165,7 @@ in
         noto-fonts-cjk-sans
         noto-fonts-emoji
         noto-fonts-extra
-        nerdfonts
+        nerd-fonts.hack
         ipafont
       ];
 
