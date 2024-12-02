@@ -242,7 +242,8 @@ in
         (callPackage ../pkgs/outfox {})
       ];
       programs.steam.enable = true;
-      hardware.opentabletdriver.enable = true;
+      # Disabled until #360389 is merged
+      #hardware.opentabletdriver.enable = true;
     })
 
     (mkIf cfg.printing {
