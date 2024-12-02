@@ -193,6 +193,13 @@
 
     # Satisfactory
     5222 6666
+    
+    # Dynmap
+    8123
+    # Minecraft
+    25565
+    # Minecraft web site
+    9990
   ];
 
   networking.firewall.allowedUDPPorts = [
@@ -220,6 +227,45 @@
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2009", MODE="0666"
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", KERNELS=="0005:057E:2009.*", MODE="0666"
   '';
+
+  users.users.minecraft = {
+    description  = "Minecraft user account";
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    createHome = true;
+    linger = true;
+    packages = with pkgs; [
+      tmux
+    ];
+  };
+  
+  services.nginx = {
+    enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    virtualHosts."serverpack" = {
+      serverName = "10.100.0.5";
+      listen = [{
+        addr = "10.100.0.5";
+        port = 9990;
+      }];
+      locations."/" = {
+        root = "/srv/minecraft";
+      };
+      extraConfig = ''
+        autoindex on;
+      '';
+    };
+  };
+
+  fileSystems."/srv/minecraft" = {
+    device = "/home/minecraft/web";
+    depends = ["/home/minecraft/web"];
+    options = ["bind"];
+  };
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
