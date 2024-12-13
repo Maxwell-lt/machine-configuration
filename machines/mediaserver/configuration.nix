@@ -34,7 +34,10 @@
     mediaLocation = "/mnt/media/immich";
   };
 
-  users.users.immich.extraGroups = [ "video" "render" ];
+  users.users.immich.extraGroups = [
+    "video"
+    "render"
+  ];
 
   services.postgresql = {
     package = pkgs.postgresql;
@@ -159,10 +162,12 @@
 
     virtualHosts."zrepl_forwarder" = {
       serverName = "10.100.0.2";
-      listen = [{
-        addr = "10.100.0.2";
-        port = 9812;
-      }];
+      listen = [
+        {
+          addr = "10.100.0.2";
+          port = 9812;
+        }
+      ];
       locations."/" = {
         proxyPass = "http://10.0.0.156:9811";
       };
@@ -177,9 +182,16 @@
 
   networking.firewall.allowedTCPPorts = [
     # Prometheus exporters
-    9100 9101 9102 9811 9812
+    9100
+    9101
+    9102
+    9811
+    9812
     # InvokeAI
     9090
+
+    # K3s
+    6443
   ];
 
   # Setup Wireguard client
@@ -209,7 +221,10 @@
 
   services.zpool-exporter = {
     enable = false;
-    datasets = [ "ssdpool" "rustpool" ];
+    datasets = [
+      "ssdpool"
+      "rustpool"
+    ];
   };
 
   services.powerpanel-exporter = {
@@ -231,6 +246,46 @@
     enableAlarm = true;
     turnUPSOff = false;
     hibernate = false;
+  };
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = toString [
+      "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+      "--snapshotter=zfs"
+    ];
+  };
+
+  systemd.services.k3s = {
+    wants = [ "containerd.service" ];
+    after = [ "containerd.service" ];
+  };
+
+  systemd.services.containerd.serviceConfig = {
+    ExecStartPre = [
+      "-${pkgs.zfs}/bin/zfs create -o mountpoint=/var/lib/containerd/io.containerd.snapshotter.v1.zfs ssdpool/containerd"
+    ];
+  };
+
+  virtualisation.containerd = {
+    enable = true;
+    settings =
+      let
+        fullCNIPlugins = pkgs.buildEnv {
+          name = "full-cni";
+          paths = with pkgs; [
+            cni-plugins
+            cni-plugin-flannel
+          ];
+        };
+      in
+      {
+        plugins."io.containerd.grpc.v1.cri".cni = {
+          bin_dir = "${fullCNIPlugins}/bin";
+          conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
+        };
+      };
   };
 
   nix.settings.sandbox = "relaxed";
