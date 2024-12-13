@@ -236,6 +236,7 @@
     linger = true;
     packages = with pkgs; [
       tmux
+      kitty
     ];
   };
   
