@@ -48,6 +48,7 @@ in
   config = mkMerge [
     (mkIf cfg.containers {
       environment.systemPackages = with pkgs; [
+        argocd          # ArgoCD CLI
         buildah         # Daemonless OCI container builder
         kubectl         # CLI for Kubernetes
         kubectx         # Switch between contexts
