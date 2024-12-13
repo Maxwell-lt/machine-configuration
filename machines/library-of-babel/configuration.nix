@@ -334,6 +334,12 @@
         import headers
         reverse_proxy 10.100.0.5:9990
       }
+
+      # ArgoCD
+      argocd.kube.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:28080
+      }
     '';
   };
 
