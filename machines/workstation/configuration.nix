@@ -9,6 +9,7 @@
     common = {
       enable = true;
       media = true;
+      containers = true;
       user = {
         enable = true;
         password = true;
