@@ -192,6 +192,9 @@
 
     # K3s
     6443
+    # K3s Traefik
+    28080
+    28443
   ];
 
   # Setup Wireguard client
@@ -254,6 +257,11 @@
     extraFlags = toString [
       "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       "--snapshotter=zfs"
+      "--kube-apiserver-arg=oidc-issuer-url=https://auth.maxwell-lt.dev"
+      "--kube-apiserver-arg=oidc-client-id=cbadd492-86d0-445e-93a7-587c6190a386"
+      "--kube-apiserver-arg=oidc-username-claim=email"
+      "--kube-apiserver-arg=oidc-groups-claim=groups"
+
     ];
   };
 
@@ -274,13 +282,12 @@
       let
         fullCNIPlugins = pkgs.buildEnv {
           name = "full-cni";
-          paths = with pkgs; [
+          paths = with pkgs;[
             cni-plugins
             cni-plugin-flannel
           ];
         };
-      in
-      {
+      in {
         plugins."io.containerd.grpc.v1.cri".cni = {
           bin_dir = "${fullCNIPlugins}/bin";
           conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";

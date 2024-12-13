@@ -146,6 +146,57 @@ in
                 ];
                 userinfo_signed_response_alg = "none";
               }
+              {
+                client_name = "Argo CD";
+                client_id = "5dbafb80-2072-458d-af6a-4ee2358deab7";
+                client_secret = "$pbkdf2-sha512$310000$w1nkCqJ4gCvjjNoRdy5KbQ$2krpEnX1fmQnkB3y3Y4ek4yVaUu1hFz1juT/dlo8xP5bFNiBCMeYM0Khey.BK/JxQYYzv27RyJUJC2kSaLNnyA";
+                public = false;
+                authorization_policy = "exclude_sa";
+                redirect_uris = [
+                  "https://argocd.kube.maxwell-lt.dev/auth/callback"
+                ];
+                scopes = [
+                  "openid"
+                  "email"
+                  "groups"
+                  "profile"
+                ];
+                userinfo_signed_response_alg = "none";
+              }
+              {
+                client_name = "Argo CD (CLI)";
+                client_id = "argocd-cli";
+                public = true;
+                authorization_policy = "exclude_sa";
+                redirect_uris = [
+                  "http://localhost:8085/auth/callback"
+                ];
+                scopes = [
+                  "openid"
+                  "email"
+                  "groups"
+                  "profile"
+                  "offline_access"
+                ];
+                userinfo_signed_response_alg = "none";
+              }
+              {
+                client_name = "Kubernetes";
+                client_id = "cbadd492-86d0-445e-93a7-587c6190a386";
+                public = true;
+                authorization_policy = "exclude_sa";
+                redirect_uris = [
+                  "http://localhost:8000"
+                  "http://localhost:18000"
+                ];
+                scopes = [
+                  "openid"
+                  "email"
+                  "groups"
+                  "profile"
+                ];
+                userinfo_signed_response_alg = "none";
+              }
             ];
           };
         };
