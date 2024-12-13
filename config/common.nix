@@ -51,6 +51,7 @@ in
         argocd          # ArgoCD CLI
         buildah         # Daemonless OCI container builder
         kubectl         # CLI for Kubernetes
+        kubelogin-oidc  # Login to Kubernetes with OIDC
         kubectx         # Switch between contexts
         kubernetes-helm # Deploy charts to K8s clusters
       ];
