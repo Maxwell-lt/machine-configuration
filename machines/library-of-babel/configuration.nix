@@ -326,13 +326,13 @@
       # e34 Dynmap
       map.maxwell-lt.dev {
         import headers
-        reverse_proxy 10.100.0.2:8123
+        reverse_proxy 10.100.0.5:8123
       }
 
       # e34 website
       minecraft.maxwell-lt.dev {
         import headers
-        reverse_proxy 10.100.0.2:9990
+        reverse_proxy 10.100.0.5:9990
       }
     '';
   };
@@ -342,7 +342,7 @@
     streamConfig = ''
       server {
         listen 25565;
-        proxy_pass 10.100.0.2:25565;
+        proxy_pass 10.100.0.5:25565;
       }
     '';
   };
