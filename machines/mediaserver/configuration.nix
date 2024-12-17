@@ -251,17 +251,30 @@
     hibernate = false;
   };
 
+  sops.secrets = {
+    kube_service_account_key = {};
+    kube_service_account_signing_key = {};
+  };
+
   services.k3s = {
     enable = true;
     role = "server";
-    extraFlags = toString [
+    extraFlags = 
+    let
+      secrets = config.sops.secrets;
+      key_file_path = secrets.kube_service_account_key.path;
+      signing_key_file_path = secrets.kube_service_account_signing_key.path;
+    in toString [
       "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       "--snapshotter=zfs"
       "--kube-apiserver-arg=oidc-issuer-url=https://auth.maxwell-lt.dev"
       "--kube-apiserver-arg=oidc-client-id=cbadd492-86d0-445e-93a7-587c6190a386"
       "--kube-apiserver-arg=oidc-username-claim=email"
       "--kube-apiserver-arg=oidc-groups-claim=groups"
-
+      "--kube-apiserver-arg=service-account-issuer=https://kube.maxwell-lt.dev"
+      "--kube-apiserver-arg=service-account-key-file=${key_file_path}"
+      "--kube-apiserver-arg=service-account-signing-key-file=${signing_key_file_path}"
+      "--kube-apiserver-arg=api-audiences=kubernetes"
     ];
   };
 
