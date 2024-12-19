@@ -280,11 +280,9 @@
         reverse_proxy 10.100.0.2:9091
       }
 
-      # static home page
-      maxwell-lt.dev, www.maxwell-lt.dev {
-        import headers
-        root * /var/www/infosite
-        file_server
+      # Redirect home page to Firebase
+      maxwell-lt.dev {
+        redir https://www.maxwell-lt.dev{uri}
       }
 
       # Jellyfin media server
