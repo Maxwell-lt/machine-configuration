@@ -274,7 +274,6 @@
       "--kube-apiserver-arg=service-account-issuer=https://kube.maxwell-lt.dev"
       "--kube-apiserver-arg=service-account-key-file=${key_file_path}"
       "--kube-apiserver-arg=service-account-signing-key-file=${signing_key_file_path}"
-      "--kube-apiserver-arg=api-audiences=kubernetes"
     ];
   };
 
