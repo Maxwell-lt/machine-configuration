@@ -342,6 +342,13 @@
         import headers
         reverse_proxy 10.100.0.2:28080
       }
+
+      # Coder
+      coder.maxwell-lt.dev {
+        import headers
+        import auth
+        reverse_proxy 10.100.0.5:3000
+      }
     '';
   };
 
