@@ -20,7 +20,7 @@
         version = "21";
       };
     };
-    docker.enable = false;
+    docker.enable = true;
     desktop = {
       enable = true;
       gpu = "modesetting"; # recommended for AMD drivers over amdgpu
@@ -85,6 +85,7 @@
     package = pkgs.postgresql;
   };
   networking.firewall.interfaces.wg0.allowedTCPPorts = [ 3000 ];
+  systemd.services.coder.serviceConfig.SupplementaryGroups = [ "docker" ];
 
   # Setup Wireguard client
   networking.wireguard.interfaces = {
