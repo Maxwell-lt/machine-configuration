@@ -71,10 +71,14 @@
     "snd_hda_codec_hdmi"
   ];
 
+  sops.secrets.coder_environment_file = {
+    sopsFile = ../../secrets/coder.yaml;
+  };
   services.coder = {
     enable = true;
     accessUrl = "https://coder.maxwell-lt.dev";
     listenAddress = "10.100.0.5:3000";
+    environment.file = config.sops.secrets.coder_environment_file.path;
   };
   # Needed for coder
   services.postgresql = {
