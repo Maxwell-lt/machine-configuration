@@ -71,6 +71,17 @@
     "snd_hda_codec_hdmi"
   ];
 
+  services.coder = {
+    enable = true;
+    accessUrl = "https://coder.maxwell-lt.dev";
+    listenAddress = "10.100.0.5:3000";
+  };
+  # Needed for coder
+  services.postgresql = {
+    package = pkgs.postgresql;
+  };
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 3000 ];
+
   # Setup Wireguard client
   networking.wireguard.interfaces = {
     wg0 = {
