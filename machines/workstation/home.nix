@@ -200,52 +200,6 @@ in
     ipc = off
   '';
 
-  programs.waybar = {
-    enable = false;
-    systemd = {
-      enable = false;
-      target = "hyprland-session.target";
-    };
-    settings = {
-      mainBar = {
-        layer = "top";
-        position = "top";
-        height = 36;
-        modules-left = [ "hyprland/workspaces" ];
-        modules-center = [ "hyprland/window" ];
-        modules-right = [ "tray" "wireplumber" "clock" ];
-        tray = {
-          icon-size = 20;
-          spacing = 10;
-        };
-        wireplumber = {
-          format = "{volume}%";
-          max-volume = 100;
-          scroll-step = 1;
-        };
-        clock = {
-          interval = 1;
-          format = "{:%H:%M:%S}";
-        };
-        "hyprland/workspaces" = {
-          format = "{name} {windows}";
-          format-window-separator = " ";
-          window-rewrite-default = "";
-          window-rewrite = {
-            "class<kitty>" = "";
-            "class<firefox>" = "";
-            "class<org.strawberrymusicplayer.strawberry>" = "";
-          };
-        };
-      };
-    };
-    style = ''
-      * {
-        font-family: Hack Nerd Font;
-      }
-    '';
-  };
-
   services.dunst = {
     enable = true;
     settings = {
