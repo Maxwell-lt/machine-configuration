@@ -197,6 +197,22 @@ in
                 ];
                 userinfo_signed_response_alg = "none";
               }
+              {
+                client_name = "Coder";
+                client_id = "468dc01f-ed54-4976-9f35-9d23fdafee11";
+                client_secret = "$pbkdf2-sha512$310000$ZLQK29F6ykFSZ6vXO9/Tcw$wISl78Qr1aAK0zsJdIwvm5M.CTRGS3kmOudvWuTmR.D6y6sSNrUAS05hDi7nT5I1wOTxWFUpJXcgw03GUfd32Q";
+                public = false;
+                authorization_policy = "exclude_sa";
+                redirect_uris = [
+                  "https://coder.maxwell-lt.dev/api/v2/users/oidc/callback"
+                ];
+                scopes = [
+                  "openid"
+                  "email"
+                  "groups"
+                  "profile"
+                ];
+              }
             ];
           };
         };
