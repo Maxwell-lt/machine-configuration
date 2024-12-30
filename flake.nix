@@ -120,6 +120,9 @@
         ];
 	"maxwell@nix-portable-omega" = buildHome [
 	  machines/laptop/home.nix
+          hyprland.homeManagerModules.default
+          anyrun.homeManagerModules.default
+          ags.homeManagerModules.default
 	];
       };
   };
