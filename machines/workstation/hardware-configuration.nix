@@ -49,6 +49,10 @@
     { device = "rpool/local/gdrivetemp";
       fsType = "zfs";
     };
+  fileSystems."/home/maxwell/Insync" =
+    { device = "rpool/local/insync";
+      fsType = "zfs";
+    };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/e1272c9f-d29c-4794-b515-cf3639f06587"; }
