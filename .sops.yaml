@@ -5,6 +5,7 @@ keys:
 - &host_media age13d0wge5xgtd8yvfak9lrhy5ee0yus7uecwhh0cpyqs59yv2ypveqt6evuh
 - &host_laptop age1zd6sgnfz9cv0urtpl6u7p5a4adurgr5tezgp4mnfvjuk2r4vpsdqmfk8mq
 - &host_itg age1j3dd2epq9tq2dhvwsde9xalq7axrsu225gn20chax88qq8um8v7q8jqmwp
+- &host_psi age1ealkneafzee6fn8u59tjxw0jcen0c6ztmmzcmpl047wzmv6sc5lqx339da
 creation_rules:
   # Overridden key permissions for specific files
 - path_regex: secrets/wifi.yaml$
@@ -13,6 +14,7 @@ creation_rules:
     - *admin_workstation
     - *host_laptop
     - *host_itg
+    - *host_psi
 - path_regex: secrets/services.yaml$
   key_groups:
   - age:
@@ -33,3 +35,4 @@ creation_rules:
     - *host_babel
     - *host_media
     - *host_laptop
+    - *host_psi
