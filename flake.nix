@@ -82,6 +82,9 @@
         nix-portable-omega = buildSystem [
           ./machines/laptop/configuration.nix
         ];
+        nix-portable-psi = buildSystem [
+          ./machines/nix-portable-psi/configuration.nix
+        ];
         library-of-babel = buildSystem [
           ./machines/library-of-babel/configuration.nix
         ];
@@ -123,7 +126,13 @@
           hyprland.homeManagerModules.default
           anyrun.homeManagerModules.default
           ags.homeManagerModules.default
-	];
+        ];
+        "maxwell@nix-portable-psi" = buildHome [
+          machines/nix-portable-psi/home.nix
+          hyprland.homeManagerModules.default
+          anyrun.homeManagerModules.default
+          ags.homeManagerModules.default
+        ];
       };
   };
 }
