@@ -138,6 +138,9 @@
           publicKey = "3e412tg0Wb4tdNmiggInlgG8cI6P5GzJeC0u9PxXrUw=";
           allowedIPs = [ "10.100.0.6/32" ];
         }
+        {
+          publicKey = "gyBBNMjaWfONNt6C4aM78wuG+kMdOJFPSg9HAVt4b2U=";
+          allowedIPs = [ "10.100.0.7/32" ];
       ];
     };
   };
@@ -238,6 +241,7 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6RnS6RiN5u9vyXVKMZgnCsLJOuXaqADbDQWfShufCv maxwell@nix-portable-omega"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/qNB6f8IaU2BuI9AsHodHuOoaPabGNogUJQUs2etXE maxwell@pixel"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2M9+aenrZ9xCtrF1zsQTgmUeQjj5mzSgD6Y9lARWB+ JuiceSSH"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHd5DZKyDi6DicHeqDekEXAVQAtaiPMlacve0Mv3IdT maxwell@nix-portable-psi"
         ];
     shell = pkgs.zsh;
   };
