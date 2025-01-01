@@ -14,6 +14,14 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.extraModulePackages = [ ];
 
+  # https://github.com/lwfinger/rtw89/issues/275#issuecomment-1784155449
+  boot.extraModprobeConfig = ''
+    options rtw89_pci disable_aspm_l1=y disable_aspm_l1ss=y
+    options rtw89pci disable_aspm_l1=y disable_aspm_l1ss=y
+    options rtw89_core disable_ps_mode=y
+    options rtw89core disable_ps_mode=y
+  '';
+
   fileSystems."/" =
     { device = "pool/safe/root";
       fsType = "zfs";
