@@ -36,6 +36,11 @@
     { device = "pool/local/nix";
       fsType = "zfs";
     };
+  
+  fileSystems."/home/maxwell/Temporary Files" = 
+    { device = "pool/local/hometemp";
+      fsType = "zfs";
+    };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/E185-C4C2";
