@@ -17,6 +17,7 @@
     playerctl
     libnotify
     bun
+    git-credential-keepassxc
   ];
 
   programs.ssh = {
