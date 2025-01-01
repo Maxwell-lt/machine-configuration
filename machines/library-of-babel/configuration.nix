@@ -141,6 +141,7 @@
         {
           publicKey = "gyBBNMjaWfONNt6C4aM78wuG+kMdOJFPSg9HAVt4b2U=";
           allowedIPs = [ "10.100.0.7/32" ];
+        }
       ];
     };
   };
