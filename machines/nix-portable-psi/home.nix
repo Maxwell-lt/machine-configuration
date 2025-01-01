@@ -93,7 +93,7 @@
         "$mainMod, XF86AudioPlay, workspace, name:Music"
         "$mainMod SHIFT, XF86AudioPlay, movetoworkspace, name:Music"
 
-        "$mainMod, Scroll_Lock, togglespecialworkspace, name:keepass"
+        "$mainMod, KP_Subtract, togglespecialworkspace, name:keepass"
       ];
       bindm = [
         "$mainMod, mouse:272, movewindow"
