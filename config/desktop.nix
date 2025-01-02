@@ -82,6 +82,7 @@ in
         ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
         dolphin                 # KDE file manager
+        feh                     # Simple file viewer
         filelight               # Disk space usage viewer
         filezilla               # FTP client
         firefox                 # Browser
