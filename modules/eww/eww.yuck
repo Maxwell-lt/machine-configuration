@@ -10,14 +10,18 @@
            :exclusive true
            (centerbox :orientation "horizontal"
                       :halign "fill"
-                      (box :orientation "horizontal"
-                           (label :text "Left"))
+                      (systray :spacing 5
+                               :orientation "horizontal"
+                               :space-evenly true
+                               :icon-size 25
+                               :prepend-new true)
                       (box :orientation "horizontal"
                            (windows :monitor 0))
                       (box :orientation "horizontal"
                            :halign "end"
                            :spacing 5
                            :space-evenly false
+                           {"${EWW_BATTERY.BAT0.status} - ${EWW_BATTERY.BAT0.capacity}"}
                            (music)
                            (clock))))
 
