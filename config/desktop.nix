@@ -85,6 +85,7 @@ in
         filelight               # Disk space usage viewer
         filezilla               # FTP client
         firefox                 # Browser
+        (flameshot.override {enableWlrSupport = true;}) # Screenshot tool
         gparted                 # Manage partitions graphically
         kate                    # Text editor
         kcalc                   # Simple calculator
@@ -128,7 +129,7 @@ in
         enable = true;
         settings = {
           default_session = {
-            command = "${pkgs.greetd.greetd}/bin/agreety --cmd Hyprland";
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
           };
         };
       };
