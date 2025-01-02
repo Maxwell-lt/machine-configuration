@@ -70,6 +70,14 @@
   #  };
   #};
 
+  programs.light = {
+    enable = true;
+    brightnessKeys = {
+      enable = true;
+      step = 5;
+    };
+  };
+
   # Don't change this value from 25.05!
   system.stateVersion = "25.05"; # Did you read the comment?
 }
