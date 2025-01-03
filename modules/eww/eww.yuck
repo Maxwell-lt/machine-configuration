@@ -12,7 +12,7 @@
                       :halign "fill"
                       (systray :spacing 5
                                :orientation "horizontal"
-                               :space-evenly true
+                               :space-evenly false
                                :icon-size 25
                                :prepend-new true)
                       (box :orientation "horizontal"

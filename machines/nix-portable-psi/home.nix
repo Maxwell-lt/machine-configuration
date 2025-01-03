@@ -241,6 +241,7 @@
   };
 
   gtk = {
+    gtk3.extraConfig = { gtk-application-prefer-dark-theme = "1"; };
     enable = true;
     theme = {
       package = pkgs.kdePackages.breeze-gtk;
@@ -248,8 +249,8 @@
     };
 
     iconTheme = {
-      package = pkgs.kdePackages.breeze-icons;
-      name = "Breeze";
+      package = pkgs.elementary-xfce-icon-theme;
+      name = "elementary-xfce-dark";
     };
 
     font = {
@@ -266,6 +267,8 @@
     };
     platformTheme.name = "kde";
   };
+
+  services.network-manager-applet.enable = true;
 
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
   nixpkgs.config.allowUnfree = true;
