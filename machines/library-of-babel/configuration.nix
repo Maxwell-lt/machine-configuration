@@ -326,6 +326,7 @@
       game-demo.maxwell-lt.dev {
         import headers
         import auth
+        header Cache-Control max-age=1800
         root * /var/www/game
         file_server
       }
