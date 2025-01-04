@@ -39,6 +39,9 @@ in
           PROVIDER = "db";
           COOKIE_SECURE = true;
         };
+        webhook = {
+          ALLOWED_HOST_LIST = "loopback";
+        };
       };
     };
     services.postgresql = {
