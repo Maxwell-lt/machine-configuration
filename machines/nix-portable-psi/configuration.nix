@@ -13,6 +13,10 @@
         password = true;
       };
       containers = true;
+      java = {
+        enable = true;
+        version = "21";
+      };
     };
     desktop = {
       enable = true;
