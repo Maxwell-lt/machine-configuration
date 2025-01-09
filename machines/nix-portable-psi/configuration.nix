@@ -40,6 +40,8 @@
     dump1090
     direwolf
     rtl_433
+
+    jetbrains.datagrip
   ];
 
   networking.networkmanager.enable = true;
