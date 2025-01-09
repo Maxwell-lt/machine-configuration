@@ -48,6 +48,9 @@
     jetbrains.datagrip
 
     jetbrains.idea-ultimate
+
+    maven
+    gradle
   ];
 
   networking.networkmanager.enable = true;
