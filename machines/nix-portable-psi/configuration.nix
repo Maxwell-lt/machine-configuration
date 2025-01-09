@@ -53,6 +53,8 @@
     gradle
 
     burpsuite
+
+    vscode-fhs
   ];
 
   networking.networkmanager.enable = true;
