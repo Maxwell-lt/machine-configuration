@@ -100,6 +100,7 @@
       #type database  DBuser  auth-method
       local all       all     trust
     '';
+    extensions = ps: with ps; [ postgis ];
   };
 
   # Don't change this value from 25.05!
