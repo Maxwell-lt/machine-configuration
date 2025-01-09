@@ -103,6 +103,9 @@
       local all       all     trust
     '';
     extensions = ps: with ps; [ postgis ];
+    identMap = ''
+      superuser_map    maxwell    postgres
+    '';
   };
 
   # Don't change this value from 25.05!
