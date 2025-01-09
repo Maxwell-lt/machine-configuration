@@ -51,6 +51,8 @@
 
     maven
     gradle
+
+    burpsuite
   ];
 
   networking.networkmanager.enable = true;
