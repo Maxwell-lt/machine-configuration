@@ -94,6 +94,14 @@
     enable = true;
   };
 
+  services.postgresql = {
+    enable = true;
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
+  };
+
   # Don't change this value from 25.05!
   system.stateVersion = "25.05"; # Did you read the comment?
 }
