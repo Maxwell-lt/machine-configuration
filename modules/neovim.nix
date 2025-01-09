@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     ripgrep
-    nodejs yarn
+    nodejs_22 yarn
     nixd
     nixfmt-rfc-style
   ];
