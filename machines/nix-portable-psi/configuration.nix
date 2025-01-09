@@ -12,12 +12,14 @@
         enable = true;
         password = true;
       };
+      containers = true;
     };
     desktop = {
       enable = true;
       printing = true;
       productivity = true;
     };
+    docker.enable = true;
     zfs.enable = true;
   };
 
