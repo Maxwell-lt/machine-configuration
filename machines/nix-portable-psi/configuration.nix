@@ -32,6 +32,16 @@
     hostName = "nix-portable-psi";
   };
 
+  environment.systemPackages = with pkgs; [
+    # SDR
+    rtl-sdr-osmocom
+    sdrangel
+    redisinsight
+    dump1090
+    direwolf
+    rtl_433
+  ];
+
   networking.networkmanager.enable = true;
 
   hardware.bluetooth.enable = true;
