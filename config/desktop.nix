@@ -69,10 +69,7 @@ in
       environment.systemPackages = with pkgs; [
         vscodium
         insomnia
-        jetbrains.idea-ultimate
-        jetbrains.clion
-        jetbrains.pycharm-professional
-        jetbrains.webstorm
+        jetbrains-toolbox
       ];
     })
 
