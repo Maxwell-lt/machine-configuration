@@ -59,6 +59,10 @@
 
   environment.systemPackages = with pkgs; [
     zoom-us
+    
+    # Added to support compilation of Bevy projects through RustRover
+    clang
+    lld
   ];
 
   virtualisation.waydroid.enable = true;
@@ -312,6 +316,7 @@
     atk
     bzip2
     cairo
+    clang
     cups
     curlWithGnuTls
     dbus
@@ -369,6 +374,7 @@
     libxcrypt-legacy
     libxkbcommon
     libxml2
+    lld
     mesa
     nspr
     nss
