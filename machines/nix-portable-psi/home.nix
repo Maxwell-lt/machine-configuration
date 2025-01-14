@@ -20,6 +20,10 @@
     git-credential-keepassxc
   ];
 
+  home.sessionPath = [
+    "$HOME/.local/share/JetBrains/Toolbox/scripts"
+  ];
+
   programs.ssh = {
     enable = true;
     matchBlocks = {
