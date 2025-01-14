@@ -22,6 +22,7 @@
       enable = true;
       printing = true;
       productivity = true;
+      development = true;
     };
     docker.enable = true;
     zfs.enable = true;
