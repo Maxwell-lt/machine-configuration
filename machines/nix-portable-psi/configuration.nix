@@ -11,6 +11,7 @@
       user = {
         enable = true;
         password = true;
+        additionalExtraGroups = [ "plugdev" ];
       };
       containers = true;
       java = {
@@ -57,6 +58,8 @@
 
     vscode-fhs
   ];
+
+  hardware.rtl-sdr.enable = true;
 
   networking.networkmanager.enable = true;
 
