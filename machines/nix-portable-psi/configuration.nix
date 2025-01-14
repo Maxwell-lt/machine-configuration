@@ -38,6 +38,9 @@
     hostName = "nix-portable-psi";
   };
 
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 8000 ];
+  services.udev.packages = [ pkgs.direwolf ];
+
   environment.systemPackages = with pkgs; [
     # SDR
     rtl-sdr-osmocom
