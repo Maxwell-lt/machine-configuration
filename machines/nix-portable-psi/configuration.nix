@@ -60,6 +60,8 @@
     burpsuite
 
     vscode-fhs
+
+    arduino-ide
   ];
 
   hardware.rtl-sdr.enable = true;
