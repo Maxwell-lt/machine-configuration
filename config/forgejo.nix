@@ -40,7 +40,7 @@ in
           COOKIE_SECURE = true;
         };
         webhook = {
-          ALLOWED_HOST_LIST = "loopback";
+          ALLOWED_HOST_LIST = "loopback,discord.com";
         };
       };
     };
