@@ -204,7 +204,7 @@
 
   networking.useDHCP = false;
   networking.interfaces.enp16s0.useDHCP = true;
-  networking.interfaces.wlp17s0.useDHCP = false;
+  systemd.network.netdevs.wlp17s0.enable = false;
 
   networking.firewall.allowedTCPPorts = [
     # Avoid 30 second wait before login prompt when connecting to Lutron SmartBridge using Telnet: https://forums.lutron.com/showthread.php/3031-30-second-Telnet-Login-Delay
@@ -309,7 +309,7 @@
     SDL2_ttf
     SDL_image
     SDL_mixer
-    SDL_ttf
+    #SDL_ttf
     alsa-lib
     at-spi2-atk
     at-spi2-core

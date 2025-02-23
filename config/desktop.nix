@@ -267,6 +267,7 @@ in
         drivers = with pkgs; [
           hplip
           epson-escpr
+          brlaser
         ];
       };
 
