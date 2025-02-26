@@ -1,7 +1,12 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
-  playlist-scan = pkgs.writers.writePython3Bin "playlist-scan" {} ''
+  playlist-scan = pkgs.writers.writePython3Bin "playlist-scan" { } ''
     import os
     import sys
     with open(sys.argv[1]) as f:
@@ -227,7 +232,9 @@ in
         translate
         websearch
       ];
-      width = { fraction = 0.3; };
+      width = {
+        fraction = 0.3;
+      };
       closeOnClick = true;
     };
     extraCss = ''
@@ -249,7 +256,7 @@ in
   programs.ags = {
     enable = true;
     configDir = ../../modules/ags;
-    extraPackages = with pkgs; [];
+    extraPackages = with pkgs; [ ];
   };
 
   programs.kitty = {
@@ -309,6 +316,21 @@ in
     };
     autosuggestion = {
       enable = true;
+    };
+  };
+
+  systemd.user.services = {
+    openrgb-off = {
+      Service = {
+        ExecStart = "openrgb -p /home/maxwell/.config/OpenRGB/Off.orp";
+        Type = "oneshot";
+      };
+    };
+    openrgb-on = {
+      Service = {
+        ExecStart = "openrgb -p /home/maxwell/.config/OpenRGB/Red.orp";
+        Type = "oneshot";
+      };
     };
   };
 
