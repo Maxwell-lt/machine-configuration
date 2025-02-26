@@ -322,14 +322,35 @@ in
   systemd.user.services = {
     openrgb-off = {
       Service = {
-        ExecStart = "openrgb -p /home/maxwell/.config/OpenRGB/Off.orp";
+        ExecStart = "${pkgs.openrgb-with-all-plugins}/bin/openrgb -p /home/maxwell/.config/OpenRGB/Off.orp";
         Type = "oneshot";
       };
     };
     openrgb-on = {
       Service = {
-        ExecStart = "openrgb -p /home/maxwell/.config/OpenRGB/Red.orp";
+        ExecStart = "${pkgs.openrgb-with-all-plugins}/bin/openrgb -p /home/maxwell/.config/OpenRGB/Red.orp";
         Type = "oneshot";
+      };
+    };
+  };
+
+  systemd.user.timers = {
+    openrgb-off = {
+      Timer = {
+        OnCalendar = "22:00:00";
+        Unit = "openrgb-off.service";
+      };
+      Install = {
+        WantedBy = [ "timers.target" ];
+      };
+    };
+    openrgb-on = {
+      Timer = {
+        OnCalendar = "07:00:00";
+        Unit = "openrgb-on.service";
+      };
+      Install = {
+        WantedBy = [ "timers.target" ];
       };
     };
   };
