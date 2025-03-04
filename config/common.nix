@@ -65,7 +65,7 @@ in
         ffmpeg-full     # Fully featured media file manipulation tool
         imagemagickBig  # xkcd::2347
         mkvtoolnix-cli  # Matroska media container tools
-        r128gain        # Add ReplayGain information to music files
+        rsgain        # Add ReplayGain information to music files
         vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
         vorbis-tools    # Vorbis encoder tools
         yt-dlp          # Download video/audio from YouTube
@@ -80,7 +80,7 @@ in
       users.users.${cfg.user.username} = {
         description = "${cfg.user.userDescription}";
         isNormalUser = true;
-        extraGroups = [ "wheel" ];
+        extraGroups = [ "wheel" ] ++ cfg.user.additionalExtraGroups;
         hashedPasswordFile = mkIf cfg.user.password config.sops.secrets.password.path;
         openssh.authorizedKeys.keys = cfg.user.additionalSSHKeys ++ [
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD5LS315i42OMhMxkRjLrvdP65zDYdlD0hAOjXslf6JAhgvQu7CUbnLmMhivKlXp7z825NWrB66jlR5R6muO6bwoSDC9RID01ixcRv1iF4fmveDDXkSUy1MjeOdUOcml+zhh+IIi/SkGsjI7weqe0fKJCj1uIoru+UoIOjPeL0uC32Sl/GC9VRVGqiH57lIjkUaf9j3Ja9MvY63nx5W1+BIQuOlabEB2XD8hIUiEQEi0jNCCkAuvhnJjHIGSIRvUQBijInUGOR7M8eRmEwTrbl36DFIphnKKP+mhAefy5zIIMctdDucqyfweizLBg2D4qY1WiXHflng5k63h5WRYwvAyLJQ7Jy9/Dvm2eNYWhQ0bdGV0a3l3oRvthIReXgLuygWs9M/quCyb1VnNRYbxs1vRwI1MzN1EZ7W8OfX/5S3XNy3DBENoga4eA8xXanhSM3StRFpaYfx05E4x2tdQYQ2CMbps14oMEZ8bYc1cxD5r1aDfzzo2/0YkLGhVJVpoBrmCaQsHc07klqb+XwWTkqxdE/jTiNV3ZXXHlzD3Vt1jD8Goo2kMqjC1MGwFTUJAz20St3O/3ntka1sYZZJ8dDzU/ly6xI3xW1IN+o0A7Q9qpIIw4Lgc1eWEURH3/D2fnDTcFPIIh9h1oEEXldl0j6dWrw8f3XySBVBk7yNJzB0/Q== maxwell.lt@live.com"

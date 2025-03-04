@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     ripgrep
-    nodejs yarn
+    nodejs_22 yarn
     nixd
     nixfmt-rfc-style
   ];
@@ -194,9 +194,9 @@
           config = "require('gitsigns').setup()";
         }
         {
-          plugin = feline-nvim;
+          plugin = lualine-nvim;
           type = "lua";
-          config = "require('feline').setup()";
+          config = "require('lualine').setup()";
         }
         nvim-web-devicons   # Icons
         (nvim-treesitter.withPlugins (
