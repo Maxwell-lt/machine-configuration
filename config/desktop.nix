@@ -46,7 +46,7 @@ in
       environment.systemPackages = with pkgs; [
         # Image
         gimp          # Image editor
-        kdenlive      # Video editor
+        kdePackages.kdenlive      # Video editor
         krita         # Digital art tool
         # Video
         obs-studio    # Screen recorder
@@ -76,22 +76,22 @@ in
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [
         # Basic utilities
-        ark                     # Archive viewer
+        kdePackages.ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
-        dolphin                 # KDE file manager
+        kdePackages.dolphin                 # KDE file manager
         feh                     # Simple file viewer
-        filelight               # Disk space usage viewer
+        kdePackages.filelight               # Disk space usage viewer
         filezilla               # FTP client
         firefox                 # Browser
         (flameshot.override {enableWlrSupport = true;}) # Screenshot tool
         gparted                 # Manage partitions graphically
-        kate                    # Text editor
-        kcalc                   # Simple calculator
+        kdePackages.kate                    # Text editor
+        kdePackages.kcalc                   # Simple calculator
         keepassxc               # Secure local password manager
-        kfind                   # Search tool
-        okular                  # PDF and image viewer
+        kdePackages.kfind                   # Search tool
+        kdePackages.okular                  # PDF and image viewer
         wlr-randr               # Configure monitors on Wayland
-        xdg-desktop-portal-kde  # File picker used by Firefox, Flatpak, and others
+        kdePackages.xdg-desktop-portal-kde  # File picker used by Firefox, Flatpak, and others
 
         # Media
         calibre     # E-book manager
