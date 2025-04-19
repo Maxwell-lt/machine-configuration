@@ -30,8 +30,7 @@ in
       environment.systemPackages = with pkgs; [
         kmymoney      # Double-entry accounting platform
         libreoffice   # Office suite
-        # Electron is EOL again...
-        #logseq        # Knowledge management platform
+        logseq        # Knowledge management platform
       ];
     })
 
@@ -99,7 +98,6 @@ in
         pavucontrol # Audio device manager
         puddletag   # Music tagger
         strawberry  # Music player, forked from Clementine
-        # waiting for pyside 6.7.1
         syncplay    # Syncronize video watching within a group
 
         # Sync
@@ -252,8 +250,7 @@ in
         (callPackage ../pkgs/outfox {})
       ];
       programs.steam.enable = true;
-      # Disabled until #360389 is merged
-      #hardware.opentabletdriver.enable = true;
+      hardware.opentabletdriver.enable = true;
     })
 
     (mkIf cfg.printing {
