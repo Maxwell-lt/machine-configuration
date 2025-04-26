@@ -16,13 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+      url = "github:hyprwm/Hyprland";
     };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
     anyrun = {
       url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +34,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, hyprland-plugins, anyrun, ags, playerctl-inhibit, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, anyrun, ags, playerctl-inhibit, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
