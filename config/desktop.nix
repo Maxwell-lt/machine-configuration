@@ -246,6 +246,7 @@ in
         (prismlauncher.override {
           jdks = [ jdk8 jdk17 jdk21 jdk23 ];
         })
+        umu-launcher
         (callPackage ../pkgs/itgmania-bin {})
         (callPackage ../pkgs/outfox {})
       ];
