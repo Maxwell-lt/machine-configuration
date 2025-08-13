@@ -225,13 +225,13 @@ in
   programs.anyrun = {
     enable = true;
     config = {
-      plugins = with inputs.anyrun.packages.${pkgs.system}; [
-        applications
-        dictionary
-        rink
-        symbols
-        translate
-        websearch
+      plugins = [
+        "${pkgs.anyrun}/lib/libapplications.so"
+        "${pkgs.anyrun}/lib/libdictionary.so"
+        "${pkgs.anyrun}/lib/librink.so"
+        "${pkgs.anyrun}/lib/libsymbols.so"
+        "${pkgs.anyrun}/lib/libtranslate.so"
+        "${pkgs.anyrun}/lib/libwebsearch.so"
       ];
       width = {
         fraction = 0.3;

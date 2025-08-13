@@ -18,11 +18,6 @@
     hyprland = {
       url = "github:hyprwm/Hyprland";
     };
-    anyrun = {
-      url = "github:Kirottu/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     ags = {
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +29,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, anyrun, ags, playerctl-inhibit, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, ags, playerctl-inhibit, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -69,8 +64,8 @@
               })
             ];
             nix.settings = {
-              trusted-substituters = [ "https://ai.cachix.org" "https://anyrun.cachix.org" ];
-              trusted-public-keys = [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s=" ];
+              trusted-substituters = [ "https://ai.cachix.org" ];
+              trusted-public-keys = [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
             };
           }
         ]) // { specialArgs = { inherit nixified-ai; }; };
@@ -110,7 +105,6 @@
         "maxwell@maxwell-nixos" = buildHome [
           machines/workstation/home.nix
           hyprland.homeManagerModules.default
-          anyrun.homeManagerModules.default
           ags.homeManagerModules.default
         ];
         "maxwell@media-server-alpha" = buildHome [
@@ -119,13 +113,11 @@
 	"maxwell@nix-portable-omega" = buildHome [
 	  machines/laptop/home.nix
           hyprland.homeManagerModules.default
-          anyrun.homeManagerModules.default
           ags.homeManagerModules.default
         ];
         "maxwell@nix-portable-psi" = buildHome [
           machines/nix-portable-psi/home.nix
           hyprland.homeManagerModules.default
-          anyrun.homeManagerModules.default
           ags.homeManagerModules.default
         ];
       };
