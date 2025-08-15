@@ -186,6 +186,20 @@
 
   programs.adb.enable = true;
 
+  services.grocy = {
+    enable = true;
+    hostName = "grocy.maxwell-lt.dev";
+    nginx.enableSSL = false;
+  };
+
+  services.nginx.virtualHosts."grocy.maxwell-lt.dev".listen = [
+    {
+      addr = "10.100.0.5";
+      port = 8900;
+      ssl = false;
+    }
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
