@@ -50,7 +50,7 @@ in
         user = "maxwell";
       };
       "media-server-alpha" = {
-        hostname = "10.0.0.114";
+        hostname = "10.100.0.2";
         port = 22;
         user = "maxwell";
       };
