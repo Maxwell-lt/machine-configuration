@@ -200,8 +200,8 @@ in
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ~/Pictures/wallpapers/Cover.png
     preload = ~/Pictures/wallpapers/nge6.png
-    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526,~/Pictures/wallpapers/Cover.png
-    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517,~/Pictures/wallpapers/nge6.png
+    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517,~/Pictures/wallpapers/Cover.png
+    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526,~/Pictures/wallpapers/nge6.png
     splash = false
     ipc = off
   '';
