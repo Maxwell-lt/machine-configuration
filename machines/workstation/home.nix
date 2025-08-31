@@ -74,8 +74,8 @@ in
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
       "$menu" = "anyrun";
-      "$monRight" = "ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
-      "$monLeft" = "ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
+      "$monLeft" = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
+      "$monRight" = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
       "$monitorConfig" = "highrr";
       monitor = [
         "$monLeft, $monitorConfig, 0x0, 1"
