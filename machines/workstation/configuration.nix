@@ -63,6 +63,8 @@
     # Added to support compilation of Bevy projects through RustRover
     clang
     lld
+
+    jetbrains.idea-ultimate
   ];
 
   virtualisation.waydroid.enable = false;
