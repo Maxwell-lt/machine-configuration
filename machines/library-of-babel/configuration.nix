@@ -322,14 +322,6 @@
         reverse_proxy 10.100.0.2:3000
       }
 
-      # Game demo
-      game-demo.maxwell-lt.dev {
-        import headers
-        header Cache-Control max-age=1800
-        root * /var/www/game
-        file_server
-      }
-
       # e34 Dynmap
       map.maxwell-lt.dev {
         import headers
