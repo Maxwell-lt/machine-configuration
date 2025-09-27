@@ -148,11 +148,11 @@ in
   networking.interfaces.wlo1.useDHCP = true;
   networking.networkmanager.enable = false;
   networking.wireless = {
-    environmentFile = config.sops.secrets."wireless.env".path;
+    secretsFile = config.sops.secrets."wireless.env".path;
     enable = true;
     networks = {
-      "@home_uuid@" = {
-        psk = "@home_psk@";
+      "ltfamilywifi" = {
+        psk = "ext:home_psk";
         priority = 40;
       };
     };

@@ -65,7 +65,7 @@
     lld
   ];
 
-  virtualisation.waydroid.enable = true;
+  virtualisation.waydroid.enable = false;
 
   networking.networkmanager.enable = true;
 

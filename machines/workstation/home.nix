@@ -38,6 +38,7 @@ in
     bun
     anki
     git-credential-keepassxc
+    open-in-mpv
   ];
 
   programs.ssh = {

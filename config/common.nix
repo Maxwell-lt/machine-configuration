@@ -65,6 +65,7 @@ in
         ffmpeg-full     # Fully featured media file manipulation tool
         imagemagickBig  # xkcd::2347
         mkvtoolnix-cli  # Matroska media container tools
+        qrencode       # Create QR codes
         rsgain        # Add ReplayGain information to music files
         vorbisgain      # Add ReplayGain information to Vorbis-encoded music files. Used by abcde
         vorbis-tools    # Vorbis encoder tools

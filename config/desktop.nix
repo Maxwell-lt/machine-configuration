@@ -30,8 +30,7 @@ in
       environment.systemPackages = with pkgs; [
         kmymoney      # Double-entry accounting platform
         libreoffice   # Office suite
-        # Electron is EOL again...
-        #logseq        # Knowledge management platform
+        logseq        # Knowledge management platform
       ];
     })
 
@@ -46,7 +45,7 @@ in
       environment.systemPackages = with pkgs; [
         # Image
         gimp          # Image editor
-        kdenlive      # Video editor
+        kdePackages.kdenlive      # Video editor
         krita         # Digital art tool
         # Video
         obs-studio    # Screen recorder
@@ -76,22 +75,22 @@ in
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [
         # Basic utilities
-        ark                     # Archive viewer
+        kdePackages.ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
-        dolphin                 # KDE file manager
+        kdePackages.dolphin                 # KDE file manager
         feh                     # Simple file viewer
-        filelight               # Disk space usage viewer
+        kdePackages.filelight               # Disk space usage viewer
         filezilla               # FTP client
         firefox                 # Browser
         (flameshot.override {enableWlrSupport = true;}) # Screenshot tool
         gparted                 # Manage partitions graphically
-        kate                    # Text editor
-        kcalc                   # Simple calculator
+        kdePackages.kate                    # Text editor
+        kdePackages.kcalc                   # Simple calculator
         keepassxc               # Secure local password manager
-        kfind                   # Search tool
-        okular                  # PDF and image viewer
+        kdePackages.kfind                   # Search tool
+        kdePackages.okular                  # PDF and image viewer
         wlr-randr               # Configure monitors on Wayland
-        xdg-desktop-portal-kde  # File picker used by Firefox, Flatpak, and others
+        kdePackages.xdg-desktop-portal-kde  # File picker used by Firefox, Flatpak, and others
 
         # Media
         calibre     # E-book manager
@@ -99,7 +98,6 @@ in
         pavucontrol # Audio device manager
         puddletag   # Music tagger
         strawberry  # Music player, forked from Clementine
-        # waiting for pyside 6.7.1
         syncplay    # Syncronize video watching within a group
 
         # Sync
@@ -248,12 +246,12 @@ in
         (prismlauncher.override {
           jdks = [ jdk8 jdk17 jdk21 jdk23 ];
         })
+        umu-launcher
         (callPackage ../pkgs/itgmania-bin {})
         (callPackage ../pkgs/outfox {})
       ];
       programs.steam.enable = true;
-      # Disabled until #360389 is merged
-      #hardware.opentabletdriver.enable = true;
+      hardware.opentabletdriver.enable = true;
     })
 
     (mkIf cfg.printing {
