@@ -94,6 +94,16 @@ in
               ];
               allowed_origins_from_client_redirect_uris = true;
             };
+            claims_policies = {
+              dev_testing = {
+                id_token = [
+                  "name"
+                  "email"
+                  "family_name"
+                  "given_name"
+                ];
+              };
+            };
             clients = [
               {
                 client_name = "Immich";
@@ -212,6 +222,40 @@ in
                   "groups"
                   "profile"
                 ];
+              }
+              {
+                client_name = "development_testing";
+                client_id = "bc35915f-0c81-473c-b42d-439b070b4289";
+                client_secret = "$pbkdf2-sha512$310000$g/A8ZnBdLEQDdwcdFKZ/gw$T6uOwNNpCXKFJHwceAjYKZ3cbg3Cc3JfEuv7VYsWjIWTUP1bIlIUvfk/08ga8RoEOZyYrfVG25dljdzsabA5Sg";
+                public = false;
+                require_pkce = true;
+                pkce_challenge_method = "S256";
+                redirect_uris = [
+                  "https://localhost:9443/oidcclient/redirect/authelia"
+                ];
+                scopes = [
+                  "offline_access"
+                  #"authelia.bearer.authz"
+                  "openid"
+                  "profile"
+                ];
+                audience = [
+                  "development_testing"
+                ];
+                grant_types = [
+                  "authorization_code"
+                  "refresh_token"
+                ];
+                response_types = [
+                  "code"
+                ];
+                response_modes = [
+                  "form_post"
+                ];
+                consent_mode = "explicit";
+                require_pushed_authorization_requests = false;
+                token_endpoint_auth_method = "client_secret_post";
+                claims_policy = "dev_testing";
               }
             ];
           };

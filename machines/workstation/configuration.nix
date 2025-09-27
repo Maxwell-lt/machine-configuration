@@ -59,9 +59,15 @@
 
   environment.systemPackages = with pkgs; [
     zoom-us
+    
+    # Added to support compilation of Bevy projects through RustRover
+    clang
+    lld
+
+    jetbrains.idea-ultimate
   ];
 
-  virtualisation.waydroid.enable = true;
+  virtualisation.waydroid.enable = false;
 
   networking.networkmanager.enable = true;
 
@@ -182,6 +188,20 @@
 
   programs.adb.enable = true;
 
+  services.grocy = {
+    enable = true;
+    hostName = "grocy.maxwell-lt.dev";
+    nginx.enableSSL = false;
+  };
+
+  services.nginx.virtualHosts."grocy.maxwell-lt.dev".listen = [
+    {
+      addr = "10.100.0.5";
+      port = 8900;
+      ssl = false;
+    }
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -200,7 +220,7 @@
 
   networking.useDHCP = false;
   networking.interfaces.enp16s0.useDHCP = true;
-  networking.interfaces.wlp17s0.useDHCP = false;
+  systemd.network.netdevs.wlp17s0.enable = false;
 
   networking.firewall.allowedTCPPorts = [
     # Avoid 30 second wait before login prompt when connecting to Lutron SmartBridge using Telnet: https://forums.lutron.com/showthread.php/3031-30-second-Telnet-Login-Delay
@@ -209,8 +229,9 @@
     9811
 
     # Satisfactory
-    5222 6666
-    
+    5222
+    6666
+
     # Dynmap
     8123
     # Minecraft
@@ -221,21 +242,28 @@
 
   networking.firewall.allowedUDPPorts = [
     # Satisfactory
-    5222 6666
+    5222
+    6666
     # WG
     51820
   ];
 
   networking.firewall.allowedUDPPortRanges = [
     # Satisfactory
-    { from = 7777; to = 9999; }
+    {
+      from = 7777;
+      to = 9999;
+    }
   ];
 
   networking.firewall.allowedTCPPortRanges = [
     # Satisfactory
-    { from = 7777; to = 9999; }
+    {
+      from = 7777;
+      to = 9999;
+    }
   ];
-  
+
   # Needed to use erisia/builder
   nix.settings.sandbox = "relaxed";
 
@@ -246,7 +274,7 @@
   '';
 
   users.users.minecraft = {
-    description  = "Minecraft user account";
+    description = "Minecraft user account";
     isNormalUser = true;
     shell = pkgs.zsh;
     createHome = true;
@@ -256,7 +284,7 @@
       kitty
     ];
   };
-  
+
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
@@ -266,10 +294,12 @@
 
     virtualHosts."serverpack" = {
       serverName = "10.100.0.5";
-      listen = [{
-        addr = "10.100.0.5";
-        port = 9990;
-      }];
+      listen = [
+        {
+          addr = "10.100.0.5";
+          port = 9990;
+        }
+      ];
       locations."/" = {
         root = "/srv/minecraft";
       };
@@ -281,9 +311,129 @@
 
   fileSystems."/srv/minecraft" = {
     device = "/home/minecraft/web";
-    depends = ["/home/minecraft/web"];
-    options = ["bind"];
+    depends = [ "/home/minecraft/web" ];
+    options = [ "bind" ];
   };
+
+  # nix-ld configuration copied from https://nixos.wiki/wiki/Jetbrains_Tools
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    SDL
+    SDL2
+    SDL2_image
+    SDL2_mixer
+    SDL2_ttf
+    SDL_image
+    SDL_mixer
+    #SDL_ttf
+    alsa-lib
+    at-spi2-atk
+    at-spi2-core
+    atk
+    bzip2
+    cairo
+    clang
+    cups
+    curlWithGnuTls
+    dbus
+    dbus-glib
+    desktop-file-utils
+    e2fsprogs
+    expat
+    flac
+    fontconfig
+    freeglut
+    freetype
+    fribidi
+    fuse
+    fuse3
+    gdk-pixbuf
+    glew110
+    glib
+    gmp
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gstreamer
+    gtk2
+    harfbuzz
+    icu
+    keyutils.lib
+    libGL
+    libGLU
+    libappindicator-gtk2
+    libcaca
+    libcanberra
+    libcap
+    libclang.lib
+    libdbusmenu
+    libdrm
+    libgcrypt
+    libgpg-error
+    libidn
+    libjack2
+    libjpeg
+    libmikmod
+    libogg
+    libpng12
+    libpulseaudio
+    librsvg
+    libsamplerate
+    libthai
+    libtheora
+    libtiff
+    libudev0-shim
+    libusb1
+    libuuid
+    libvdpau
+    libvorbis
+    libvpx
+    libxcrypt-legacy
+    libxkbcommon
+    libxml2
+    lld
+    mesa
+    nspr
+    nss
+    openssl
+    p11-kit
+    pango
+    pixman
+    python3
+    speex
+    stdenv.cc.cc
+    tbb
+    udev
+    vulkan-loader
+    wayland
+    xorg.libICE
+    xorg.libSM
+    xorg.libX11
+    xorg.libXScrnSaver
+    xorg.libXcomposite
+    xorg.libXcursor
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXft
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXmu
+    xorg.libXrandr
+    xorg.libXrender
+    xorg.libXt
+    xorg.libXtst
+    xorg.libXxf86vm
+    xorg.libpciaccess
+    xorg.libxcb
+    xorg.xcbutil
+    xorg.xcbutilimage
+    xorg.xcbutilkeysyms
+    xorg.xcbutilrenderutil
+    xorg.xcbutilwm
+    xorg.xkeyboardconfig
+    xz
+    zlib
+  ];
 
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?

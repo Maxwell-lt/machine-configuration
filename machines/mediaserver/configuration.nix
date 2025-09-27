@@ -40,13 +40,7 @@
   ];
 
   services.postgresql = {
-    package = pkgs.postgresql;
-  };
-
-  services.invokeai = {
-    enable = true;
-    package = pkgs.invokeai-nvidia;
-    settings.host = "0.0.0.0";
+    package = pkgs.postgresql_16;
   };
 
   networking = {
@@ -187,8 +181,6 @@
     9102
     9811
     9812
-    # InvokeAI
-    9090
 
     # K3s
     6443

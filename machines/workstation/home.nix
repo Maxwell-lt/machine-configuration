@@ -1,7 +1,12 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
-  playlist-scan = pkgs.writers.writePython3Bin "playlist-scan" {} ''
+  playlist-scan = pkgs.writers.writePython3Bin "playlist-scan" { } ''
     import os
     import sys
     with open(sys.argv[1]) as f:
@@ -33,6 +38,7 @@ in
     bun
     anki
     git-credential-keepassxc
+    open-in-mpv
   ];
 
   programs.ssh = {
@@ -44,7 +50,7 @@ in
         user = "maxwell";
       };
       "media-server-alpha" = {
-        hostname = "10.0.0.114";
+        hostname = "10.100.0.2";
         port = 22;
         user = "maxwell";
       };
@@ -68,8 +74,8 @@ in
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
       "$menu" = "anyrun";
-      "$monLeft" = "ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
-      "$monRight" = "ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
+      "$monLeft" = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
+      "$monRight" = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
       "$monitorConfig" = "highrr";
       monitor = [
         "$monLeft, $monitorConfig, 0x0, 1"
@@ -194,8 +200,8 @@ in
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ~/Pictures/wallpapers/Cover.png
     preload = ~/Pictures/wallpapers/nge6.png
-    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526,~/Pictures/wallpapers/Cover.png
-    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517,~/Pictures/wallpapers/nge6.png
+    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517,~/Pictures/wallpapers/Cover.png
+    wallpaper = desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526,~/Pictures/wallpapers/nge6.png
     splash = false
     ipc = off
   '';
@@ -219,15 +225,17 @@ in
   programs.anyrun = {
     enable = true;
     config = {
-      plugins = with inputs.anyrun.packages.${pkgs.system}; [
-        applications
-        dictionary
-        rink
-        symbols
-        translate
-        websearch
+      plugins = [
+        "${pkgs.anyrun}/lib/libapplications.so"
+        "${pkgs.anyrun}/lib/libdictionary.so"
+        "${pkgs.anyrun}/lib/librink.so"
+        "${pkgs.anyrun}/lib/libsymbols.so"
+        "${pkgs.anyrun}/lib/libtranslate.so"
+        "${pkgs.anyrun}/lib/libwebsearch.so"
       ];
-      width = { fraction = 0.3; };
+      width = {
+        fraction = 0.3;
+      };
       closeOnClick = true;
     };
     extraCss = ''
@@ -249,7 +257,7 @@ in
   programs.ags = {
     enable = true;
     configDir = ../../modules/ags;
-    extraPackages = with pkgs; [];
+    extraPackages = with pkgs; [ ];
   };
 
   programs.kitty = {
@@ -309,6 +317,42 @@ in
     };
     autosuggestion = {
       enable = true;
+    };
+  };
+
+  systemd.user.services = {
+    openrgb-off = {
+      Service = {
+        ExecStart = "${pkgs.openrgb-with-all-plugins}/bin/openrgb -p /home/maxwell/.config/OpenRGB/Off.orp";
+        Type = "oneshot";
+      };
+    };
+    openrgb-on = {
+      Service = {
+        ExecStart = "${pkgs.openrgb-with-all-plugins}/bin/openrgb -p /home/maxwell/.config/OpenRGB/Red.orp";
+        Type = "oneshot";
+      };
+    };
+  };
+
+  systemd.user.timers = {
+    openrgb-off = {
+      Timer = {
+        OnCalendar = "22:00:00";
+        Unit = "openrgb-off.service";
+      };
+      Install = {
+        WantedBy = [ "timers.target" ];
+      };
+    };
+    openrgb-on = {
+      Timer = {
+        OnCalendar = "07:00:00";
+        Unit = "openrgb-on.service";
+      };
+      Install = {
+        WantedBy = [ "timers.target" ];
+      };
     };
   };
 

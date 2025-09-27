@@ -20,6 +20,10 @@
     git-credential-keepassxc
   ];
 
+  home.sessionPath = [
+    "$HOME/.local/share/JetBrains/Toolbox/scripts"
+  ];
+
   programs.ssh = {
     enable = true;
     matchBlocks = {
@@ -196,13 +200,13 @@
   programs.anyrun = {
     enable = true;
     config = {
-      plugins = with inputs.anyrun.packages.${pkgs.system}; [
-        applications
-        dictionary
-        rink
-        symbols
-        translate
-        websearch
+      plugins = [
+        "applications"
+        "dictionary"
+        "rink"
+        "symbols"
+        "translate"
+        "websearch"
       ];
       width = { fraction = 0.3; };
       closeOnClick = true;
