@@ -325,7 +325,6 @@
       # Game demo
       game-demo.maxwell-lt.dev {
         import headers
-        import auth
         header Cache-Control max-age=1800
         root * /var/www/game
         file_server
@@ -353,6 +352,12 @@
       coder.maxwell-lt.dev {
         import headers
         reverse_proxy 10.100.0.5:3000
+      }
+
+      # Grocy
+      grocy.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.5:8900
       }
     '';
   };
