@@ -150,7 +150,6 @@ in
         fcitx5 = {
           addons = [ pkgs.fcitx5-mozc ];
           waylandFrontend = true;
-          plasma6Support = true;
         };
       };
 
