@@ -239,7 +239,7 @@ in
     (mkIf cfg.gaming {
       environment.systemPackages = with pkgs; [
         dolphin-emu-beta
-        ryujinx
+        ryubing
         lutris
         pcsx2
         (prismlauncher.override {
