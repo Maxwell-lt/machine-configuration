@@ -8,15 +8,9 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
     };
-    nixified-ai = {
-      url = "github:nixified-ai/flake";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
     };
     ags = {
       url = "github:Aylur/ags";
@@ -29,7 +23,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, nixified-ai, home-manager, hyprland, ags, playerctl-inhibit, ... }: {
+  outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, ags, playerctl-inhibit, ... }: {
     nixosConfigurations =
       let
         linux64System = "x86_64-linux";
@@ -38,12 +32,6 @@
           modules = config ++ [ 
             sops-nix.nixosModules.sops
             ./config
-            {
-                nix.settings = {
-                  substituters = ["https://hyprland.cachix.org"];
-                  trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-                };
-            }
           ];
           specialArgs = { inherit inputs; };
         };
@@ -53,15 +41,9 @@
           ./machines/workstation/configuration.nix
           playerctl-inhibit.nixosModules.playerctl-inhibit
         ];
-        media-server-alpha = (buildSystem [
+        media-server-alpha = buildSystem [
           ./machines/mediaserver/configuration.nix
-          {
-            nix.settings = {
-              trusted-substituters = [ "https://ai.cachix.org" ];
-              trusted-public-keys = [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
-            };
-          }
-        ]) // { specialArgs = { inherit nixified-ai; }; };
+        ];
         nix-portable-omega = buildSystem [
           ./machines/laptop/configuration.nix
         ];
@@ -97,7 +79,6 @@
       {
         "maxwell@maxwell-nixos" = buildHome [
           machines/workstation/home.nix
-          hyprland.homeManagerModules.default
           ags.homeManagerModules.default
         ];
         "maxwell@media-server-alpha" = buildHome [
@@ -105,12 +86,10 @@
         ];
 	"maxwell@nix-portable-omega" = buildHome [
 	  machines/laptop/home.nix
-          hyprland.homeManagerModules.default
           ags.homeManagerModules.default
         ];
         "maxwell@nix-portable-psi" = buildHome [
           machines/nix-portable-psi/home.nix
-          hyprland.homeManagerModules.default
           ags.homeManagerModules.default
         ];
       };

@@ -227,11 +227,6 @@ in
       # Experimental: enable Hyprland
       programs.hyprland = {
         enable = true;
-        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-      };
-      hardware.graphics = {
-        package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
-        package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa.drivers;
       };
       security.pam.services.swaylock = {};
     })
