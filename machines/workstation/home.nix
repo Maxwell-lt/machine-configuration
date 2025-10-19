@@ -348,26 +348,26 @@ in
     };
   };
 
-  systemd.user.timers = {
-    openrgb-off = {
-      Timer = {
-        OnCalendar = "22:00:00";
-        Unit = "openrgb-off.service";
-      };
-      Install = {
-        WantedBy = [ "timers.target" ];
-      };
-    };
-    openrgb-on = {
-      Timer = {
-        OnCalendar = "07:00:00";
-        Unit = "openrgb-on.service";
-      };
-      Install = {
-        WantedBy = [ "timers.target" ];
-      };
-    };
-  };
+  #systemd.user.timers = {
+  #  openrgb-off = {
+  #    Timer = {
+  #      OnCalendar = "22:00:00";
+  #      Unit = "openrgb-off.service";
+  #    };
+  #    Install = {
+  #      WantedBy = [ "timers.target" ];
+  #    };
+  #  };
+  #  openrgb-on = {
+  #    Timer = {
+  #      OnCalendar = "07:00:00";
+  #      Unit = "openrgb-on.service";
+  #    };
+  #    Install = {
+  #      WantedBy = [ "timers.target" ];
+  #    };
+  #  };
+  #};
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
