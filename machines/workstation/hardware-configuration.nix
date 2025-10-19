@@ -54,9 +54,13 @@
       fsType = "zfs";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/e1272c9f-d29c-4794-b515-cf3639f06587"; }
-    ];
+  swapDevices = lib.mkForce [];
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
 
   nix.settings.max-jobs = lib.mkDefault 16;
   # High-DPI console
