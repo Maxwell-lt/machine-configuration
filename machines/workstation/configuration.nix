@@ -59,7 +59,7 @@
 
   environment.systemPackages = with pkgs; [
     zoom-us
-    
+
     # Added to support compilation of Bevy projects through RustRover
     clang
     lld
