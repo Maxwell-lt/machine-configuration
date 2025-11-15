@@ -435,6 +435,8 @@
     zlib
   ];
 
+  environment.etc."xdg/menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+
   # Don't change this value from 20.03!
   system.stateVersion = "20.03"; # Did you read the comment?
 }

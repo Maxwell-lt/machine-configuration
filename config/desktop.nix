@@ -78,6 +78,9 @@ in
         kdePackages.ark                     # Archive viewer
         audio-recorder          # Simple audio recorder
         kdePackages.dolphin                 # KDE file manager
+        kdePackages.dolphin-plugins
+        kdePackages.baloo-widgets
+        kdePackages.baloo
         feh                     # Simple file viewer
         kdePackages.filelight               # Disk space usage viewer
         filezilla               # FTP client
@@ -108,6 +111,20 @@ in
         discord # Discord client
         hexchat # IRC client
       ];
+
+      xdg = {
+        mime.enable = true;
+        menus.enable = true;
+        portal = {
+          enable = true;
+          extraPortals = [
+            pkgs.xdg-desktop-portal-hyprland
+            pkgs.xdg-desktop-portal-wlr
+            pkgs.xdg-desktop-portal-gtk
+            pkgs.kdePackages.xdg-desktop-portal-kde
+          ];
+        };
+      };
 
       # Enable Plasma/Wayland
       services.xserver = {
