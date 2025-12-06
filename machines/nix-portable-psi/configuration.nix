@@ -45,7 +45,7 @@
     # SDR
     rtl-sdr-osmocom
     sdrangel
-    redisinsight
+    #redisinsight
     dump1090
     direwolf
     rtl_433
