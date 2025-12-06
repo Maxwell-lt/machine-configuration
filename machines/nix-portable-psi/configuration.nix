@@ -11,7 +11,7 @@
       user = {
         enable = true;
         password = true;
-        additionalExtraGroups = [ "plugdev" ];
+        additionalExtraGroups = [ "plugdev" "dialout" ];
       };
       containers = true;
       java = {
