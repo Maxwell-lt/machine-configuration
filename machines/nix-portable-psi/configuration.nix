@@ -11,7 +11,7 @@
       user = {
         enable = true;
         password = true;
-        additionalExtraGroups = [ "plugdev" ];
+        additionalExtraGroups = [ "plugdev" "dialout" ];
       };
       containers = true;
       java = {
@@ -24,6 +24,7 @@
       printing = true;
       productivity = true;
       development = true;
+      creative = true;
     };
     docker.enable = true;
     zfs.enable = true;
@@ -45,7 +46,7 @@
     # SDR
     rtl-sdr-osmocom
     sdrangel
-    redisinsight
+    #redisinsight
     dump1090
     direwolf
     rtl_433
@@ -60,6 +61,8 @@
     burpsuite
 
     vscode-fhs
+
+    arduino-ide
   ];
 
   hardware.rtl-sdr.enable = true;
