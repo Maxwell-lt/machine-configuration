@@ -65,6 +65,8 @@
     lld
 
     jetbrains.idea-ultimate
+
+    android-tools
   ];
 
   virtualisation.waydroid.enable = false;
@@ -185,8 +187,6 @@
   };
 
   services.flatpak.enable = true;
-
-  programs.adb.enable = true;
 
   services.grocy = {
     enable = true;

@@ -76,7 +76,7 @@ in
       environment.systemPackages = with pkgs; [
         # Basic utilities
         kdePackages.ark                     # Archive viewer
-        audio-recorder          # Simple audio recorder
+        #audio-recorder          # Simple audio recorder
         kdePackages.dolphin                 # KDE file manager
         kdePackages.dolphin-plugins
         kdePackages.baloo-widgets
@@ -187,8 +187,7 @@ in
         corefonts
         noto-fonts
         noto-fonts-cjk-sans
-        noto-fonts-emoji
-        noto-fonts-extra
+        noto-fonts-color-emoji
         nerd-fonts.hack
         ipafont
       ];
@@ -250,12 +249,12 @@ in
 
     (mkIf cfg.gaming {
       environment.systemPackages = with pkgs; [
-        dolphin-emu-beta
+        dolphin-emu
         ryubing
         lutris
         pcsx2
         (prismlauncher.override {
-          jdks = [ jdk8 jdk17 jdk21 jdk23 ];
+          jdks = [ jdk8 jdk17 jdk21 jdk25 ];
         })
         umu-launcher
         (callPackage ../pkgs/itgmania-bin {})
