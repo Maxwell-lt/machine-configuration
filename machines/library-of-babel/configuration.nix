@@ -171,7 +171,7 @@
 
   environment.systemPackages = with pkgs; [
     # Terminal tools
-    coreutils gitAndTools.gitFull wget vim man tree
+    coreutils gitFull wget vim man tree
     mkpasswd sshfs units progress pv ripgrep zip
     unzip p7zip gnupg unrar git-lfs direnv easyrsa
     wireguard-tools nix-output-monitor
@@ -187,7 +187,7 @@
     r128gain
     # Fonts
     powerline-fonts corefonts noto-fonts noto-fonts-cjk-sans
-    noto-fonts-emoji noto-fonts-extra
+    noto-fonts-color-emoji
   ];
 
   programs = {
