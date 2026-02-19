@@ -39,6 +39,7 @@ in
     anki
     git-credential-keepassxc
     open-in-mpv
+    wl-clipboard
   ];
 
   programs.ssh = {
