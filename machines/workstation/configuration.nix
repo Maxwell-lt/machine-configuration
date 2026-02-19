@@ -64,7 +64,7 @@
     clang
     lld
 
-    jetbrains.idea-ultimate
+    jetbrains.idea
 
     android-tools
   ];

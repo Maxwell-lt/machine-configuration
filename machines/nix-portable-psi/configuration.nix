@@ -53,7 +53,7 @@
 
     jetbrains.datagrip
 
-    jetbrains.idea-ultimate
+    jetbrains.idea
 
     maven
     gradle
