@@ -167,7 +167,7 @@ in
       env = [
         "WLR_DRM_NO_ATOMIC, 1"
       ];
-      windowrulev2 = [
+      windowrule = [
         "immediate, class:^(steam_app_)(.*)$"
         "immediate, class:^ITGmania$"
         "tile, class:^(thunderbird)$"
