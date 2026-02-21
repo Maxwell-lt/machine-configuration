@@ -168,10 +168,10 @@ in
         "WLR_DRM_NO_ATOMIC, 1"
       ];
       windowrule = [
-        "immediate, class:^(steam_app_)(.*)$"
-        "immediate, class:^ITGmania$"
-        "tile, class:^(thunderbird)$"
-        "pseudo,class:fcitx"
+        "match:class ^(steam_app_)(.*)$, immediate on"
+        "match:class ^ITGmania$, immediate on"
+        "match:class ^(thunderbird)$, tile on"
+        "match:class fcitx, pseudo on"
       ];
       decoration = {
         rounding = 5;
