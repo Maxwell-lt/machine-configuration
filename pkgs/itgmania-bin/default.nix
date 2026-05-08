@@ -10,7 +10,7 @@
 , libGLU
 , libpulseaudio
 , libusb-compat-0_1
-, xorg
+, libxtst
 , makeDesktopItem
 , makeWrapper
 }:
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     libGLU
     libpulseaudio
     libusb-compat-0_1
-    xorg.libXtst
+    libxtst
   ];
 
   desktop = makeDesktopItem {

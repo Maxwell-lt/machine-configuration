@@ -349,7 +349,7 @@
     fuse
     fuse3
     gdk-pixbuf
-    glew110
+    glew_1_10
     glib
     gmp
     gst_all_1.gst-plugins-base
@@ -406,32 +406,32 @@
     udev
     vulkan-loader
     wayland
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXScrnSaver
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXft
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXmu
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXt
-    xorg.libXtst
-    xorg.libXxf86vm
-    xorg.libpciaccess
-    xorg.libxcb
-    xorg.xcbutil
-    xorg.xcbutilimage
-    xorg.xcbutilkeysyms
-    xorg.xcbutilrenderutil
-    xorg.xcbutilwm
-    xorg.xkeyboardconfig
+    libice
+    libsm
+    libx11
+    libxscrnsaver
+    libxcomposite
+    libxcursor
+    libxdamage
+    libxext
+    libxfixes
+    libxft
+    libxi
+    libxinerama
+    libxmu
+    libxrandr
+    libxrender
+    libxt
+    libxtst
+    libxxf86vm
+    libpciaccess
+    libxcb
+    libxcb-util
+    libxcb-image
+    libxcb-keysyms
+    libxcb-render-util
+    libxcb-wm
+    xkeyboard-config
     xz
     zlib
   ];
