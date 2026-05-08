@@ -313,6 +313,7 @@
     device = "/home/minecraft/web";
     depends = [ "/home/minecraft/web" ];
     options = [ "bind" ];
+    fsType = "none";
   };
 
   # nix-ld configuration copied from https://nixos.wiki/wiki/Jetbrains_Tools
