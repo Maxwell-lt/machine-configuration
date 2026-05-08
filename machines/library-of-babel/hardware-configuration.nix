@@ -14,6 +14,9 @@
   boot.extraModulePackages = [ ];
   boot.zfs.requestEncryptionCredentials = [ ];
 
+  # New default as of 26.11
+  boot.zfs.forceImportRoot = false;
+
   fileSystems."/" =
     { device = "rpool/system";
       fsType = "zfs";

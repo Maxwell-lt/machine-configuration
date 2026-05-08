@@ -13,6 +13,9 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # New default as of 26.11
+  boot.zfs.forceImportRoot = false;
+
   fileSystems."/" =
     { device = "ssdpool/root/nixos";
       fsType = "zfs";
