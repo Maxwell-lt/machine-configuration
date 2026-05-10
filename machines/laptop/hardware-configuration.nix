@@ -13,6 +13,9 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # New default as of 26.11
+  boot.zfs.forceImportRoot = false;
+
   fileSystems."/" =
     { device = "rpool/root/system";
       fsType = "zfs";

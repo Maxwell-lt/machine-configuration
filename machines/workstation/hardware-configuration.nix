@@ -28,6 +28,8 @@
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
   };
+  # New default as of 26.11
+  boot.zfs.forceImportRoot = false;
   # Set ZFS ARC size to 16GiB
   boot.extraModprobeConfig = ''
     options zfs zfs_arc_max=17179869184

@@ -9,7 +9,7 @@ in
     ];
 
   environment.systemPackages = [
-    itgmania
+    pkgs.itgmania
     pkgs.comma
     pkgs.gitMinimal
     pkgs.rsync
@@ -31,9 +31,8 @@ in
   #  };
   #};
 
-  services.xserver = {
-    enable = true;
-    desktopManager.plasma5 = {
+  services.desktopManager = {
+    plasma6 = {
       enable = true;
     };
   };
@@ -146,17 +145,7 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlo1.useDHCP = true;
-  networking.networkmanager.enable = false;
-  networking.wireless = {
-    secretsFile = config.sops.secrets."wireless.env".path;
-    enable = true;
-    networks = {
-      "ltfamilywifi" = {
-        psk = "ext:home_psk";
-        priority = 40;
-      };
-    };
-  };
+  networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
 

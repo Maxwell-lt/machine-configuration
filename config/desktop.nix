@@ -142,7 +142,7 @@ in
         enable = true;
         settings = {
           default_session = {
-            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+            command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
           };
         };
       };
@@ -262,6 +262,16 @@ in
       ];
       programs.steam.enable = true;
       hardware.opentabletdriver.enable = true;
+
+      # Temporary fix for Lutris transitive dependency not passing tests during Nix build
+      # https://github.com/NixOS/nixpkgs/issues/514113
+      nixpkgs.overlays = [
+        (_: prev: {
+          openldap = prev.openldap.overrideAttrs {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          };
+        })
+      ];
     })
 
     (mkIf cfg.printing {

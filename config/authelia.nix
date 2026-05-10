@@ -116,6 +116,7 @@ in
                   "https://photos.maxwell-lt.dev/user-settings"
                   "app.immich:///oauth-callback"
                 ];
+                token_endpoint_auth_method = "client_secret_post";
                 scopes = [
                   "openid"
                   "profile"

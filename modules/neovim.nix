@@ -14,7 +14,7 @@
       viAlias = true;
       vimAlias = true;
       withNodeJs = true;
-      extraLuaConfig = ''
+      initLua = ''
         vim.opt.backup = false
         vim.opt.writebackup = false
         vim.opt.swapfile = false
@@ -35,16 +35,15 @@
         -- Add additional capabilities supported by nvim-cmp
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        local lspconfig = require('lspconfig')
-
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
         local servers = { 'rust_analyzer', 'pyright', 'nixd' }
         for _, lsp in ipairs(servers) do
-          lspconfig[lsp].setup {
+          vim.lsp.config(lsp, {
             capabilities = capabilities,
-          }
+          })
+          vim.lsp.enable(lsp)
         end
-        lspconfig["ts_ls"].setup({
+        vim.lsp.config("ts_ls", {
           capabilities = capabilities,
           init_options = {
             tsserver = {
@@ -56,6 +55,10 @@
             "--stdio" 
           }
         })
+        vim.lsp.enable("ts_ls")
+
+        -- Enable inline LSP display
+        vim.diagnostic.config({ virtual_text = true })
         
         -- Set nvim-lspconfig keybinds
         -- Use LspAttach autocommand to only map the following keys
@@ -175,6 +178,7 @@
         cmp-nvim-lsp        # LSP source for nvim-cmp
         cmp_luasnip         # Snippets source for nvim-cmp
         luasnip             # Snippets plugin
+        plenary-nvim        # Required for Telescope
         {
           plugin = telescope-nvim;
           type = "lua";

@@ -14,6 +14,9 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.extraModulePackages = [ ];
 
+  # New default as of 26.11
+  boot.zfs.forceImportRoot = false;
+
   # https://github.com/lwfinger/rtw89/issues/275#issuecomment-1784155449
   boot.extraModprobeConfig = ''
     options rtw89_pci disable_aspm_l1=y disable_aspm_l1ss=y
