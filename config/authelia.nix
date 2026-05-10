@@ -285,7 +285,18 @@ in
             }
           ];
         };
-        server.endpoints.authz.forward-auth.implementation = "ForwardAuth";
+        server.endpoints.authz.forward-auth = {
+          implementation = "ForwardAuth";
+          authn_strategies = [
+            {
+              name = "HeaderProxyAuthorization";
+              schemes = [ "Basic" ];
+            }
+            {
+              name = "CookieSession";
+            }
+          ];
+        };
         notifier.smtp = {
           address = "submission://smtp.gmail.com:587";
           username = "appliedarctan@gmail.com";
