@@ -22,6 +22,12 @@
     "usbhid"
     "sd_mod"
   ];
+
+  # https://bugzilla.kernel.org/show_bug.cgi?id=221539
+  # https://bugzilla.kernel.org/show_bug.cgi?id=221521
+  # Switch to 7.0.10 once available in unstable (pkgs.linuxKernel.packages.linux_7.0)
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
+
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
