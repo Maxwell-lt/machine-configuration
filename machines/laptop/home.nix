@@ -74,8 +74,6 @@
         "$mainMod, V, togglefloating,"
         "$mainMod, F, fullscreen,"
         "$mainMod, R, exec, $menu"
-        "$mainMod, P, pseudo, # dwindle"
-        "$mainMod, J, togglesplit, # dwindle"
         "$mainMod, L, exec, loginctl lock-session"
 
         "$mainMod, left, movefocus, l"
