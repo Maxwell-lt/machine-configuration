@@ -47,11 +47,11 @@
           capabilities = capabilities,
           init_options = {
             tsserver = {
-              path = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/"
+              path = "${pkgs.typescript}/lib/node_modules/typescript/lib/"
             }
           },
           cmd = { 
-            "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
+            "${pkgs.typescript-language-server}/bin/typescript-language-server", 
             "--stdio" 
           }
         })
@@ -234,9 +234,9 @@
         rust-analyzer
         pyright
         fd
-        nodePackages.typescript
-        nodePackages.typescript-language-server
-        nodePackages.yaml-language-server
+        typescript
+        typescript-language-server
+        yaml-language-server
         wl-clipboard
       ];
     };
