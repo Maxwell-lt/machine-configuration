@@ -84,7 +84,7 @@
 
         allowedIPs = [ "10.100.0.0/24" ];
 
-        endpoint = "158.69.224.168:51820";
+        endpoint = "loa.maxwell-lt.dev:51820";
 
         persistentKeepalive = 25;
       }
