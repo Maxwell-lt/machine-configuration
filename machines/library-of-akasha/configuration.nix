@@ -202,6 +202,87 @@
     };
   };
 
+  # Setup caddy
+  services.caddy = {
+    enable = true;
+    email = "maxwell.lt@live.com";
+    globalConfig = ''
+      grace_period 1m
+    '';
+    extraConfig = ''
+      (headers) {
+        header X-Clacks-Overhead "GNU Terry Pratchett"
+        header X-XSS-Protection "1; mode=block"
+        header Referrer-Policy "no-referrer-when-downgrade"
+
+        encode zstd gzip
+        handle_errors {
+          header content-type "text/plain"
+          respond "{http.error.status_code} {http.error.status_text}"
+        }
+      }
+
+      (auth) {
+        forward_auth 10.100.0.2:9091 {
+          uri /api/authz/forward-auth
+          copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+        }
+      }
+
+      # Auth portal
+      #auth.maxwell-lt.dev {
+      #  import headers
+      #  reverse_proxy 10.100.0.2:9091
+      #}
+
+      # Redirect home page to Firebase
+      #maxwell-lt.dev {
+      #  redir https://www.maxwell-lt.dev{uri}
+      #}
+
+      # Jellyfin media server
+      #media.maxwell-lt.dev {
+      #  import headers
+      #  import auth
+      #  reverse_proxy 10.100.0.2:8096
+      #}
+
+      # Immich photo repository
+      #photos.maxwell-lt.dev {
+      #  import headers
+      #  request_body {
+      #    max_size 10GB
+      #  }
+      #  reverse_proxy 10.100.0.2:2283
+      #}
+
+      # Forgejo Git host
+      #git.maxwell-lt.dev {
+      #  import headers
+      #  reverse_proxy 10.100.0.2:3000
+      #}
+      
+      # e34 website
+      minecraft.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.5:9990
+      }
+
+      # ArgoCD
+      #argocd.kube.maxwell-lt.dev {
+      #  import headers
+      #  reverse_proxy 10.100.0.2:28080
+      #}
+
+      # Grocy
+      grocy.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.5:8900
+      }
+    '';
+  };
+
+
   # Proxy Minecraft traffic
   services.nginx = {
     enable = true;
