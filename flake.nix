@@ -53,6 +53,9 @@
         library-of-babel = buildSystem [
           ./machines/library-of-babel/configuration.nix
         ];
+        library-of-akasha = buildSystem [
+          ./machines/library-of-akasha/configuration.nix
+        ];
         rpi4-nixos = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [ ./machines/r4spberrypi/configuration.nix ];
