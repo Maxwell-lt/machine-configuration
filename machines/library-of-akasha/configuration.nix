@@ -230,37 +230,37 @@
       }
 
       # Auth portal
-      #auth.maxwell-lt.dev {
-      #  import headers
-      #  reverse_proxy 10.100.0.2:9091
-      #}
+      auth.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:9091
+      }
 
       # Redirect home page to Firebase
-      #maxwell-lt.dev {
-      #  redir https://www.maxwell-lt.dev{uri}
-      #}
+      maxwell-lt.dev {
+        redir https://www.maxwell-lt.dev{uri}
+      }
 
       # Jellyfin media server
-      #media.maxwell-lt.dev {
-      #  import headers
-      #  import auth
-      #  reverse_proxy 10.100.0.2:8096
-      #}
+      media.maxwell-lt.dev {
+        import headers
+        import auth
+        reverse_proxy 10.100.0.2:8096
+      }
 
       # Immich photo repository
-      #photos.maxwell-lt.dev {
-      #  import headers
-      #  request_body {
-      #    max_size 10GB
-      #  }
-      #  reverse_proxy 10.100.0.2:2283
-      #}
+      photos.maxwell-lt.dev {
+        import headers
+        request_body {
+          max_size 10GB
+        }
+        reverse_proxy 10.100.0.2:2283
+      }
 
       # Forgejo Git host
-      #git.maxwell-lt.dev {
-      #  import headers
-      #  reverse_proxy 10.100.0.2:3000
-      #}
+      git.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:3000
+      }
       
       # e34 website
       minecraft.maxwell-lt.dev {
@@ -269,10 +269,10 @@
       }
 
       # ArgoCD
-      #argocd.kube.maxwell-lt.dev {
-      #  import headers
-      #  reverse_proxy 10.100.0.2:28080
-      #}
+      argocd.kube.maxwell-lt.dev {
+        import headers
+        reverse_proxy 10.100.0.2:28080
+      }
 
       # Grocy
       grocy.maxwell-lt.dev {
