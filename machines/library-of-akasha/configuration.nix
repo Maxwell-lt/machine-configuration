@@ -156,7 +156,7 @@
       jobs = [
         {
           name = "zrepl_sink";
-          root_fs = "rustpool/backup";
+          root_fs = "rustpool/backups";
           type = "sink";
           serve = {
             clients = {
