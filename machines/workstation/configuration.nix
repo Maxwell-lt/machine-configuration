@@ -137,17 +137,14 @@
       jobs = [
         {
           connect = {
-            address = "158.69.224.168:8550";
-            ca = "/var/spool/zrepl/ca.crt";
-            cert = "/var/spool/zrepl/maxwell-nixos.crt";
-            key = "/var/spool/zrepl/maxwell-nixos.key";
-            server_cn = "library-of-babel";
-            type = "tls";
+            address = "10.100.0.1:8550";
+            type = "tcp";
           };
           filesystems = {
             "rpool/safe<" = true;
+            "rpool/safe/lxd<" = false;
           };
-          name = "rpool_push";
+          name = "rpool_push_akasha";
           pruning = {
             keep_receiver = [
               {
