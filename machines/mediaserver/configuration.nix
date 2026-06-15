@@ -62,18 +62,15 @@
       jobs = [
         {
           connect = {
-            address = "158.69.224.168:8550";
-            ca = "/var/spool/zrepl/ca.crt";
-            cert = "/var/spool/zrepl/media-server-alpha.crt";
-            key = "/var/spool/zrepl/media-server-alpha.key";
-            server_cn = "library-of-babel";
-            type = "tls";
+            address = "10.100.0.1:8550";
+            type = "tcp";
           };
           filesystems = {
+            "rustpool/reserved" = false;
             "rustpool/media<" = true;
             "rustpool/dynmap<" = false;
           };
-          name = "rustpool_push";
+          name = "rustpool_push_akasha";
           pruning = {
             keep_receiver = [
               {
@@ -102,12 +99,8 @@
         }
         {
           connect = {
-            address = "158.69.224.168:8550";
-            ca = "/var/spool/zrepl/ca.crt";
-            cert = "/var/spool/zrepl/media-server-alpha.crt";
-            key = "/var/spool/zrepl/media-server-alpha.key";
-            server_cn = "library-of-babel";
-            type = "tls";
+            address = "10.100.0.1:8550";
+            type = "tcp";
           };
           filesystems = {
             "ssdpool/reserved" = false;
@@ -116,7 +109,7 @@
             "ssdpool/root/nixos" = true;
             "ssdpool/containerd<" = false;
           };
-          name = "ssdpool_push";
+          name = "ssdpool_push_akasha";
           pruning = {
             keep_receiver = [
               {
