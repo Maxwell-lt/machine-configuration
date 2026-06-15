@@ -158,6 +158,11 @@
           name = "zrepl_sink";
           root_fs = "rustpool/backups";
           type = "sink";
+          recv = {
+            placeholder = {
+              encryption = "off";
+            };
+          };
           serve = {
             clients = {
               "10.100.0.2" = "media-server-alpha";
