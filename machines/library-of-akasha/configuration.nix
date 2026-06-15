@@ -37,26 +37,29 @@
       privateKeyFile = "/root/private";
       peers = [
         {
+          # media-server-alpha
           publicKey = "1n83gP4hK7vLUpvh4m5tYMT/Nlij1AF9XeiTdMtgIE8=";
           allowedIPs = [ "10.100.0.2/32" ];
         }
+        #{
+        #  publicKey = "fpAVHIb6zeR1pavzcw5gvrsJhAQf/9rMSpBuI35A7Fw=";
+        #  allowedIPs = [ "10.100.0.3/32" ];
+        #}
+        #{
+        #  publicKey = "u02RNnEoI2W/kZiFAY1OG6i7KnpEMgq+VpSHnVt9Ck0=";
+        #  allowedIPs = [ "10.100.0.4/32" ];
+        #}
         {
-          publicKey = "fpAVHIb6zeR1pavzcw5gvrsJhAQf/9rMSpBuI35A7Fw=";
-          allowedIPs = [ "10.100.0.3/32" ];
-        }
-        {
-          publicKey = "u02RNnEoI2W/kZiFAY1OG6i7KnpEMgq+VpSHnVt9Ck0=";
-          allowedIPs = [ "10.100.0.4/32" ];
-        }
-        {
+          # maxwell-nixos
           publicKey = "S+U8WhWiLl9NOzvFb1QGZg6brrGpnAVp0dfrQ5PsrCk=";
           allowedIPs = [ "10.100.0.5/32" ];
         }
+        #{
+        #  publicKey = "3e412tg0Wb4tdNmiggInlgG8cI6P5GzJeC0u9PxXrUw=";
+        #  allowedIPs = [ "10.100.0.6/32" ];
+        #}
         {
-          publicKey = "3e412tg0Wb4tdNmiggInlgG8cI6P5GzJeC0u9PxXrUw=";
-          allowedIPs = [ "10.100.0.6/32" ];
-        }
-        {
+          # nix-portable-psi
           publicKey = "gyBBNMjaWfONNt6C4aM78wuG+kMdOJFPSg9HAVt4b2U=";
           allowedIPs = [ "10.100.0.7/32" ];
         }
@@ -65,11 +68,13 @@
     firewall = {
       allowedTCPPorts = [
         443
-        8550 # zrepl
         25565 # Minecraft
       ];
       allowedUDPPorts = [
         51820 # wg
+      ];
+      interfaces."wg0".allowedTCPPorts = [
+        8550 # zrepl only over wg
       ];
     };
   };
@@ -138,33 +143,30 @@
   };
 
   services.zrepl = {
-    enable = false;
+    enable = true;
     settings = {
-      global = {
-        monitoring = [
-          {
-            listen = ":9811";
-            type = "prometheus";
-          }
-        ];
-      };
+      #global = {
+      #  monitoring = [
+      #    {
+      #      listen = ":9811";
+      #      type = "prometheus";
+      #    }
+      #  ];
+      #};
       jobs = [
         {
           name = "zrepl_sink";
           root_fs = "rustpool/backup";
-          serve = {
-            ca = "/var/spool/zrepl/ca.crt";
-            cert = "/var/spool/zrepl/library-of-akasha.crt";
-            key = "/var/spool/zrepl/library-of-akasha.key";
-            client_cns = [
-              "media-server-alpha"
-              "maxwell-nixos"
-              "nix-portable-omega"
-            ];
-            listen = ":8550";
-            type = "tls";
-          };
           type = "sink";
+          serve = {
+            clients = {
+              "10.100.0.2" = "media-server-alpha";
+              "10.100.0.5" = "maxwell-nixos";
+              "10.100.0.7" = "nix-portable-psi";
+            };
+            listen = "10.100.0.1:8550";
+            type = "tcp";
+          };
         }
       ];
     };
