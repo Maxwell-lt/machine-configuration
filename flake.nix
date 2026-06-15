@@ -95,6 +95,9 @@
           machines/nix-portable-psi/home.nix
           ags.homeManagerModules.default
         ];
+        "maxwell@library-of-akasha" = buildHome [
+          machines/library-of-akasha/home.nix
+        ];
       };
   };
 }
