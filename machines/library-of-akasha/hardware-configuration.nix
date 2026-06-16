@@ -14,6 +14,7 @@
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.extraPools = [ "ssdpool" "rustpool" ];
+  boot.zfs.requestEncryptionCredentials = [ ];
 
   fileSystems."/" =
     { device = "ssdpool/safe/root";
