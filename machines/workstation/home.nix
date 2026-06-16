@@ -44,33 +44,42 @@ in
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
+    settings = {
       "library-of-babel" = {
-        hostname = "ssh.maxwell-lt.dev";
-        port = 22;
-        user = "maxwell";
+        HostName = "lob.maxwell-lt.dev";
+        Port = 22;
+        User = "maxwell";
       };
+
+      "library-of-akasha" = {
+        HostName = "loa.maxwell-lt.dev";
+        Port = 22;
+        User = "maxwell";
+      };
+
       "media-server-alpha" = {
-        hostname = "10.100.0.2";
-        port = 22;
-        user = "maxwell";
+        HostName = "10.100.0.2";
+        Port = 22;
+        User = "maxwell";
       };
+
       "itg" = {
-        hostname = "10.0.0.243";
-        port = 22;
-        user = "itg";
+        HostName = "10.0.0.243";
+        Port = 22;
+        User = "itg";
       };
+
       "*" = {
-        forwardAgent = false;
-        addKeysToAgent = "no";
-        compression = false;
-        serverAliveInterval = 0;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
-        controlMaster = "no";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "no";
+        ForwardAgent = "no";
+        AddKeysToAgent = "no";
+        Compression = "no";
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = "no";
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
       };
     };
     enableDefaultConfig = false;
