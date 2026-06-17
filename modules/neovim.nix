@@ -14,6 +14,8 @@
       viAlias = true;
       vimAlias = true;
       withNodeJs = true;
+      withPython3 = true;
+      withRuby = true;
       initLua = ''
         vim.opt.backup = false
         vim.opt.writebackup = false

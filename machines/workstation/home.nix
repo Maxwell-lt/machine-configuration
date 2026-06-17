@@ -443,7 +443,7 @@ in
       closeOnClick = true;
     };
     extraCss = ''
-      #window {
+      window {
         background-color: rgba(0, 0, 0, 0);
         background-image: radial-gradient(ellipse 70% 50% at top,
           rgba(200, 255, 200, 0.6),
@@ -497,6 +497,7 @@ in
       name = "Noto Sans";
       size = 11;
     };
+    gtk4.theme = null;
   };
 
   qt = {
