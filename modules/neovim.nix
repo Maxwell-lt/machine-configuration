@@ -5,7 +5,7 @@
     ripgrep
     nodejs_22 yarn
     nixd
-    nixfmt-rfc-style
+    nixfmt
   ];
 
   programs = {
