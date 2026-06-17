@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  lib,
   ...
 }:
 
@@ -92,111 +93,288 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
-    settings = {
-      "$mainMod" = "SUPER";
-      "$terminal" = "kitty";
-      "$fileManager" = "dolphin";
-      "$menu" = "anyrun";
-      "$monLeft" = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
-      "$monRight" = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
-      "$monitorConfig" = "highrr";
-      monitor = [
-        "$monLeft, $monitorConfig, 0x0, 1"
-        "$monRight, $monitorConfig, 2560x0, 1"
-      ];
-      bind = [
-        "$mainMod, T, exec, $terminal"
-        "$mainMod, C, killactive,"
-        "$mainMod, M, exit,"
-        "$mainMod, E, exec, $fileManager"
-        "$mainMod, V, togglefloating,"
-        "$mainMod, F, fullscreen,"
-        "$mainMod, R, exec, $menu"
-        "$mainMod, L, exec, loginctl lock-session"
+    configType = "lua";
+    settings =
+      let
+        lua = lib.generators.mkLuaInline;
 
-        "$mainMod, left, movefocus, l"
-        "$mainMod, right, movefocus, r"
-        "$mainMod, up, movefocus, u"
-        "$mainMod, down, movefocus, d"
+        fileManager = "dolphin";
+        mainMod = "SUPER";
+        menu = "anyrun";
+        monLeft = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000517";
+        monRight = "desc:ASUSTek COMPUTER INC VG27AQL3A S4LMQS000526";
+        monitorConfig = "highrr";
+        terminal = "kitty";
+      in
+      {
+        env = [
+          {
+            _args = [
+              "WLR_DRM_NO_ATOMIC"
+              "1"
+            ];
+          }
+        ];
 
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
+        monitor = [
+          {
+            output = monLeft;
+            mode = monitorConfig;
+            position = "0x0";
+            scale = "1";
+          }
+          {
+            output = monRight;
+            mode = monitorConfig;
+            position = "2560x0";
+            scale = "1";
+          }
+        ];
 
-        "$mainMod SHIFT, 1, movetoworkspace, 1"
-        "$mainMod SHIFT, 2, movetoworkspace, 2"
-        "$mainMod SHIFT, 3, movetoworkspace, 3"
-        "$mainMod SHIFT, 4, movetoworkspace, 4"
-        "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
+        bind = [
+          {
+            _args = [
+              "${mainMod} + T"
+              (lua ''hl.dsp.exec_cmd("${terminal}")'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + C"
+              (lua "hl.dsp.window.close()")
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + M"
+              (lua "hl.dsp.exit()")
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + E"
+              (lua ''hl.dsp.exec_cmd("${fileManager}")'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + V"
+              (lua ''hl.dsp.window.float({ action = "toggle" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + F"
+              (lua ''hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + R"
+              (lua ''hl.dsp.exec_cmd("${menu}")'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + L"
+              (lua ''hl.dsp.exec_cmd("loginctl lock-session")'')
+            ];
+          }
 
-        "$mainMod, XF86AudioPlay, workspace, name:Music"
-        "$mainMod SHIFT, XF86AudioPlay, movetoworkspace, name:Music"
+          {
+            _args = [
+              "${mainMod} + left"
+              (lua ''hl.dsp.focus({ direction = "left" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + right"
+              (lua ''hl.dsp.focus({ direction = "right" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + up"
+              (lua ''hl.dsp.focus({ direction = "up" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + down"
+              (lua ''hl.dsp.focus({ direction = "down" })'')
+            ];
+          }
 
-        "$mainMod, Scroll_Lock, togglespecialworkspace, name:keepass"
-      ];
-      bindm = [
-        "$mainMod, mouse:272, movewindow"
-        "$mainMod, mouse:273, resizewindow"
-      ];
-      bindl = [
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86AudioNext, exec, playerctl next"
-      ];
-      exec-once = [
-        "hyprpaper"
-        "eww daemon; sleep 0.25s; eww open-many leftmon rightmon"
-        "insync start"
-        "fcitx5-remote -r"
-        "fcitx5 -d --replace"
-        "fcitx5-remote -r"
-      ];
-      workspace = [
-        "special:keepass, on-created-empty:keepassxc"
-      ];
-      general = {
-        allow_tearing = true;
-        gaps_out = 10;
-      };
-      env = [
-        "WLR_DRM_NO_ATOMIC, 1"
-      ];
-      windowrule = [
-        "match:class ^(steam_app_)(.*)$, immediate on"
-        "match:class ^ITGmania$, immediate on"
-        "match:class ^(thunderbird)$, tile on"
-        "match:class fcitx, pseudo on"
-      ];
-      decoration = {
-        rounding = 5;
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
-          vibrancy = 0.1696;
+          {
+            _args = [
+              "${mainMod} + XF86AudioPlay"
+              (lua ''hl.dsp.focus({ workspace = "name:Music" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + SHIFT + XF86AudioPlay"
+              (lua ''hl.dsp.window.move({ workspace = "name:Music" })'')
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + Scroll_Lock"
+              (lua ''hl.dsp.workspace.toggle_special("name:keepass")'')
+            ];
+          }
+
+          # Works while locked
+          {
+            _args = [
+              "XF86AudioRaiseVolume"
+              (lua ''hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+")'')
+              { locked = true; }
+            ];
+          }
+          {
+            _args = [
+              "XF86AudioLowerVolume"
+              (lua ''hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-")'')
+              { locked = true; }
+            ];
+          }
+          {
+            _args = [
+              "XF86AudioMute"
+              (lua ''hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")'')
+              { locked = true; }
+            ];
+          }
+          {
+            _args = [
+              "XF86AudioPlay"
+              (lua ''hl.dsp.exec_cmd("playerctl play-pause")'')
+              { locked = true; }
+            ];
+          }
+          {
+            _args = [
+              "XF86AudioPrev"
+              (lua ''hl.dsp.exec_cmd("playerctl previous")'')
+              { locked = true; }
+            ];
+          }
+          {
+            _args = [
+              "XF86AudioNext"
+              (lua ''hl.dsp.exec_cmd("playerctl next")'')
+              { locked = true; }
+            ];
+          }
+
+          # Mouse movement
+          {
+            _args = [
+              "${mainMod} + mouse:272"
+              (lua "hl.dsp.window.drag()")
+              { mouse = true; }
+            ];
+          }
+          {
+            _args = [
+              "${mainMod} + mouse:273"
+              (lua "hl.dsp.window.resize()")
+              { mouse = true; }
+            ];
+          }
+        ]
+        ++ (builtins.concatLists (
+          builtins.genList (
+            i:
+            let
+              workspace = i + 1;
+            in
+            [
+              {
+                _args = [
+                  "${mainMod} + ${toString workspace}"
+                  (lua "hl.dsp.focus({ workspace = ${toString workspace} })")
+                ];
+              }
+              {
+                _args = [
+                  "${mainMod} + SHIFT + ${toString workspace}"
+                  (lua "hl.dsp.window.move({ workspace = ${toString workspace} })")
+                ];
+              }
+            ]
+          ) 9
+        ));
+
+        window_rule = [
+          {
+            match.class = "^(steam_app_)(.*)$";
+            immediate = true;
+          }
+          {
+            match.class = "^ITGmania$";
+            immediate = true;
+          }
+          {
+            match.class = "^(thunderbird)$";
+            float = false;
+          }
+          {
+            match.class = "fcitx";
+            pseudo = true;
+          }
+        ];
+
+        workspace_rule = [
+          {
+            workspace = "special:keypass";
+            on_created_empty = "keepassxc";
+          }
+        ];
+
+        config = {
+          decoration = {
+            blur = {
+              enabled = true;
+              passes = 1;
+              size = 3;
+              vibrancy = 0.1696;
+            };
+            rounding = 5;
+          };
+          general = {
+            allow_tearing = true;
+            gaps_out = 10;
+          };
+          input = {
+            numlock_by_default = true;
+          };
+          misc = {
+            key_press_enables_dpms = true;
+            mouse_move_enables_dpms = true;
+          };
         };
+
+        on = [
+          {
+            _args = [
+              "hyprland.start"
+              (lua ''
+                function()
+                  hl.exec_cmd("hyprpaper")
+                  hl.exec_cmd("eww daemon; sleep 0.25s; eww open-many leftmon rightmon")
+                  hl.exec_cmd("insync start")
+                  hl.exec_cmd("fcitx5-remote -r")
+                  hl.exec_cmd("fcitx5 -d --replace")
+                  hl.exec_cmd("fcitx5-remote -r")
+                end'')
+            ];
+          }
+        ];
+
       };
-      input = {
-        numlock_by_default = true;
-      };
-      misc = {
-        mouse_move_enables_dpms = true;
-        key_press_enables_dpms = true;
-      };
-    };
   };
 
   services.hypridle = {
