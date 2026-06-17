@@ -369,6 +369,7 @@ in
                   hl.exec_cmd("fcitx5-remote -r")
                   hl.exec_cmd("fcitx5 -d --replace")
                   hl.exec_cmd("fcitx5-remote -r")
+                  hl.exec_cmd("anyrun daemon")
                 end'')
             ];
           }
@@ -450,6 +451,12 @@ in
           rgba(200, 200, 255, 0.6)
         );
       }
+    '';
+    extraConfigFiles."websearch.ron".text = ''
+      Config(
+        prefix: "?",
+        engines: [DuckDuckGo]
+      )
     '';
   };
 
