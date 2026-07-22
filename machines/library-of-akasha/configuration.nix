@@ -286,6 +286,15 @@
         import headers
         reverse_proxy 10.100.0.5:8900
       }
+
+      mbc.maxwell-lt.dev {
+        import headers
+        root /var/www
+        basic_auth {
+          mbc $2a$14$vKHN24sH/6PrHFvyNwith.DdW0ZZJuF6pRKlhAzQ1cftJQJC5np8q
+        }
+        file_server browse
+      }
     '';
   };
 
