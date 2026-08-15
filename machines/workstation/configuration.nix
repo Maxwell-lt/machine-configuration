@@ -358,7 +358,6 @@
     keyutils.lib
     libGL
     libGLU
-    libappindicator-gtk2
     libcaca
     libcanberra
     libcap

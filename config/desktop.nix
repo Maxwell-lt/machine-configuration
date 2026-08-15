@@ -110,7 +110,6 @@ in
 
         # Chat
         discord # Discord client
-        hexchat # IRC client
       ];
 
       xdg = {
@@ -253,7 +252,7 @@ in
         dolphin-emu
         ryubing
         lutris
-        pcsx2
+        #pcsx2
         (prismlauncher.override {
           jdks = [ jdk8 jdk17 jdk21 jdk25 ];
         })
