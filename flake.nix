@@ -68,6 +68,15 @@
             ./machines/itg/configuration.nix
           ];
         };
+        iso-plasma = nixpkgs.lib.nixosSystem {
+          system = linux64System;
+          modules = [
+            sops-nix.nixosModules.sops
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
+            ./config
+            ./misc/iso.nix
+          ];
+        };
       };
     homeConfigurations =
       let
