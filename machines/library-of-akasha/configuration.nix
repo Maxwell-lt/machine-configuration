@@ -118,7 +118,7 @@
     wget sshfs-fuse rsync
     # Media manipulation
     ffmpeg-full mkvtoolnix-cli imagemagickBig yt-dlp
-    r128gain
+    rsgain
     # Fonts
     powerline-fonts corefonts noto-fonts noto-fonts-cjk-sans
     noto-fonts-color-emoji
